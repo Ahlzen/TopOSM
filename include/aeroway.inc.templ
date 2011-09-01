@@ -1,0 +1,105 @@
+<Style name="aeroway-outline">
+
+  	<!-- Runway outline -->
+	<Rule>
+      &minz14; &maxz14;
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  <LineSymbolizer stroke-width="11.0" stroke="&aerowayoutlinecolor;" stroke-linecap="square" />
+	</Rule>
+	<Rule>
+	  &minz15; &maxz15;
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  <LineSymbolizer stroke-width="19.0" stroke="&aerowayoutlinecolor;" stroke-linecap="square" />
+	</Rule>
+	<Rule>
+	  &minz16;
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  <LineSymbolizer stroke-width="33.0" stroke="&aerowayoutlinecolor;" stroke-linecap="square" />
+	</Rule>
+
+	<!-- Taxiway outline -->
+	<Rule>
+	  &minz14; &maxz14;
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  <LineSymbolizer stroke-width="5.0" stroke="&aerowayoutlinecolor;" stroke-linejoin="round" />
+	</Rule>
+	<Rule>
+	  &minz15; &minz16;
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  <LineSymbolizer stroke-width="7.0" stroke="&aerowayoutlinecolor;" stroke-linejoin="round" />
+	</Rule>
+	<Rule>
+	  &minz16;
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  <LineSymbolizer stroke-width="13.0" stroke="&aerowayoutlinecolor;" stroke-linejoin="round" />
+	</Rule>
+	
+</Style>
+
+<Style name="aeroway-fill">
+  
+  <!-- Runway fill -->
+	<Rule>
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  &minz11; &maxz11;
+	  <LineSymbolizer stroke-width="2.0" stroke="&aerowaycolor;" stroke-linecap="square" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  &minz12; &maxz12;
+	  <LineSymbolizer stroke-width="3.0" stroke="&aerowaycolor;" stroke-linecap="square" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  &minz13; &maxz13;
+	  <LineSymbolizer stroke-width="5.0" stroke="&aerowaycolor;" stroke-linecap="square" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  &minz14; &maxz14;
+	  <LineSymbolizer stroke-width="9.0" stroke="&aerowaycolor;" stroke-linecap="square" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  &minz15; &maxz15;
+	  <LineSymbolizer stroke-width="17.0" stroke="&aerowaycolor;" stroke-linecap="square" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'runway'</Filter>
+	  &minz16;
+	  <LineSymbolizer stroke-width="30.0" stroke="&aerowaycolor;" stroke-linecap="square" />
+	</Rule>
+	
+	<!-- Taxiways -->
+	<Rule>
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  &minz11; &maxz11;
+	  <LineSymbolizer stroke-width="0.8" stroke="&aerowaycolor;" stroke-linejoin="round" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  &minz12; &maxz12;
+	  <LineSymbolizer stroke-width="1.0" stroke="&aerowaycolor;" stroke-linejoin="round" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  &minz13; &maxz13;
+	  <LineSymbolizer stroke-width="2.0" stroke="&aerowaycolor;" stroke-linejoin="round" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  &minz14; &maxz14;
+	  <LineSymbolizer stroke-width="3.0" stroke="&aerowaycolor;" stroke-linejoin="round" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  &minz15; &minz16;
+	  <LineSymbolizer stroke-width="5.0" stroke="&aerowaycolor;" stroke-linejoin="round" />
+	</Rule>
+	<Rule>
+	  <Filter>[aeroway] = 'taxiway'</Filter>
+	  &minz16;
+	  <LineSymbolizer stroke-width="10.0" stroke="&aerowaycolor;" stroke-linejoin="round" />
+	</Rule>
+  
+</Style>

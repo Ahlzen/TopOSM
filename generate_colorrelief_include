@@ -1,0 +1,75 @@
+#!/bin/bash
+
+#DATADIR="./geodata/us/hillshade"
+DATADIR="./geodata/colorrelief"
+
+#SRS="+proj=latlong +datum=NAD83 +ellps=GRS80 +no_defs"
+
+WEST=130
+EAST=65
+SOUTH=23
+NORTH=52
+
+for X in `seq $EAST $WEST`; do for Y in `seq $SOUTH $NORTH`; do
+    TILE=`printf n%02dw%03d $Y $X`
+    
+#    LEFT=$((-1 * $X))
+#    RIGHT=$((-1 * ($X-1)))
+#    TOP=$Y
+#    BOTTOM=$((Y-1))
+    
+    TILENAME="$DATADIR/$TILE.png"
+    if [ -f "$TILENAME" ] ; then
+	#echo "<Layer name=\"${TILE}_cr\" status=\"on\" srs=\"$SRS\">"
+	echo "<Layer name=\"${TILE}_cr\" status=\"on\" srs=\"&srs900913;\">"
+	echo "  <StyleName>colorrelief</StyleName>"
+	echo "  <Datasource>"
+	echo "    <Parameter name=\"type\">gdal</Parameter>"
+	#echo "    <Parameter name=\"estimate_extent\">false</Parameter>"
+	#echo "    <Parameter name=\"extent\">$LEFT,$BOTTOM,$RIGHT,$TOP</Parameter>"
+	echo "    <Parameter name=\"estimate_extent\">true</Parameter>"
+	echo "    <Parameter name=\"file\">$TILENAME</Parameter>"
+	echo "  </Datasource>"
+	echo "</Layer>"
+    fi
+
+    # quarter resolution
+    QTILENAME="$DATADIR/${TILE}q.png"
+    if [ -f "$QTILENAME" ] ; then
+	echo "<Layer name=\"${TILE}_q_cr\" status=\"on\" srs=\"&srs900913;\">"
+	echo "  <StyleName>colorrelief_q</StyleName>"
+	echo "  <Datasource>"
+	echo "    <Parameter name=\"type\">gdal</Parameter>"
+	echo "    <Parameter name=\"estimate_extent\">true</Parameter>"
+	echo "    <Parameter name=\"file\">$QTILENAME</Parameter>"
+	echo "  </Datasource>"
+	echo "</Layer>"
+    fi
+    
+    # sixteenth resolution
+    STILENAME="$DATADIR/${TILE}s.png"
+    if [ -f "$STILENAME" ] ; then
+	echo "<Layer name=\"${TILE}_s_cr\" status=\"on\" srs=\"&srs900913;\">"
+	echo "  <StyleName>colorrelief_s</StyleName>"
+	echo "  <Datasource>"
+	echo "    <Parameter name=\"type\">gdal</Parameter>"
+	echo "    <Parameter name=\"estimate_extent\">true</Parameter>"
+	echo "    <Parameter name=\"file\">$STILENAME</Parameter>"
+	echo "  </Datasource>"
+	echo "</Layer>"
+    fi
+    
+    # sixty-fourth resolution
+    FTILENAME="$DATADIR/${TILE}f.png"
+    if [ -f "$FTILENAME" ] ; then
+	echo "<Layer name=\"${TILE}_f_cr\" status=\"on\" srs=\"&srs900913;\">"
+	echo "  <StyleName>colorrelief_f</StyleName>"
+	echo "  <Datasource>"
+	echo "    <Parameter name=\"type\">gdal</Parameter>"
+	echo "    <Parameter name=\"estimate_extent\">true</Parameter>"
+	echo "    <Parameter name=\"file\">$FTILENAME</Parameter>"
+	echo "  </Datasource>"
+	echo "</Layer>"
+    fi
+    
+done; done

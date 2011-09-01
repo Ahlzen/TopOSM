@@ -1,0 +1,67 @@
+Index: src/cairo_renderer.cpp
+===================================================================
+--- src/cairo_renderer.cpp	(revision 2643)
++++ src/cairo_renderer.cpp	(working copy)
+@@ -307,7 +307,7 @@
+     {
+         context_->set_line_width(width);
+     }
+-
++    
+     void set_dash(dash_array const &dashes)
+     {
+         std::valarray<double> d(dashes.size() * 2);
+@@ -329,6 +329,11 @@
+         context_->set_fill_rule(fill_rule);
+     }
+ 
++    void set_operator(Cairo::Operator op)
++    {
++        context_->set_operator(op);
++    }
++
+     void move_to(double x, double y)
+     {
+ #if CAIRO_VERSION < CAIRO_VERSION_ENCODE(1, 6, 0)
+@@ -609,9 +614,15 @@
+ 
+         set_line_width(halo_radius);
+         set_line_join(ROUND_JOIN);
+-        set_color(halo_fill);
+-        stroke();
+-
++        if (halo_fill.rgba() == 0)
++        {
++            set_operator(Cairo::OPERATOR_DEST_OUT);
++            stroke();
++            set_operator(Cairo::OPERATOR_OVER);
++        } else {
++            set_color(halo_fill);
++            stroke();
++        }
+         set_color(fill);
+ 
+         path.rewind();
+@@ -746,7 +757,12 @@
+ 
+     cairo_context context(context_);
+ 
+-    context.set_color(sym.get_fill(), sym.get_opacity());
++    if (sym.get_fill().rgba() == 0) {
++        context.set_color(0, 0, 0, 1.0);
++        context.set_operator(Cairo::OPERATOR_DEST_OUT);
++    } else {
++        context.set_color(sym.get_fill(), sym.get_opacity());
++    }
+ 
+     for (unsigned i = 0; i < feature.num_geometries(); ++i)
+     {
+@@ -760,6 +776,8 @@
+             context.fill();
+         }
+     }
++    
++    context.set_operator(Cairo::OPERATOR_OVER);
+ }
+ 
+ typedef boost::tuple<double,double,double,double> segment_t;

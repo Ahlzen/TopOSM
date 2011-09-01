@@ -1,0 +1,845 @@
+<Style name="highway-lowzoom">
+  <Rule>
+    &minz5; &maxz6;
+    <Filter>[highway] = 'motorway'</Filter>
+    <LineSymbolizer stroke="&interstatecolorlowzoom;" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule> 
+  <Rule>
+    &minz7; &maxz8;
+    <Filter>[highway] = 'motorway'</Filter>
+    <LineSymbolizer stroke="&interstatecolorlowzoom;" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+    &minz7; &maxz8;
+    <Filter>[highway] = 'trunk'</Filter>
+    <LineSymbolizer stroke="&trunkcolorlowzoom;" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+</Style>
+
+
+<Style name="highway-highzoom-outline">
+ 
+  <!-- Interstate/Trunk outline -->
+  <Rule>
+	&minz9; &maxz11;
+    <Filter>([highway] = 'motorway' or [highway] = 'trunk') and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz12; &maxz14;
+    <Filter>([highway] = 'motorway' or [highway] = 'trunk') and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="7.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz15;
+    <Filter>([highway] = 'motorway' or [highway] = 'trunk') and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="13.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Interstate/Trunk tunnel outline -->
+  <Rule>
+	&minz9; &maxz11;
+    <Filter>([highway] = 'motorway' or [highway] = 'trunk') and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="&tunneloutlinecolor;" stroke-dasharray="4,2" />
+  </Rule>
+  <Rule>
+	&minz12; &maxz14;
+    <Filter>([highway] = 'motorway' or [highway] = 'trunk') and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="7.0" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+	&minz15;
+    <Filter>([highway] = 'motorway' or [highway] = 'trunk') and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="13.0" stroke="&tunneloutlinecolor;" stroke-dasharray="10,5" />
+  </Rule>
+  
+  <!-- Primary outline -->
+  <Rule>
+	&minz10; &maxz11;
+    <Filter>[highway] = 'primary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz12; &maxz14;
+    <Filter>[highway] = 'primary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="5.5" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz15;
+    <Filter>[highway] = 'primary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Primary tunnel outline -->
+  <Rule>
+	&minz10; &maxz11;
+    <Filter>[highway] = 'primary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="3.5" stroke="&tunneloutlinecolor;" stroke-dasharray="4,2" />
+  </Rule>
+  <Rule>
+	&minz12; &maxz14;
+    <Filter>[highway] = 'primary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="5.5" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+	&minz15;
+    <Filter>[highway] = 'primary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="&tunneloutlinecolor;" stroke-dasharray="10,5" />
+  </Rule>
+  
+  <!-- Secondary/Tertiary outline -->
+  <Rule>
+	&minz10; &maxz11;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz14; &maxz15;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="5.5" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz16;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Secondary/Tertiary tunnel outline -->
+  <Rule>
+	&minz10; &maxz11;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="&tunneloutlinecolor;" stroke-dasharray="4,2" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+	&minz14; &maxz15;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="5.5" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+	&minz16;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="&tunneloutlinecolor;" stroke-dasharray="10,5" />
+  </Rule>
+  
+  <!-- Link outlines -->
+  <Rule>
+  	&minz10; &maxz10;
+    <Filter>
+      ([highway] = 'motorway_link' or
+      [highway] = 'trunk_link' or
+      [highway] = 'primary_link' or
+      [highway] = 'secondary_link') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="0.5" stroke="black" stroke-opacity="0.6" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz11; &maxz11;
+    <Filter>
+      ([highway] = 'motorway_link' or
+      [highway] = 'trunk_link' or
+      [highway] = 'primary_link' or
+      [highway] = 'secondary_link') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="0.6" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz15;
+    <Filter>
+      ([highway] = 'motorway_link' or
+      [highway] = 'trunk_link' or
+      [highway] = 'primary_link' or
+      [highway] = 'secondary_link') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>
+      ([highway] = 'motorway_link' or
+      [highway] = 'trunk_link' or
+      [highway] = 'primary_link' or
+      [highway] = 'secondary_link') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="7.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Link tunnels -->
+  <Rule>
+  	&minz12; &maxz15;
+    <Filter>
+      ([highway] = 'motorway_link' or
+      [highway] = 'trunk_link' or
+      [highway] = 'primary_link' or
+      [highway] = 'secondary_link') and [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>
+      ([highway] = 'motorway_link' or
+      [highway] = 'trunk_link' or
+      [highway] = 'primary_link' or
+      [highway] = 'secondary_link') and [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="7.0" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  
+  <!-- Small road outlines -->
+  <Rule>
+  	&minz10; &maxz10;
+    <Filter>
+      ([highway] = 'residential' or [highway] = 'unclassified') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="0.5" stroke="#444" stroke-opacity="0.6" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz11; &maxz11;
+    <Filter>
+      ([highway] = 'residential' or [highway] = 'unclassified') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="0.6" stroke="#444" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>
+      ([highway] = 'residential' or [highway] = 'unclassified') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="1.2" stroke="#444" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>
+      ([highway] = 'residential' or [highway] = 'unclassified') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>
+      ([highway] = 'residential' or [highway] = 'unclassified') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="7.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Small road tunnel outlines -->
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>
+      ([highway] = 'residential' or [highway] = 'unclassified') and [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="1.2" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>
+      ([highway] = 'residential' or [highway] = 'unclassified') and [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>
+      ([highway] = 'residential' or [highway] = 'unclassified') and [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="7.0" stroke="&tunneloutlinecolor;" stroke-dasharray="10,5" />
+  </Rule>
+
+  <!-- Service road outlines -->
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>[highway] = 'service' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="0.8" stroke="#444" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>[highway] = 'service' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>[highway] = 'service' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Service road tunnel outlines -->
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>[highway] = 'service' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="0.8" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>[highway] = 'service' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="&tunneloutlinecolor;" stroke-dasharray="6,3" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>[highway] = 'service' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="&tunneloutlinecolor;" stroke-dasharray="10,5" />
+  </Rule>
+  
+  <!-- Unimproved road outlines -->
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>
+       ([highway] = 'track' and not [bicycle] = 'designated') or
+  		[highway] = 'unsurfaced' or
+  		[highway] = 'unimproved'
+    </Filter>
+    <LineSymbolizer stroke-width="1.2" stroke="#444" stroke-dasharray="4,2" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+  	<Filter>
+  	    ([highway] = 'track' and not [bicycle] = 'designated') or
+  	     [highway] = 'unsurfaced' or
+         [highway] = 'unimproved'
+  	</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="black" stroke-dasharray="5,2" />
+  </Rule>
+  <Rule>
+  	&minz16;
+  	<Filter>
+  		([highway] = 'track' and not [bicycle] = 'designated') or
+  		 [highway] = 'unsurfaced' or
+  		 [highway] = 'unimproved'
+  	</Filter>
+  	<LineSymbolizer stroke-width="7.0" stroke="black" stroke-dasharray="5,2" />
+  </Rule>
+  
+  <!-- Bike paths -->
+  <Rule>
+  	&minz13; &maxz14;
+  	<Filter>
+      [highway] = 'cycleway' or
+      [highway] = 'bikeway' or
+      [highway] = 'bridleway' or
+      ([highway] = 'track' and [bicycle] = 'designated')
+    </Filter>
+    <LineSymbolizer stroke-width="1.0" stroke="black" stroke-dasharray="5,1" />
+  </Rule>
+  <Rule>
+  	&minz15;
+  	<Filter>
+      [highway] = 'cycleway' or
+      [highway] = 'bikeway' or
+      [highway] = 'bridleway' or
+      ([highway] = 'track' and [bicycle] = 'designated')
+    </Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="black" stroke-dasharray="6,1" />
+  </Rule>
+  
+  <!-- Foot paths, trails etc -->
+  <Rule>
+  	&minz13; &maxz14;
+  	<Filter>
+      [highway] = 'path' or
+      [highway] = 'trail' or
+      [highway] = 'footway' or
+      [highway] = 'steps' or
+      [highway] = 'pedestrian'
+    </Filter>
+    <LineSymbolizer stroke-width="0.8" stroke="black" stroke-dasharray="3,2" />
+  </Rule>
+  <Rule>
+  	&minz15;
+  	<Filter>
+      [highway] = 'path' or
+      [highway] = 'trail' or
+      [highway] = 'footway' or
+      [highway] = 'steps' or
+      [highway] = 'pedestrian'
+    </Filter>
+    <LineSymbolizer stroke-width="1.5" stroke="black" stroke-dasharray="4,3" />
+  </Rule>
+    
+</Style>
+
+<Style name="highway-highzoom-fill">  
+
+  <!-- All bridge outlines (z14 and up) -->
+  <!-- NOTE: These must be in the same style as highway fills, since
+  they are often drawn "inbetween" different level roads.
+  Outlines at the same level will draw before fills, however, thanks to "pass".
+  -->
+  <Rule>
+	&minz14; &maxz14;
+    <Filter>([highway] = 'motorway' or [highway] = 'trunk') and [bridge] = 'yes' and [pass] = 1</Filter>
+    <LineSymbolizer stroke-width="9.0" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+	&minz15;
+    <Filter>([highway] = 'motorway' or [highway] = 'trunk') and [bridge] = 'yes' and [pass] = 1</Filter>
+    <LineSymbolizer stroke-width="16.0" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+	&minz14; &maxz14;
+    <Filter>([highway] = 'primary') and [bridge] = 'yes' and [pass] = 1</Filter>
+    <LineSymbolizer stroke-width="7.5" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+	&minz15;
+    <Filter>([highway] = 'primary') and [bridge] = 'yes' and [pass] = 1</Filter>
+    <LineSymbolizer stroke-width="13.0" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+	&minz14; &maxz15;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and [bridge] = 'yes' and [pass] = 1</Filter>
+    <LineSymbolizer stroke-width="7.5" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+	&minz16;
+    <Filter>([highway] = 'secondary' or [highway] = 'tertiary') and [bridge] = 'yes' and [pass] = 1</Filter>
+    <LineSymbolizer stroke-width="13.0" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+  	&minz14;&maxz15;
+    <Filter>
+      ([highway] = 'motorway_link' or
+      [highway] = 'trunk_link' or
+      [highway] = 'primary_link' or
+      [highway] = 'secondary_link' or 
+      [highway] = 'residential' or
+      [highway] = 'unclassified' or
+      [highway] = 'service') and [bridge] = 'yes' and [pass] = 1
+    </Filter>
+    <LineSymbolizer stroke-width="6.0" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>
+      ([highway] = 'motorway_link' or
+      [highway] = 'trunk_link' or
+      [highway] = 'primary_link' or
+      [highway] = 'secondary_link' or
+      [highway] = 'residential' or
+      [highway] = 'unclassified' or
+      [highway] = 'service') and [bridge] = 'yes' and [pass] = 1
+    </Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz14;
+  	<Filter>
+  		([highway] = 'cycleway' or
+  		[highway] = 'bikeway' or
+  		[highway] = 'path' or
+	    [highway] = 'trail' or
+        [highway] = 'footway' or
+        [highway] = 'steps' or
+        [highway] = 'pedestrian') and [bridge] = 'yes' and [pass] = 1
+    </Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="black" stroke-opacity="0.6" stroke-linecap="butt" />
+  </Rule>
+  <Rule>
+  	&minz15;
+	<Filter>
+  		([highway] = 'cycleway' or
+  		[highway] = 'bikeway' or
+  		[highway] = 'path' or
+	    [highway] = 'trail' or
+        [highway] = 'footway' or
+        [highway] = 'steps' or
+        [highway] = 'pedestrian') and [bridge] = 'yes' and [pass] = 1
+    </Filter>
+    <LineSymbolizer stroke-width="4.0" stroke="black" stroke-opacity="0.6" stroke-linecap="square" />
+  </Rule>
+
+  <!-- Interstate fill -->
+  <Rule>
+	&minz9; &maxz11;
+    <Filter>[highway] = 'motorway' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="&interstatecolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz12; &maxz14;
+    <Filter>[highway] = 'motorway' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.5" stroke="&interstatecolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz15;
+    <Filter>[highway] = 'motorway' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="&interstatecolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Interstate tunnel fill -->
+  <Rule>
+	&minz9; &maxz11;
+    <Filter>[highway] = 'motorway' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="&interstatecolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz12; &maxz14;
+    <Filter>[highway] = 'motorway' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.5" stroke="&interstatecolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz15;
+    <Filter>[highway] = 'motorway' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="&interstatecolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Trunk fill -->
+  <Rule>
+  	&minz9; &maxz11;
+    <Filter>[highway] = 'trunk' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="&trunkcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz14;
+    <Filter>[highway] = 'trunk' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.5" stroke="&trunkcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz15;
+    <Filter>[highway] = 'trunk' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="&trunkcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Trunk tunnel fill -->
+  <Rule>
+  	&minz9; &maxz11;
+    <Filter>[highway] = 'trunk' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.5" stroke="&trunkcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz14;
+    <Filter>[highway] = 'trunk' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="4.5" stroke="&trunkcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz15;
+    <Filter>[highway] = 'trunk' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="10.0" stroke="&trunkcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Primary fill -->
+  <Rule>
+  	&minz9; &maxz9;
+    <Filter>[highway] = 'primary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.5" stroke="&primarycolorlowzoom;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+    &minz10; &maxz11;
+    <Filter>[highway] = 'primary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.5" stroke="&primarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz14;
+    <Filter>[highway] = 'primary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="3.5" stroke="&primarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz15;
+    <Filter>[highway] = 'primary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="8.0" stroke="&primarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Primary tunnel fill -->
+  <Rule>
+  	&minz9; &maxz9;
+    <Filter>[highway] = 'primary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.5" stroke="&primarycolorlowzoom;"  stroke-dasharray="4,2" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+      &minz10; &maxz11;
+      <Filter>[highway] = 'primary' and [tunnel] = 'yes'</Filter>
+      <LineSymbolizer stroke-width="1.5" stroke="&primarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz14;
+    <Filter>[highway] = 'primary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="3.5" stroke="&primarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz15;
+    <Filter>[highway] = 'primary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="8.0" stroke="&primarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Secondary fill -->
+  <Rule>
+  	&minz9; &maxz9;
+    <Filter>[highway] = 'secondary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.0" stroke="&secondarycolorlowzoom;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz10; &maxz11;
+    <Filter>[highway] = 'secondary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.5" stroke="&secondarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>[highway] = 'secondary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="&secondarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>[highway] = 'secondary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="3.5" stroke="&secondarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>[highway] = 'secondary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="8.0" stroke="&secondarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Secondary tunnel fill -->
+  <Rule>
+  	&minz9; &maxz9;
+    <Filter>[highway] = 'secondary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.0" stroke="&secondarycolorlowzoom;"  stroke-dasharray="4,2" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz10; &maxz11;
+    <Filter>[highway] = 'secondary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.5" stroke="&secondarycolor;"  stroke-dasharray="4,2" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>[highway] = 'secondary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="&secondarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>[highway] = 'secondary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="3.5" stroke="&secondarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>[highway] = 'secondary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="8.0" stroke="&secondarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Tertiary fill -->
+  <Rule>
+  	&minz9; &maxz9;
+    <Filter>[highway] = 'tertiary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="0.7" stroke="&smallroadcolorlowzoom;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz10; &maxz11;
+    <Filter>[highway] = 'tertiary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.0" stroke="&smallroadcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>[highway] = 'tertiary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="&smallroadcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>[highway] = 'tertiary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="3.5" stroke="&smallroadcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>[highway] = 'tertiary' and not [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="8.0" stroke="&smallroadcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Tertiary tunnel fill -->
+  <Rule>
+  	&minz9; &maxz9;
+    <Filter>[highway] = 'tertiary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="0.7" stroke="&smallroadcolorlowzoom;" stroke-dasharray="4,2" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz10; &maxz11;
+    <Filter>[highway] = 'tertiary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="1.0" stroke="&smallroadcolor;" stroke-dasharray="4,2" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz13;
+    <Filter>[highway] = 'tertiary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="&smallroadcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>[highway] = 'tertiary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="3.5" stroke="&smallroadcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+    <Filter>[highway] = 'tertiary' and [tunnel] = 'yes'</Filter>
+    <LineSymbolizer stroke-width="8.0" stroke="&smallroadcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Minor road fills -->
+  <Rule>
+	&minz14; &maxz15;
+    <Filter>
+      ([highway] = 'residential' or
+      [highway] = 'unclassified' or
+      ([highway] = 'track' and not [bicycle] = 'designated') or
+	  [highway] = 'unsurfaced' or
+  	  [highway] = 'unimproved') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="&smallroadcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz16;
+    <Filter>
+      ([highway] = 'residential' or
+      [highway] = 'unclassified' or
+      ([highway] = 'track' and not [bicycle] = 'designated') or
+	  [highway] = 'unsurfaced' or
+  	  [highway] = 'unimproved') and not [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="5.0" stroke="&smallroadcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Minor road tunnel fills -->
+  <Rule>
+	&minz14; &maxz15;
+    <Filter>
+      ([highway] = 'residential' or
+      [highway] = 'unclassified' or
+      ([highway] = 'track' and not [bicycle] = 'designated') or
+	  [highway] = 'unsurfaced' or
+  	  [highway] = 'unimproved') and [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="&smallroadcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz16;
+    <Filter>
+      ([highway] = 'residential' or
+      [highway] = 'unclassified' or
+      ([highway] = 'track' and not [bicycle] = 'designated') or
+	  [highway] = 'unsurfaced' or
+  	  [highway] = 'unimproved') and [tunnel] = 'yes'
+    </Filter>
+    <LineSymbolizer stroke-width="5.0" stroke="&smallroadcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Service roads fills -->
+  <Rule>
+	&minz14; &maxz15;
+    <Filter>[highway] = 'service'</Filter>
+    <LineSymbolizer stroke-width="1.3" stroke="&smallroadcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz16;
+    <Filter>[highway] = 'service'</Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="&smallroadcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Link fills -->
+  <Rule>
+  	&minz12; &maxz15;
+  	<Filter>[highway] = 'motorway_link' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.0" stroke="&interstatecolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>	
+  <Rule>
+  	&minz16;
+  	<Filter>[highway] = 'motorway_link' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="3.5" stroke="&interstatecolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz12; &maxz15;
+  	<Filter>[highway] = 'trunk_link' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.0" stroke="&trunkcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz16;
+  	<Filter>[highway] = 'trunk_link' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="&trunkcolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz15;
+  	<Filter>[highway] = 'primary_link' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.0" stroke="&primarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+  	<Filter>[highway] = 'primary_link' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="&primarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz15;
+  	<Filter>[highway] = 'secondary_link' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.0" stroke="&secondarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+  	<Filter>[highway] = 'secondary_link' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="&secondarycolor;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Link tunnel fills -->
+  <Rule>
+  	&minz12; &maxz15;
+  	<Filter>[highway] = 'motorway_link' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.0" stroke="&interstatecolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>	
+  <Rule>
+  	&minz16;
+  	<Filter>[highway] = 'motorway_link' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="&interstatecolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz12; &maxz15;
+  	<Filter>[highway] = 'trunk_link' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.0" stroke="&trunkcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+	&minz16;
+  	<Filter>[highway] = 'trunk_link' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="&trunkcolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12; &maxz15;
+  	<Filter>[highway] = 'primary_link' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.0" stroke="&primarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+  	<Filter>[highway] = 'primary_link' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="&primarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz12;
+	&maxz15;
+  	<Filter>[highway] = 'secondary_link' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.0" stroke="&secondarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+  	<Filter>[highway] = 'secondary_link' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="&secondarycolortunnel;" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+</Style>
+
+<!-- parking lots are rendered (outline+fill) just like roads -->
+<Style name="parking-outline">
+  <Rule>
+  	&minz14; &maxz15;
+    <Filter>[amenity] = 'parking'</Filter>
+    <LineSymbolizer stroke-width="2.0" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz16;
+	<Filter>[amenity] = 'parking'</Filter>
+    <LineSymbolizer stroke-width="3.5" stroke="black" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+</Style>
+
+<Style name="parking-fill">
+  <Rule>
+	&minz14;
+	<Filter>[amenity] = 'parking'</Filter>
+    <PolygonSymbolizer fill="&smallroadcolor;" />
+  </Rule>
+</Style>

@@ -1,0 +1,150 @@
+<!--
+NHD FEATURE CODES
+
+Perennial lakes and ponds (39000, 39003, 39004, 39009-39012)
+Intermittent lakes and ponds (39001, 39002, 39005, 39006)
+Perennial rivers/streams (46000, 46004, 46005, 46006)
+Ephemeral rivers/streams (46007)
+Intermittent rivers/streams (46001, 46002, 46003)
+Reservoirs (Reservoir) (436xx)
+Canals and ditches (CanalDitch) (336xx)
+Artificial Path (55800)
+(NOTE: Is this correct? Merced River through Yosemite valley has fcode 55800)
+-->
+
+
+<Style name="water-outline-lowzoom">
+  <Rule>
+  	&minz7; &maxz9;
+  	<!-- NOTE: Size (the area or length of a feature) is a very crude
+    filter, but it's better than nothing. -->
+    <Filter>
+        ([fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
+		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
+    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
+    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
+    	[fcode] = 46007
+    	) and [size] > 4
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.5" />
+  </Rule>
+</Style>
+
+<Style name="water-fill-lowzoom">
+  <Rule>
+    &maxz9;
+    <Filter>
+    	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
+		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
+    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
+    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
+    	[fcode] = 46007
+    </Filter>
+    <PolygonSymbolizer fill="&waterfillcolor;" />
+  </Rule>
+</Style>
+
+<Style name="water-outline">
+  <!-- Perennial hydrographic features -->
+  <Rule>
+  	&minz10; &maxz13;
+    <Filter>
+    	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
+    	([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or [fcode] = 55800
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" />
+  </Rule>
+  <Rule>
+  	&minz14;
+    <Filter>
+    	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
+    	([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or [fcode] = 55800
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  
+  <!-- Intermittent/ephemeral hydrographic features -->
+  <Rule>
+  	&minz12;
+	&maxz13;
+    <Filter>
+    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
+    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 46007
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" stroke-dasharray="4,2" />
+  </Rule>
+  <Rule>
+  	&minz14;
+    <Filter>
+    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
+    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 46007
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.5" stroke-dasharray="8,4" />
+  </Rule>
+</Style>
+
+<Style name="water-fill">
+  <Rule>
+    &minz10;
+    <Filter>
+    	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
+		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
+    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
+    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
+    	[fcode] = 46007
+    </Filter>
+    <PolygonSymbolizer fill="&waterfillcolor;" />
+  </Rule>
+</Style>
+
+<Style name="playas">
+	<Rule>
+		&minz10;
+		<Filter>[ftype] = 'Playa'</Filter>	 
+		<PolygonSymbolizer fill="#ffe0c0" />
+	</Rule>
+</Style>
+
+<Style name="wetlands">
+  <Rule>
+  	&minz13;
+    <Filter>[fcode] = 46600</Filter>
+    <PolygonPatternSymbolizer file="symbols/marsh.png" />
+  </Rule>
+</Style>
+
+<Style name="ice">
+  <Rule>
+  	&minz10;
+    <Filter>[ftype] = 'Ice Mass'</Filter>
+	<LineSymbolizer stroke="#888" stroke-width="0.7" stroke-dasharray="5,5" />
+    <PolygonSymbolizer fill="#ffe0c0" />
+  </Rule>
+</Style>
+
+<Style name="pipelines">
+  <Rule>
+  	&minz11; &maxz13;
+    <Filter>[ftype] = 'Pipeline'</Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.6" stroke-dasharray="1.6,10" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+  <Rule>
+  	&minz14;
+    <Filter>[ftype] = 'Pipeline'</Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="3" stroke-dasharray="3,20" stroke-linejoin="round" stroke-linecap="round" />
+  </Rule>
+</Style>
+
+

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Generates the mapnik xml files and includes from
+# their respective templates.
+
+# Variable declarations on the form ${VAR} are substituted with
+# the value of the corresponding enviroment variable VAR.
+
+
+# awk program to substitute environment variables
+AWKFILTER='{while(match($0,"[$]{[^}]*}")){var=substr($0,RSTART+2,RLENGTH -3);gsub("[$]{"var"}",ENVIRON[var])}}1'
+
+if [[ -z $TOPOSM_ENV_SET ]]; then
+    echo "Error: TopOSM environment not set."
+    exit 1
+fi
+
+# process includes
+for SRC in `ls include/*.templ`; do
+    echo "Processing $SRC..."
+    DST=`dirname $SRC`/`basename $SRC .templ`
+    cat "$SRC" | awk "$AWKFILTER" > "$DST"
+done
+
+# process style xml files
+for SRC in `ls templates/*.templ`; do
+    echo "Processing $SRC..."
+    DST=`basename $SRC .templ`
+    cat "$SRC" | awk "$AWKFILTER" > "$DST"
+done
+
+echo "Done."
+

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# downloads NED data for the specified region
+
+# TODO: fix zero-prefixed west coordinates
+
+W=126
+N=44
+E=112
+S=31
+
+SRC="http://openstreetmap.us/ned/13arcsec/grid"
+for n in `seq $S $N` ; do
+    for w in `seq $E $W`; do
+	wget -r --no-parent --no-host-directories --cut-dirs=3 "$SRC/n${n}w${w}"
+    done
+done

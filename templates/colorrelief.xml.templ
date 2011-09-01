@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[
+    <!ENTITY % utils SYSTEM "include/utils.inc">
+    <!ENTITY % colors SYSTEM "include/colors.inc">
+	<!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
+	<!ENTITY extents SYSTEM "include/extents.inc">
+	<!ENTITY extentsLatLon SYSTEM "include/extentsLatLon.inc">
+    <!ENTITY colorrelieflayers SYSTEM "colorrelieflayers.inc">	
+	%utils;
+	%colors;
+]>
+
+<Map background-color="&landcolor;" srs="&srs900913;">
+
+<!-- Full-resolution color relief -->
+<Style name="colorrelief">
+  <Rule>
+    &minz13;
+    <RasterSymbolizer scaling="bilinear" />
+  </Rule>
+</Style>
+
+<!-- Quarter-resolution color relief -->
+<Style name="colorrelief_q">
+  <Rule>
+    &minz11; &maxz12;
+    <RasterSymbolizer scaling="bilinear" />
+  </Rule>
+</Style>
+
+<!-- Sixteenth-resolution color relief -->
+<Style name="colorrelief_s">
+  <Rule>
+    &minz9; &maxz10;
+    <RasterSymbolizer scaling="bilinear" />
+  </Rule>
+</Style>
+
+<!-- Sixty-fourth-resolution color relief -->
+<Style name="colorrelief_f">
+  <Rule>
+    &maxz8;
+    <RasterSymbolizer scaling="bilinear" />
+  </Rule>
+</Style>
+
+
+&colorrelieflayers;
+
+</Map>
+

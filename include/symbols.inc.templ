@@ -1,0 +1,266 @@
+<Style name="symbols">
+
+<!--
+NOTE: 2011-06-14: SVG rendering still appears to have issues on
+some systems. Disabling SVG icons for now.
+-->
+
+    <!-- Mountain peaks -->
+	<Rule>
+	  &minz14;
+      <Filter>[natural]='peak'</Filter>
+      <PointSymbolizer file="&customsymbolsdir;/peak.png" />
+    </Rule>
+    
+    <!-- Power line pylons -->
+    <Rule>
+        &minz14; &maxz14;
+        <Filter>[power] = 'tower'</Filter>
+        <PointSymbolizer file="&customsymbolsdir;/power-tower-3px.png" allow-overlap="true" />
+    </Rule>        
+    <Rule>
+        &minz15; &maxz15;
+        <Filter>[power] = 'tower'</Filter>
+        <PointSymbolizer file="&customsymbolsdir;/power-tower-4px.png" allow-overlap="true" />
+    </Rule>
+    <Rule>
+        &minz16;
+        <Filter>[power] = 'tower'</Filter>
+        <PointSymbolizer file="&customsymbolsdir;/power-tower-6px.png" allow-overlap="true" />
+    </Rule>
+    
+    <!-- airports -->
+	<Rule>
+    	&minz12;
+    	&maxz13;
+    	<Filter>[aeroway] = 'aerodrome'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/airport.png" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[aeroway] = 'aerodrome'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/airport.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+    	<Filter>[aeroway] = 'aerodrome'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/airport.png" />
+	</Rule>
+	
+	<!-- rail stations, other stations -->
+    <Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>
+    		[railway] = 'station' or
+    		[railway] = 'halt' or
+    		[railway] = 'tram_station' or
+    		[aerialway] = 'station'
+    	</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/rail-station-s.png" />
+    </Rule>
+    <Rule>
+    	&minz15;
+    	<Filter>
+    		[railway] = 'station' or
+    		[railway] = 'halt' or
+    		[railway] = 'tram_station' or
+    		[aerialway] = 'station'
+    	</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/rail-station-m.png" />
+    </Rule>
+
+	<!-- mountain huts -->
+	<Rule>
+    	&minz13;
+    	&maxz13;
+    	<Filter>[tourism] = 'alpine_hut'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/hut.png"
+    	    transform="scale(0.4, 0.4)" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'alpine_hut'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/hut.png"
+    	    transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'alpine_hut'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/hut.png"
+    	    transform="scale(0.6, 0.6)" />
+	</Rule>
+
+	<!-- shelters -->
+	<Rule>
+    	&minz13;
+    	&maxz13;
+    	<Filter>[amenity] = 'shelter'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/shelter.png"
+    	    transform="scale(0.4, 0.4)" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[amenity] = 'shelter'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/shelter.png"
+    	    transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[amenity] = 'shelter'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/shelter.png"
+    	    transform="scale(0.6, 0.6)" />
+	</Rule>
+
+	<!-- public parking lots -->
+	<Rule>
+    	&minz13;
+    	&maxz13;
+    	<Filter>
+    	    [amenity] = 'parking'
+    	    and [access] &lt;&gt; 'destination'
+    	    and [access] &lt;&gt; 'private'
+    	    and [access] &lt;&gt; 'no'
+    	</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/parking.png"
+    	    transform="scale(0.4, 0.4)" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>
+    	    [amenity] = 'parking'
+    	    and [access] &lt;&gt; 'destination'
+    	    and [access] &lt;&gt; 'private'
+    	    and [access] &lt;&gt; 'no'
+    	</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/parking.png"
+    	    transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>
+		    [amenity] = 'parking'
+    	    and [access] &lt;&gt; 'destination'
+    	    and [access] &lt;&gt; 'private'
+    	    and [access] &lt;&gt; 'no'
+		</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/parking.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/parking.png" />
+	</Rule>
+	
+	<!-- viewpoints -->
+	<Rule>
+    	&minz13;
+    	&maxz13;
+    	<Filter>[tourism] = 'viewpoint'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/view.png" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'viewpoint'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/view.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'viewpoint'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/view.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/view.png" />
+	</Rule>
+
+	<!-- public restrooms -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[amenity] = 'toilets' or [amenity] = 'restrooms'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/restrooms.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[amenity] = 'toilets' or [amenity] = 'restrooms'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/restrooms.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/restrooms.png" />
+	</Rule>
+	
+	<!-- campgrounds -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'camp_site'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/campground.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'camp_site'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/campground.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/campground.png" />
+	</Rule>
+	
+	<!-- information -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'information'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/info.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'information'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/info.svg" transform="scale(0.6, 0.6)" /-->
+		<PointSymbolizer file="&customsymbolsdir;/black-m/info.png" />
+	</Rule>
+	
+	<!-- drinking water -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[amenity] = 'drinking_water'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/water.png" transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[amenity] = 'drinking_water'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/water.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/water.png" />
+	</Rule>
+	
+	<!-- picnic sites -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'picnic_site'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/picnic-area.png" transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'picnic_site'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/picnic-area.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/picnic-area.png" />
+	</Rule>
+    
+    <!-- restaurants -->
+	<Rule>
+		&minz15;
+		<Filter>
+			[amenity] = 'restaurant' or
+			[amenity] = 'fast_food' or
+			[amenity] = 'food_court'
+		</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/food.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/food.png" />
+	</Rule>
+	
+	<!-- mines etc (tagged 'quarry' from the GNIS import) -->
+    <Rule>
+    	&minz15;
+    	<Filter>[landuse] = 'quarry'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/mine.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/mine.png" />
+    </Rule>
+    
+</Style>
+

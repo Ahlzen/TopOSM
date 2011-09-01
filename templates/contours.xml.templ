@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[
+    <!ENTITY % utils SYSTEM "include/utils.inc">
+    <!ENTITY % colors SYSTEM "include/colors.inc">
+	<!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
+	<!ENTITY extentsLatLon SYSTEM "include/extentsLatLon.inc">
+    %utils;
+    %colors;
+]>
+
+<Map background-color="transparent" srs="&srs900913;">
+
+<!--
+z11: 3 (labels on 3)
+z12: major 3, minor 2 (labels on 3)
+z13-15: major 2/3, minor 1 (labels on 2/3)
+z16-: major 2/3, minor 1 (labels on 1/2/3)
+-->
+
+<Style name="contourlines">
+     
+  <Rule>
+     &minz11; &maxz11;
+     <Filter>[class] = 3</Filter>
+     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.3" /> 
+  </Rule>
+  
+  <Rule>
+     &minz12; &maxz12;
+     <Filter>[class] = 3</Filter>
+     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.5" /> 
+  </Rule>
+  <Rule>
+     &minz12; &maxz12;
+     <Filter>[class] = 2</Filter>
+     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.2" /> 
+  </Rule>
+  
+  <Rule>
+     &minz13; &maxz13;
+     <Filter>[class] = 2 or [class] = 3</Filter>
+     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.5" /> 
+  </Rule>
+  <Rule>
+     &minz13; &maxz13;
+     <Filter>[class] = 1</Filter>
+     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.1" /> 
+  </Rule>
+  
+  <Rule>
+     &minz14;
+     <Filter>[class] = 2 or [class] = 3</Filter>
+     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.5" /> 
+  </Rule>
+  <Rule>
+     &minz14;
+     <Filter>[class] = 1</Filter>
+     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.2" /> 
+  </Rule>
+  
+  <!-- Major lines -->
+  <!--
+  <Rule>
+    &minz11; &maxz12;
+    <Filter>[mod250] = 0</Filter>
+    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.15" />
+  </Rule>
+  -->
+  <!--
+  <Rule>
+    &minz13; &maxz14;
+    <Filter>[mod250] = 0</Filter>
+    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.4" />
+  </Rule>
+  <Rule>
+    &minz14;
+    <Filter>[mod250] = 0</Filter>
+    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.8" />
+  </Rule>
+  -->
+  
+  <!-- Minor lines -->
+  <!--
+  <Rule> 
+    &minz13; &maxz13;
+    <Filter>[mod250] &lt;&gt; 0</Filter>
+    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.15" />
+  </Rule>
+  -->
+  <!--
+  <Rule> 
+    &minz14;
+    <Filter>[mod250] &lt;&gt; 0</Filter>
+    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.3" />
+  </Rule>
+  -->
+</Style>
+
+<Style name="contourlabels">
+
+   <!-- Major labels -->
+   <Rule>
+     &minz11; &maxz11;
+     <Filter>[class] = 3</Filter>
+     <TextSymbolizer name="[height_ft]" face-name="DejaVu Sans Book"
+        size="8" fill="&contourcolor;" placement="line" halo-fill="transparent"
+        halo-radius="4" minimum-distance="100" max-char-angle-delta="30"/>
+   </Rule>
+   <Rule>
+     &minz12; &maxz12;
+     <Filter>[class] = 3</Filter>
+     <TextSymbolizer name="[height_ft]" face-name="DejaVu Sans Book"
+        size="9" fill="&contourcolor;" placement="line" halo-fill="transparent"
+        halo-radius="5" minimum-distance="100" max-char-angle-delta="30"/>
+   </Rule>
+   <Rule>
+     &minz13;
+     <Filter>[class] = 2 or [class] = 3</Filter>
+     <TextSymbolizer name="[height_ft]" face-name="DejaVu Sans Book"
+        size="9" fill="&contourcolor;" placement="line" halo-fill="transparent"
+        halo-radius="5" minimum-distance="100" max-char-angle-delta="30"/>
+   </Rule>
+
+   <!-- Minor labels -->
+   <Rule>
+     &minz16;
+     <Filter>[class] = 1</Filter>
+     <TextSymbolizer name="[height_ft]" face-name="DejaVu Sans Book"
+        size="8" fill="&contourcolor;" placement="line" halo-fill="transparent"
+        halo-radius="4" minimum-distance="100" max-char-angle-delta="30"/>
+   </Rule>
+   
+</Style>
+
+<!-- LAYERS -->
+
+<!--Layer name="contours" status="on" srs="&srsLatLongNAD83;"-->
+<Layer name="contours" status="on" srs="&srs900913;">
+  <StyleName>contourlines</StyleName>
+  <StyleName>contourlabels</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+    (SELECT way, height_ft, CASE
+        WHEN (height_ft % 1000) = 0 THEN 3
+        WHEN (height_ft % 200) = 0 THEN 2
+        ELSE 1 END AS class
+    FROM ${CONTOURS_TABLE}) AS contours
+    </Parameter>
+  </Datasource>
+</Layer>
+
+</Map>

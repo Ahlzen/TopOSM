@@ -1,0 +1,69 @@
+<!-- Railroads -->
+
+<Style name="railway">  
+  <Rule>
+  	&minz10; &maxz14;
+  	<Filter>[railway] = 'rail' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="1.7" stroke="black" />
+    <LineSymbolizer stroke-width="0.9" stroke="white" stroke-dasharray="4,4" />
+  </Rule>
+  <Rule>
+  	&minz15;
+  	<Filter>[railway] = 'rail' and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="black" />
+    <LineSymbolizer stroke-width="2.5" stroke="white" stroke-dasharray="10,10" />
+  </Rule>
+  
+  <!-- Railroad tunnels -->
+  <Rule>
+  	&minz10; &maxz14;
+  	<Filter>[railway] = 'rail' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="1.7" stroke="black" stroke-dasharray="4,4" />
+  </Rule>
+  <Rule>
+  	&minz15;
+  	<Filter>[railway] = 'rail' and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="4.0" stroke="black" stroke-dasharray="10,10" />
+  </Rule> 
+  
+  <!-- Light rail, subways etc -->
+  <Rule>
+  	&minz11; &maxz14;
+  	<Filter>([railway] = 'light_rail' or
+  		[railway] = 'tram' or
+  		[railway] = 'subway' or
+  		[railway] = 'monorail' or
+  		[railway] = 'funicular') and [tunnel] = 'yes'
+  	</Filter>
+  	<LineSymbolizer stroke-width="1.3" stroke="&lightrailcolor;" stroke-dasharray="2,2" />
+  </Rule>
+  <Rule>
+  	&minz15;
+  	<Filter>([railway] = 'light_rail' or
+  		[railway] = 'tram' or
+  		[railway] = 'subway' or
+  		[railway] = 'monorail' or
+  		[railway] = 'funicular') and [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.5" stroke="&lightrailcolor;" stroke-dasharray="5,5" />
+  </Rule> 
+  <Rule>
+  	&minz11; &maxz14;
+  	<Filter>([railway] = 'light_rail' or
+  		[railway] = 'tram' or
+  		[railway] = 'subway' or
+  		[railway] = 'monorail' or
+  		[railway] = 'funicular') and not [tunnel] = 'yes'
+  	</Filter>
+  	<LineSymbolizer stroke-width="1.3" stroke="&lightrailcolor;" />
+  </Rule>
+  <Rule>
+  	&minz15;
+  	<Filter>([railway] = 'light_rail' or
+  		[railway] = 'tram' or
+  		[railway] = 'subway' or
+  		[railway] = 'monorail' or
+  		[railway] = 'funicular') and not [tunnel] = 'yes'</Filter>
+  	<LineSymbolizer stroke-width="2.5" stroke="&lightrailcolor;" />
+  </Rule> 
+</Style>
+

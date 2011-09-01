@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[
+    <!ENTITY % utils SYSTEM "include/utils.inc">
+    <!ENTITY % colors SYSTEM "include/colors.inc">
+	<!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
+	<!ENTITY extents SYSTEM "include/extents.inc">
+	%utils;
+	%colors;
+]>
+
+<Map background-color="transparent" srs="&srs900913;">
+
+<Style name="builtup">
+    <Rule>
+      &minz8;
+      <PolygonSymbolizer fill="&builtupcolor;" fill-opacity="0.2" />
+    </Rule>
+</Style>
+
+<Style name="areafills">
+    
+  <Rule>
+      &minz8;
+  	  <Filter>[landuse] = 'residential'</Filter>
+  	  <PolygonSymbolizer fill="&builtupcolor;" fill-opacity="0.2" />
+  </Rule>
+  <Rule>
+      &minz8;
+      <Filter>
+		[leisure] = 'nature_reserve' or
+        [leisure] = 'park' or
+        [leisure] = 'common' or
+        [leisure] = 'playground' or
+        [leisure] = 'garden' or
+		[leisure] = 'golf_course' or
+        [landuse] = 'forest' or
+		[landuse] = 'vineyard' or
+		[landuse] = 'conservation' or
+		[landuse] = 'recreation_ground' or
+		[leisure] = 'recreation_ground' or
+		[landuse] = 'village_green' or
+		[landuse] = 'allotments'
+      </Filter>
+      <PolygonSymbolizer fill="#7e5" fill-opacity="&areaopacity;" />
+  </Rule>
+  <Rule>
+      &minz10;
+      <Filter>
+		[landuse] = 'cemetary' or
+		[amenity] = 'grave_yard'
+      </Filter>
+      <PolygonSymbolizer fill="#8b8" fill-opacity="&areaopacity;" />
+  </Rule>
+  <Rule>
+      &minz10;
+      <Filter>[landuse] = 'construction'</Filter>
+      <PolygonSymbolizer fill="#bb3" fill-opacity="&areaopacity;" />
+  </Rule>
+  <Rule>
+      &minz8;
+      <Filter>[landuse] = 'military'</Filter>
+      <PolygonSymbolizer fill="#e55" fill-opacity="&areaopacity;" />
+  </Rule>
+    <Rule>
+      &minz10;
+      <Filter>[natural] = 'beach'</Filter>
+      <PolygonSymbolizer fill="#fec" fill-opacity="&areaopacity;" />
+    </Rule>
+    <Rule>
+      &minz8;
+      <Filter>[landuse] = 'salt_pond'</Filter>
+      <PolygonSymbolizer fill="#abc" fill-opacity="&areaopacity;" />
+    </Rule>
+    <Rule>
+      &minz10;
+      <Filter>[natural] = 'glacier'</Filter>
+      <PolygonSymbolizer fill="#cde" fill-opacity="&areaopacity;" />
+    </Rule>
+    <Rule>
+	  <!-- open areas and fields -->
+      &minz10;
+      <Filter>
+		[natural] = 'heath' or
+		[landuse] = 'meadow' or
+		[landuse] = 'farm' or
+		[landuse] = 'farmyard'
+      </Filter>
+      <PolygonSymbolizer fill="#dd3" fill-opacity="&areaopacity;" />
+  </Rule>
+    
+    <!-- these are basically copied from osm.xml -->
+
+	<!-- industrial areas -->
+    <Rule>
+      &minz10;
+      <Filter>
+      	[landuse] = 'industrial' or
+      	[landuse] = 'railway' or
+      	[landuse] = 'brownfield' or
+      	[landuse] = 'landfill' or
+      	[landuse] = 'quarry'
+      </Filter>
+      <PolygonSymbolizer fill="#e69" fill-opacity="&areaopacity;" />
+    </Rule>
+    
+    <!-- commercial/public facilities -->
+    <Rule>
+      &minz10;
+      <Filter>
+      	[landuse] = 'commercial' or
+      	[landuse] = 'retail' or
+      	[amenity] = 'hospital'
+      </Filter>
+      <PolygonSymbolizer fill="#e96" fill-opacity="&areaopacity;" />
+    </Rule>
+    
+    <!-- educational facilities -->
+    <Rule>
+      &minz10;
+      <Filter>
+      	[amenity] = 'university' or
+      	[amenity] = 'college' or
+      	[amenity] = 'school'
+      </Filter>
+      <PolygonSymbolizer fill="#aa8" fill-opacity="&areaopacity;" />
+    </Rule>
+</Style>
+
+
+<!-- Layers -->
+
+<Layer name="builtup" status="off">
+    <StyleName>builtup</StyleName>
+    <Datasource>
+        &extents;    
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">${WORLD_BOUNDARIES_DIR}/builtup_area</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="areafills" status="on">
+    <StyleName>areafills</StyleName>
+    <Datasource>
+		&dbsettings; &extents;
+		<Parameter name="table">
+		 (SELECT way, leisure, landuse, amenity, "natural"
+		 FROM ${DB_PREFIX}_polygon
+		 ORDER BY z_order, way_area DESC) AS areas
+		</Parameter>
+    </Datasource>
+</Layer>
+
+</Map>

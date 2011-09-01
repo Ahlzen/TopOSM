@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# Configures the environment for TopOSM rendering.
+# Change these settings to match your setup.
+
+# Postgres settings
+export DB_NAME="gis"
+export DB_PORT=5432 # local postgres port
+export DB_PREFIX="us_osm" # prefix for all tables
+export DB_USER=`whoami` # username
+export CONTOURS_TABLE="contours_us"
+export NHD_TABLE_PREFIX="nhd"
+
+# Data directories
+export WORLD_BOUNDARIES_DIR="/home/lars/data/geo/osm/world_boundaries"
+export NHD_DIR="/mnt/data/geodata/NHD" # contains (unpacked) NHD shapefiles
+export NED13_DIR="/mnt/data/geodata/NED/13arcsecGTiff"
+export RAW_NED13_DIR="/mnt/data/geodata/NED/13arcsec/grid"
+
+# Output directories
+export BASE_TILE_DIR="tile" # output directory
+export TEMP_DIR="temp" # preprocessed data and temporary files
+
+# Program locations
+export HILLSHADE="$HOME/bin/hillshade"
+export COLORRELIEF="$HOME/bin/color-relief"
+
+# Misc files
+export OSM2PGSQL_STYLE_FILE="/usr/share/osm2pgsql/default.style"
+export COLORFILE="colors.txt" # elevation-to-color mapping
+
+# Render settings
+# NOTE: Apparently the Cairo backend is not thread safe (because,
+# it turns out, cairo/pixman is not, so let's leave this at 1 for now...
+export RENDER_THREADS=1 # typically equal to # of cores
+export TILE_SIZE=256
+export BORDER_WIDTH=128
+export ERROR_LOG="errors.log"
+
+# Quality setting for combined JPEG layer
+export JPEG_QUALITY=90
+
+# The area we're interested in
+# (this setting limits both import and rendering)
+# E.g. Conterminous US: "-127,23,-65,51"
+#export XMINLL=-127
+#export XMAXLL=-65
+#export YMINLL=23
+#export YMAXLL=51
+
+# Convert the rest of the color relief
+export XMINLL=-101
+export XMAXLL=-65
+export YMINLL=23
+export YMAXLL=51
+
+#export XMINLL=-124 # CAdetail
+#export XMAXLL=-118
+#export YMINLL=36
+#export YMAXLL=38
+
+export EXTENTS_LATLON="$XMINLL,$YMINLL,$XMAXLL,$YMAXLL"
+export EXTENTS_MERCATOR="-20037508,-19929239,20037508,19929239"
+
+# Enable/disable extra debug/diagnostic messages during rendering
+export TOPOSM_DEBUG=1
+
+# Used to check that the env is set. Don't modify.
+export TOPOSM_ENV_SET=1
+
+# Use a local, patched mapnik2:
+LOCAL_MAPNIK_PREFIX="$HOME"
+export LD_LIBRARY_PATH="$LOCAL_MAPNIK_PREFIX/lib"
+export PYTHONPATH="$LOCAL_MAPNIK_PREFIX/lib/python2.6/site-packages"
+

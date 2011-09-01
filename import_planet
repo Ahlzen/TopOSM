@@ -1,0 +1,127 @@
+#!/bin/bash
+
+# Imports one or more planet dumps (*.osm.bz2, *.osm) or
+# planet diffs (*.osc.gz, *.osc).
+
+if [[ -z $TOPOSM_ENV_SET ]]; then
+    echo "Error: TopOSM environment not set."
+    exit 1
+fi
+
+#if [ -z "$1" ]; then
+#    echo "Syntax: import_planet <file> [<file> ...]"
+#    exit 2
+#fi
+
+
+DBCMD="psql -q -p $DB_PORT $DB_NAME $DB_USER"
+
+# Import data files.
+while [ $# -gt 0 ]; do
+    SRCFILE="$1"
+    
+    # Find out whether to append to or create a new database.
+    OPERATOR=""
+    CAT="cat"
+    case "$SRCFILE"
+    in
+        *.osm.bz2)
+	    CAT="bzcat"
+	    OPERATOR="-c"
+	    ;;
+	*.osm | *.osm.pbf )
+            OPERATOR="-c" # (re)create tables
+	    ;;
+	*.osc.gz)
+	    OPERATOR="-a" # append
+	    CAT="zcat"
+	    ;;
+	*.osc)
+	    OPERATOR="-a"
+	    ;;
+        *)
+	    echo "Unknown file type: $SRCFILE"
+	    exit 1
+	    ;;
+	esac
+	
+    # Make sure that the file exists.
+	if [ ! -f "$SRCFILE" ]; then
+	    echo "File not found: $SRCFILE"
+	    exit 2
+	fi
+
+    # Import the file.
+#	$CAT "$SRCFILE" | \
+#        sed "s/v=\"coastline\"/v=\"cXline\"/g" | \
+#        osm2pgsql -m $OPERATOR --bbox "$EXTENTS_LATLON" \
+#          --style "$OSM2PGSQL_STYLE_FILE" -P $DB_PORT -d "$DB_NAME" \
+#          -U "$DB_USER" --prefix "$DB_PREFIX" \
+#          --slim -C 2000 -	
+
+	$CAT "$SRCFILE" | \
+        osm2pgsql -m $OPERATOR --bbox "$EXTENTS_LATLON" \
+          --style "$OSM2PGSQL_STYLE_FILE" -P $DB_PORT -d "$DB_NAME" \
+          -U "$DB_USER" --prefix "$DB_PREFIX" \
+          --slim -C 2000 -	
+
+	shift
+done
+
+# Rename coastline tags back.
+#for SUFFIX in line point polygon roads; do
+#    echo "Renaming coastlines in ${DB_PREFIX}_${SUFFIX}..."
+#    echo "UPDATE ${DB_PREFIX}_${SUFFIX} SET \"natural\"='coastline' WHERE \"natural\"='cXline'" | $DBCMD
+#done
+
+
+# TODO: The "ADD COLUMN"s below fail if columns exist. Not a problem, but
+# it should be handled more gracefully.
+
+
+
+# Parse/extract elevations for point features
+echo "Adding ele_ft column..."
+echo "ALTER TABLE ${DB_PREFIX}_point ADD COLUMN ele_ft INT;" | $DBCMD
+echo "Converting elevations to ft..."
+echo "UPDATE ${DB_PREFIX}_point SET ele_ft = ROUND(CASE
+    WHEN ele SIMILAR TO '[0-9. ]+m' THEN CAST(SUBSTR(ele, 0, LENGTH(ele)) AS NUMERIC)*3.2787
+    WHEN ele SIMILAR TO '[0-9. ]+ft' THEN CAST(SUBSTR(ele, 0, LENGTH(ele)-1) AS NUMERIC)
+    WHEN ele SIMILAR TO '[0-9. ]+''' THEN CAST(SUBSTR(ele, 0, LENGTH(ele)) AS NUMERIC)
+    WHEN ele SIMILAR TO '[0-9.]+' THEN CAST(ele AS NUMERIC)*3.2787
+    ELSE null END, 0)" | $DBCMD
+
+
+# Extract road/route numbers from the 'ref' or 'name' tags.
+
+# NOTE: We're updating both *roads and *lines tables, since *roads doesn't
+# contain all road classes.
+echo "Adding road number/type columns..."
+echo "ALTER TABLE ${DB_PREFIX}_roads ADD COLUMN roadnumber VARCHAR(10);" | $DBCMD
+echo "ALTER TABLE ${DB_PREFIX}_line  ADD COLUMN roadnumber VARCHAR(10);" | $DBCMD
+echo "ALTER TABLE ${DB_PREFIX}_roads ADD COLUMN roadtype CHAR(1);" | $DBCMD
+echo "ALTER TABLE ${DB_PREFIX}_line  ADD COLUMN roadtype CHAR(1);" | $DBCMD
+
+echo "Extracting road numbers..."
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = NULL, roadnumber = NULL" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = NULL, roadnumber = NULL" | $DBCMD
+# Interstates
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = 'I', roadnumber = SUBSTRING(ref FROM 'I[ -]([0-9]+)') WHERE (highway = 'motorway' OR highway = 'trunk') AND (ref LIKE 'I %' OR ref LIKE 'I-%')" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = 'I', roadnumber = SUBSTRING(ref FROM 'I[ -]([0-9]+)') WHERE (highway = 'motorway' OR highway = 'trunk') AND (ref LIKE 'I %' OR ref LIKE 'I-%')" | $DBCMD
+# US routes
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = 'U', roadnumber = SUBSTRING(ref FROM 'US ([0-9A-Z]+)') WHERE (highway <> '' AND highway IS NOT NULL) AND ref LIKE 'US %'" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = 'U', roadnumber = SUBSTRING(ref FROM 'US ([0-9A-Z]+)') WHERE (highway <> '' AND highway IS NOT NULL) AND ref LIKE 'US %'" | $DBCMD
+# State routes
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM 'SR ([0-9A-Z]+)') WHERE (highway <> '' AND highway IS NOT NULL) AND ref LIKE 'SR %'" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM 'SR ([0-9A-Z]+)') WHERE (highway <> '' AND highway IS NOT NULL) AND ref LIKE 'SR %'" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = 'S', roadnumber = SUBSTRING(name FROM 'State Highway ([0-9A-Z]+)') WHERE (highway <> '' AND highway IS NOT NULL) AND name LIKE 'State Highway %'" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = 'S', roadnumber = SUBSTRING(name FROM 'State Highway ([0-9A-Z]+)') WHERE (highway <> '' AND highway IS NOT NULL) AND name LIKE 'State Highway %'" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM '[A-Z] ([0-9A-Z-]+)') WHERE ref SIMILAR TO '[A-Z] [0-9-]%' AND ref NOT LIKE 'I %' AND highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM '[A-Z] ([0-9A-Z-]+)') WHERE ref SIMILAR TO '[A-Z] [0-9-]%' AND ref NOT LIKE 'I %' AND highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM '[A-Z]-([0-9A-Z-]+)') WHERE ref SIMILAR TO '[A-Z]-[0-9-]%' AND ref NOT LIKE 'I-%' AND highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM '[A-Z]-([0-9A-Z-]+)') WHERE ref SIMILAR TO '[A-Z]-[0-9-]%' AND ref NOT LIKE 'I-%' AND highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM '[A-Z][A-Z] ([0-9A-Z-]+)') WHERE ref SIMILAR TO '[A-Z][A-Z] [0-9-]%' AND ref NOT LIKE 'US %' AND highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM '[A-Z][A-Z] ([0-9A-Z-]+)') WHERE ref SIMILAR TO '[A-Z][A-Z] [0-9-]%' AND ref NOT LIKE 'US %' AND highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_roads SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM '[A-Z][A-Z]-([0-9A-Z-]+)') WHERE ref SIMILAR TO '[A-Z][A-Z]-[0-9-]%' AND ref NOT LIKE 'US-%' AND highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')" | $DBCMD
+echo "UPDATE ${DB_PREFIX}_line  SET roadtype = 'S', roadnumber = SUBSTRING(ref FROM '[A-Z][A-Z]-([0-9A-Z-]+)') WHERE ref SIMILAR TO '[A-Z][A-Z]-[0-9-]%' AND ref NOT LIKE 'US-%' AND highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')" | $DBCMD
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[
+    <!ENTITY % utils SYSTEM "include/utils.inc">
+    <!ENTITY % colors SYSTEM "include/colors.inc">
+	<!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
+	<!ENTITY extents SYSTEM "include/extents.inc">
+	%utils;
+	%colors;
+]>
+
+<Map background-color="&waterfillcolor;" srs="&srs900913;">
+
+<Style name="coastline-outline">
+  <Rule>
+    <!-- Twice the actual width, since half will get cut next... -->
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="2.0" />
+  </Rule>
+</Style>
+
+<Style name="land-hole">
+  <Rule>
+    <!-- NOTE: This requires a patched mapnik. -->
+    <PolygonSymbolizer fill="transparent" />
+  </Rule>
+</Style>
+
+
+<Layer name="land-poly-hires" status="on" srs="&srs900913;">
+    <StyleName>coastline-outline</StyleName>
+    <StyleName>land-hole</StyleName>
+    <Datasource>
+        &extents;
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">${WORLD_BOUNDARIES_DIR}/processed_p</Parameter>
+    </Datasource>
+</Layer>
+
+</Map>

@@ -1,0 +1,94 @@
+<!--
+Utility XML entities.
+Some of them are from the OpenStreetMap mapnik SVN includes, see:
+http://svn.openstreetmap.org/applications/rendering/mapnik/
+-->
+
+<!-- Coordinate systems and projections -->
+<!ENTITY srs900913 "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+<!ENTITY srsmercator "+proj=merc +datum=WGS84 +over">
+<!ENTITY srsLatLongWGS84 "+proj=latlong +datum=WGS84">
+<!ENTITY srsLatLongNAD83 "+proj=latlong +datum=NAD83 +ellps=GRS80 +no_defs">
+<!ENTITY srs4326 "+init=epsg:4326">
+
+<!ENTITY extentsLatLong "${EXTENTS_LATLON}">
+<!ENTITY extentsmercator "${EXTENTS_MERCATOR}">
+
+<!-- Scale-to-zoom levels -->
+<!ENTITY maxsc0 "<MaxScaleDenominator>250000000000</MaxScaleDenominator>">
+<!ENTITY maxsc1 "<MaxScaleDenominator>500000000</MaxScaleDenominator>">
+<!ENTITY minsc1 "<MinScaleDenominator>200000000</MinScaleDenominator>">
+<!ENTITY maxsc2 "<MaxScaleDenominator>200000000</MaxScaleDenominator>">
+<!ENTITY minsc2 "<MinScaleDenominator>100000000</MinScaleDenominator>">
+<!ENTITY maxsc3 "<MaxScaleDenominator>100000000</MaxScaleDenominator>">
+<!ENTITY minsc3 "<MinScaleDenominator>50000000</MinScaleDenominator>">
+<!ENTITY maxsc4 "<MaxScaleDenominator>50000000</MaxScaleDenominator>">
+<!ENTITY minsc4 "<MinScaleDenominator>25000000</MinScaleDenominator>">
+<!ENTITY maxsc5 "<MaxScaleDenominator>25000000</MaxScaleDenominator>">
+<!ENTITY minsc5 "<MinScaleDenominator>12500000</MinScaleDenominator>">
+<!ENTITY maxsc6 "<MaxScaleDenominator>12500000</MaxScaleDenominator>">
+<!ENTITY minsc6 "<MinScaleDenominator>6500000</MinScaleDenominator>">
+<!ENTITY maxsc7 "<MaxScaleDenominator>6500000</MaxScaleDenominator>">
+<!ENTITY minsc7 "<MinScaleDenominator>3000000</MinScaleDenominator>">
+<!ENTITY maxsc8 "<MaxScaleDenominator>3000000</MaxScaleDenominator>">
+<!ENTITY minsc8 "<MinScaleDenominator>1500000</MinScaleDenominator>">
+<!ENTITY maxsc9 "<MaxScaleDenominator>1500000</MaxScaleDenominator>">
+<!ENTITY minsc9 "<MinScaleDenominator>750000</MinScaleDenominator>">
+<!ENTITY maxsc10 "<MaxScaleDenominator>750000</MaxScaleDenominator>">
+<!ENTITY minsc10 "<MinScaleDenominator>400000</MinScaleDenominator>">
+<!ENTITY maxsc11 "<MaxScaleDenominator>400000</MaxScaleDenominator>">
+<!ENTITY minsc11 "<MinScaleDenominator>200000</MinScaleDenominator>">
+<!ENTITY maxsc12 "<MaxScaleDenominator>200000</MaxScaleDenominator>">
+<!ENTITY minsc12 "<MinScaleDenominator>100000</MinScaleDenominator>">
+<!ENTITY maxsc13 "<MaxScaleDenominator>100000</MaxScaleDenominator>">
+<!ENTITY minsc13 "<MinScaleDenominator>50000</MinScaleDenominator>">
+<!ENTITY maxsc14 "<MaxScaleDenominator>50000</MaxScaleDenominator>">
+<!ENTITY minsc14 "<MinScaleDenominator>25000</MinScaleDenominator>">
+<!ENTITY maxsc15 "<MaxScaleDenominator>25000</MaxScaleDenominator>">
+<!ENTITY minsc15 "<MinScaleDenominator>12500</MinScaleDenominator>">
+<!ENTITY maxsc16 "<MaxScaleDenominator>12500</MaxScaleDenominator>">
+<!ENTITY minsc16 "<MinScaleDenominator>5000</MinScaleDenominator>">
+<!ENTITY maxsc17 "<MaxScaleDenominator>5000</MaxScaleDenominator>">
+<!ENTITY minsc17 "<MinScaleDenominator>2500</MinScaleDenominator>">
+<!ENTITY maxsc18 "<MaxScaleDenominator>2500</MaxScaleDenominator>">
+<!ENTITY minsc18 "<MinScaleDenominator>1000</MinScaleDenominator>">
+
+
+<!-- ...or, directly expressed as zoom levels -->
+<!ENTITY minz1 "<MaxScaleDenominator>500000000</MaxScaleDenominator>">
+<!ENTITY maxz1 "<MinScaleDenominator>200000000</MinScaleDenominator>">
+<!ENTITY minz2 "<MaxScaleDenominator>200000000</MaxScaleDenominator>">
+<!ENTITY maxz2 "<MinScaleDenominator>100000000</MinScaleDenominator>">
+<!ENTITY minz3 "<MaxScaleDenominator>100000000</MaxScaleDenominator>">
+<!ENTITY maxz3 "<MinScaleDenominator>50000000</MinScaleDenominator>">
+<!ENTITY minz4 "<MaxScaleDenominator>50000000</MaxScaleDenominator>">
+<!ENTITY maxz4 "<MinScaleDenominator>25000000</MinScaleDenominator>">
+<!ENTITY minz5 "<MaxScaleDenominator>25000000</MaxScaleDenominator>">
+<!ENTITY maxz5 "<MinScaleDenominator>12500000</MinScaleDenominator>">
+<!ENTITY minz6 "<MaxScaleDenominator>12500000</MaxScaleDenominator>">
+<!ENTITY maxz6 "<MinScaleDenominator>6500000</MinScaleDenominator>">
+<!ENTITY minz7 "<MaxScaleDenominator>6500000</MaxScaleDenominator>">
+<!ENTITY maxz7 "<MinScaleDenominator>3000000</MinScaleDenominator>">
+<!ENTITY minz8 "<MaxScaleDenominator>3000000</MaxScaleDenominator>">
+<!ENTITY maxz8 "<MinScaleDenominator>1500000</MinScaleDenominator>">
+<!ENTITY minz9 "<MaxScaleDenominator>1500000</MaxScaleDenominator>">
+<!ENTITY maxz9 "<MinScaleDenominator>750000</MinScaleDenominator>">
+<!ENTITY minz10 "<MaxScaleDenominator>750000</MaxScaleDenominator>">
+<!ENTITY maxz10 "<MinScaleDenominator>400000</MinScaleDenominator>">
+<!ENTITY minz11 "<MaxScaleDenominator>400000</MaxScaleDenominator>">
+<!ENTITY maxz11 "<MinScaleDenominator>200000</MinScaleDenominator>">
+<!ENTITY minz12 "<MaxScaleDenominator>200000</MaxScaleDenominator>">
+<!ENTITY maxz12 "<MinScaleDenominator>100000</MinScaleDenominator>">
+<!ENTITY minz13 "<MaxScaleDenominator>100000</MaxScaleDenominator>">
+<!ENTITY maxz13 "<MinScaleDenominator>50000</MinScaleDenominator>">
+<!ENTITY minz14 "<MaxScaleDenominator>50000</MaxScaleDenominator>">
+<!ENTITY maxz14 "<MinScaleDenominator>25000</MinScaleDenominator>">
+<!ENTITY minz15 "<MaxScaleDenominator>25000</MaxScaleDenominator>">
+<!ENTITY maxz15 "<MinScaleDenominator>12500</MinScaleDenominator>">
+<!ENTITY minz16 "<MaxScaleDenominator>12500</MaxScaleDenominator>">
+<!ENTITY maxz16 "<MinScaleDenominator>5000</MinScaleDenominator>">
+<!ENTITY minz17 "<MaxScaleDenominator>5000</MaxScaleDenominator>">
+<!ENTITY maxz17 "<MinScaleDenominator>2500</MinScaleDenominator>">
+<!ENTITY minz18 "<MaxScaleDenominator>2500</MaxScaleDenominator>">
+<!ENTITY maxz18 "<MinScaleDenominator>1000</MinScaleDenominator>">
+
