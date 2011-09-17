@@ -66,5 +66,5 @@ export TOPOSM_ENV_SET=1
 # Use a local, patched mapnik2:
 LOCAL_MAPNIK_PREFIX="$HOME"
 export LD_LIBRARY_PATH="$LOCAL_MAPNIK_PREFIX/lib"
-export PYTHONPATH="$LOCAL_MAPNIK_PREFIX/lib/python2.6/site-packages"
+export PYTHONPATH="$LOCAL_MAPNIK_PREFIX/lib/python2.7/site-packages"
 

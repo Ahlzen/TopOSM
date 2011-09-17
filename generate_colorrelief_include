@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #DATADIR="./geodata/us/hillshade"
-DATADIR="./geodata/colorrelief"
+#DATADIR="./geodata/colorrelief"
+DATADIR="$HILLSHADE_DIR"
 
 #SRS="+proj=latlong +datum=NAD83 +ellps=GRS80 +no_defs"
 
@@ -18,7 +19,7 @@ for X in `seq $EAST $WEST`; do for Y in `seq $SOUTH $NORTH`; do
 #    TOP=$Y
 #    BOTTOM=$((Y-1))
     
-    TILENAME="$DATADIR/$TILE.png"
+    TILENAME="$DATADIR/$TILE.tif"
     if [ -f "$TILENAME" ] ; then
 	#echo "<Layer name=\"${TILE}_cr\" status=\"on\" srs=\"$SRS\">"
 	echo "<Layer name=\"${TILE}_cr\" status=\"on\" srs=\"&srs900913;\">"

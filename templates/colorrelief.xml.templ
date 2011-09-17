@@ -12,6 +12,14 @@
 
 <Map background-color="&landcolor;" srs="&srs900913;">
 
+<!-- TEST STYLE -->
+<Style name="hillshade">
+  <Rule>
+    <RasterSymbolizer scaling="bilinear" />
+  </Rule>
+</Style>
+
+
 <!-- Full-resolution color relief -->
 <Style name="colorrelief">
   <Rule>
@@ -44,8 +52,18 @@
   </Rule>
 </Style>
 
-
+<!--
 &colorrelieflayers;
+-->
+
+<Layer name="hillshade" status="on">
+    <StyleName>hillshade</StyleName>
+    <Datasource>
+      <Parameter name="type">gdal</Parameter>
+      <Parameter name="file">geodata/hillshade-overviews/hillshade.vrt</Parameter>
+      <Parameter name="format">vrt</Parameter>
+    </Datasource>
+</Layer>
 
 </Map>
 
