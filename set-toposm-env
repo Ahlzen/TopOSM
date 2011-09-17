@@ -43,13 +43,7 @@ export JPEG_QUALITY=90
 # The area we're interested in
 # (this setting limits both import and rendering)
 # E.g. Conterminous US: "-127,23,-65,51"
-#export XMINLL=-127
-#export XMAXLL=-65
-#export YMINLL=23
-#export YMAXLL=51
-
-# Convert the rest of the color relief
-export XMINLL=-101
+export XMINLL=-127
 export XMAXLL=-65
 export YMINLL=23
 export YMAXLL=51
@@ -71,5 +65,5 @@ export TOPOSM_ENV_SET=1
 # Use a local, patched mapnik2:
 LOCAL_MAPNIK_PREFIX="$HOME"
 export LD_LIBRARY_PATH="$LOCAL_MAPNIK_PREFIX/lib"
-export PYTHONPATH="$LOCAL_MAPNIK_PREFIX/lib/python2.6/site-packages"
+export PYTHONPATH="$LOCAL_MAPNIK_PREFIX/lib/python2.7/site-packages"
 
