@@ -6,8 +6,7 @@ if [[ -z $TOPOSM_ENV_SET ]]; then
 fi
 
 SRS900913="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over"
-DATADIR="/mnt/data/temp"
-COLORFILE="$HOME/project/toposm/colors.txt"
+COLORFILE="$HOME/projects/toposm/colors.txt"
 
 # NOTE: X values are negative, since we're west of the 0 meridian
 LEFT=$(($XMINLL * -1))
@@ -15,93 +14,35 @@ RIGHT=$(($XMAXLL * -1))
 BOTTOM=$YMINLL
 TOP=$YMAXLL
 
-#mkdir -p $DATADIR/ned
-mkdir -pv $DATADIR/hillshade
-mkdir -pv $DATADIR/colormap
-mkdir -pv $DATADIR/colorrelief
+mkdir -pv $HILLSHADE_DIR
+mkdir -pv $COLORMAP_DIR
 
 for x in `seq $RIGHT $LEFT`; do
 for y in `seq $BOTTOM $TOP`; do
     BASE=`printf "n%02dw%03d" $y $x`
-    echo; echo "***** $BASE *****"
-    continue
-    
-    srcfile=$RAW_NED13_DIR/$BASE/grd${BASE}_13/w001001.adf
-    f=$BASE.tif
-    nedfile=$NED13_DIR/$f
+    FILE=$BASE.tif
+    NEDPATH=$NED13_DIR/$FILE
 
-    if [ -f $srcfile ] ; then
-        # convert NED data to GeoTIFF (NAD83)
-        gdal_translate -of GTiff -co "COMPRESS=DEFLATE" \
-	    -co "PREDICTOR=3" -co "ZLEVEL=9" \
-	    $srcfile $nedfile
-	fi
-	
-	if [ -f $nedfile ] ; then
+    if [ -f $NEDPATH ] ; then
+    echo; echo "***** $NEDPATH"
 
-    # render hillshade GeoTIFF
-    echo "Hillshading..."
-    hillshade $nedfile $DATADIR/hillshade/$f -z 0.00001
-    
-    # reproject (gdalwarp doesn't write PNG)
+    # NOTE: Hillshading first then reprojecting seems to yield a better
+    # result than vice versa.
+
+    # Render and reproject hillshade
+    echo "Rendering hillshade..."
+    hillshade $NEDPATH $HILLSHADE_DIR/$BASE.unproj.tif -z 0.00001
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
-       $DATADIR/hillshade/$f \
-       $DATADIR/hillshade/$BASE-r.tif
-    # convert to PNG+WLD
-    gdal_translate -of PNG -co WORLDFILE=YES \
-       $DATADIR/hillshade/$BASE-r.tif \
-       $DATADIR/hillshade/$BASE.png
-    # remove GeoTIFFs
-    rm $DATADIR/hillshade/$f
-    rm $DATADIR/hillshade/$BASE-r.tif  
+       $HILLSHADE_DIR/$BASE.unproj.tif $HILLSHADE_DIR/$BASE.tif
+    rm $HILLSHADE_DIR/$BASE.unproj.tif
 
-    # render colormap GeoTIFF
-    echo "Colormapping..."
-    color-relief $nedfile $COLORFILE \
-       $DATADIR/colormap/$f
-    # reproject (gdalwarp doesn't write PNG)
+    # Render and reproject colormap
+    echo "Rendering colormap..."
+    color-relief $NEDPATH $COLORFILE $COLORMAP_DIR/$BASE.unproj.tif
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
-       $DATADIR/colormap/$f \
-       $DATADIR/colormap/$BASE-r.tif
-    # convert to PNG+WLD
-    gdal_translate -of PNG -co WORLDFILE=YES \
-       $DATADIR/colormap/$BASE-r.tif \
-       $DATADIR/colormap/$BASE.png
-    # remove GeoTIFFs
-    rm $DATADIR/colormap/$f
-    rm $DATADIR/colormap/$BASE-r.tif
+       $COLORMAP_DIR/$BASE.unproj.tif $COLORMAP_DIR/$BASE.tif
+    rm $COLORMAP_DIR/$BASE.unproj.tif
        
-    # create full-res color-relief composite
-    COLORMAP=$DATADIR/colormap/$BASE.png
-    HILLSHADE=$DATADIR/hillshade/$BASE.png
-    DEST=$DATADIR/colorrelief/$BASE.png
-    DESTQ=$DATADIR/colorrelief/${BASE}q.png
-    DESTS=$DATADIR/colorrelief/${BASE}s.png
-    DESTF=$DATADIR/colorrelief/${BASE}f.png
-    convert $COLORMAP -modulate 120 \
-        \( $HILLSHADE -level 70,95% +level 0%,80% \) -compose screen -composite \
-        \( $HILLSHADE -level 0,75% +level 40%,100% \) -compose multiply -composite \
-        -modulate 92 $DEST
-    cp -v $DATADIR/hillshade/$BASE.wld $DATADIR/colorrelief/
-      
-    # create 1/4, 1/16, 1/64 size (originals are 9653x11858)
-    # unfortunately, gdalwarp doesn't save as PNG
-    
-    gdalwarp -of GTiff -r lanczos -ts 2413 2964 $DATADIR/colorrelief/$BASE.png $DATADIR/colorrelief/${BASE}q.tif
-    gdal_translate -of PNG -co WORLDFILE=YES $DATADIR/colorrelief/${BASE}q.tif $DATADIR/colorrelief/${BASE}q.png
-    rm $DATADIR/colorrelief/${BASE}q.tif
-    
-    gdalwarp -of GTiff -r lanczos -ts 603 741 $DATADIR/colorrelief/$BASE.png $DATADIR/colorrelief/${BASE}s.tif
-    gdal_translate -of PNG -co WORLDFILE=YES $DATADIR/colorrelief/${BASE}s.tif $DATADIR/colorrelief/${BASE}s.png
-    rm $DATADIR/colorrelief/${BASE}s.tif
-    
-    gdalwarp -of GTiff -r lanczos -ts 151 185 $DATADIR/colorrelief/$BASE.png $DATADIR/colorrelief/${BASE}f.tif
-    gdal_translate -of PNG -co WORLDFILE=YES $DATADIR/colorrelief/${BASE}f.tif $DATADIR/colorrelief/${BASE}f.png
-    rm $DATADIR/colorrelief/${BASE}f.tif
-        
-    # optimize
-    #optipng $DEST $DESTQ $DESTS $DESTF
-    
-fi;
+    fi;
 done; done
 

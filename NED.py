@@ -73,8 +73,8 @@ def getTilename(lat, lon, step = 1):
     return 'n%02.2fw%03.2f' % (y, -x) 
 
 def simplifyContours():
-    pass
-    #cmd = 'UPDATE %s SET way = ST_Simplify(way, 1.0);' % (CONTOURS_TABLE)
+    cmd = 'UPDATE %s SET way = ST_Simplify(way, 1.0);' % (CONTOURS_TABLE)
+    # TODO: Finish
 
 def prepDataFile(basename, env):
     #print 'Preparing NED 1/3" data file:', basename
