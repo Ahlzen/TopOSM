@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27.804878"
+   height="27.804878"
+   id="svg4426"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="New document 57">
+  <defs
+     id="defs4428" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-53.954709"
+     inkscape:cy="-160.38328"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="452"
+     inkscape:window-height="413"
+     inkscape:window-x="800"
+     inkscape:window-y="561"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata4431">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-428.95471,-344.17403)">
+    <g
+       style="display:inline"
+       id="g2776"
+       inkscape:export-xdpi="10.421053"
+       inkscape:export-ydpi="10.421053"
+       transform="matrix(0.29268292,0,0,0.29268292,387.9791,337.629)">
+      <rect
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/black-m/campground.png"
+         ry="10"
+         rx="10"
+         y="22.362183"
+         x="140"
+         height="95"
+         width="95"
+         id="rect3159"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/black-m/campground.png"
+         sodipodi:nodetypes="cccccccccccc"
+         id="rect3209"
+         d="m 187.77794,36.880883 -30.22206,61.329566 -7.37034,0 0,5.370341 75.1848,-0.0138 0,-5.37034 L 218,98.210449 187.77794,36.880883 z m 0,32.22206 14.11103,29.107506 -28.22206,0 14.11103,-29.107506 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

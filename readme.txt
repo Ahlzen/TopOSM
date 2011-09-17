@@ -1,81 +1,87 @@
 TopOSM - OpenStreetMap Based Topographic Maps
 
-By Lars Ahlzen (lars@ahlzen.com), with contributions from:
-Ian Dees (hosting, rendering and troubleshooting)
-Phil Gold (patches and style improvements)
-Yves Cainaud (legend)
-Richard Weait (shield graphics)
-and others.
+By Lars Ahlzen (lars@ahlzen.com), with contributions from Ian Dees (hosting,
+rendering and troubleshooting), Phil Gold (patches and style improvements),
+Yves Cainaud (legend), Richard Weait (shield graphics) and others.
 
 
-Requirements:
--------------
-* Standard UN*X tools (bash, sed, awk, ...)
-* Mapnik
-* PostgreSQL
-* _int.sql (from postgresql-contrib) for PostgreSQL
-* PostGIS
-* 900913.sql projection (from osm2pgsql) for PostGIS
-* Python 2.5/2.6, with:
-  - Numpy
-  - Mapnik
-* Imagemagick
-* GDAL/OGR (including utility programs)
-* osm2pgsql (for planet import)
-* shp2pgsql (for NHD import)
-* Perrygeo DEM tools (hillshade, color-relief)
-  See: http://www.perrygeo.net/wordpress/?p=7
-* OptiPNG (for tile optimization)
+Setting up TopOSM rendering - Ubuntu 10.04/10.10/11.04
+------------------------------------------------------
 
-Data needed:
-------------
-* builtup_area.shp (from OSM svn, mapnik)
-* processed_p.shp (from OSM svn, mapnik)
-* world_bnd_m.shp (from OSM svn, mapnik)
-* USGS NED 1/3" http://openstreetmap.us/ned/13arcsec/grid/
-  (you can use the supplied get_ned script)
-* USGS NHD http://www.openstreetmap.us/nhd/
-* Planet.osm http://planet.openstreetmap.org/
-  (or other OSM data dump)
+Required packages:
+python-mapnik mapnik-utils gdal-bin gdal-contrib python-gdal libgdal-dev proj libproj-dev python-pyproj python-numpy imagemagick gcc g++ optipng subversion postgresql postgresql-contrib postgresql-server-dev-8.4 postgis wget libxml2-dev python-libxml2 libgeos-dev libbz2-dev make htop python-cairo python-cairo-dev osm2pgsql unzip python-pypdf libboost-all-dev libicu-dev libpng-dev libjpeg-dev libtiff-dev libz-dev libfreetype6-dev libxml2-dev libproj-dev libcairo-dev libcairomm-1.0-dev python-cairo-dev libpq-dev libgdal-dev libsqlite3-dev libcurl4-gnutls-dev libsigc++-dev libsigc++-2.0-dev
 
-Setup
------
-* Build/install requirements (see above).
-* Download required data sets.
-* Setup PostgreSQL with PostGIS. See OSM wiki.
-* Create a PostGIS database.
-* Modify and source set-toposm-env.
-* Run import_planet.
-* Run import_nhd.
-* Run prep_contours_table.
+Set up PostgreSQL with PostGIS, see:
+http://wiki.openstreetmap.org/wiki/Mapnik/PostGIS
 
-Render an area:
----------------
-This example will render the area UTM19T (defined in areas.py) from
-zoom level 5 through 15:
+Download and build the PerryGeo DEM utilities:
+$ sd ~/src
+$ svn co http://perrygeo.googlecode.com/svn/trunk/demtools/
+$ cd demtools
+$ make
+$ mkdir -p ~/bin
+$ cp bin/* ~/bin
+NOTE: You may need to make the following changes:
+* Makefile: GDAL_LIB=-lgdal1.6.0
+* Makefile: CPP=g++ -O3 -I/usr/include/gdal
+* stringtok.h may require a "using namespace std;" since it's
+  included before this directive in some cpp files.
 
-$ source set-toposm-env
-$ python
->>> import toposm
->>> import areas
->>> toposm.prepareData(areas.UTM19T)
->>> toposm.renderTiles(areas.UTM19T, 5, 15)
-$ optimize_png.py tile/contours
-$ optimize_png.py tile/features
+Build local patched Mapnik2:
+$ cd ~/src
+$ svn co http://svn.mapnik.org/trunk/ mapnik2
+$ cd mapnik2
+$ patch -p0 < <toposm-dir>/mapnik2_erase_patch.diff
+$ python scons/scons.py configure \
+    INPUT_PLUGINS=raster,osm,gdal,shape,postgis,ogr \
+    PREFIX=$HOME PYTHON_PREFIX=$HOME
+$ python scons/scons.py
+$ python scons/scons.py install
+NOTE: On ubuntu 10.04 you'll need to build a more recent
+version of boost. Install locally and add the following flags
+to the scons configure step:
+    BOOST_INCLUDES=$HOME/include \
+    BOOST_LIBS=$HOME/lib
 
+Download required data files:
+http://tile.openstreetmap.org/world_boundaries-spherical.tgz
+http://tile.openstreetmap.org/processed_p.tar.bz2
+http://tile.openstreetmap.org/shoreline_300.tar.bz2
+http://www.naturalearthdata.com/download/10m/cultural/10m-populated-places.zip
+http://www.naturalearthdata.com/download/110m/cultural/110m-admin-0-boundary-lines.zip
+All NHD shapefiles: http://www.openstreetmap.us/nhd/
+USGS NED data, as needed: http://openstreetmap.us/ned/13arcsec/grid/
+Planet.osm or other OSM dataset: http://planet.openstreetmap.org/
 
-Notes:
-------
-Make sure that you have plenty of disk space for temporary
-files and tiles, and database space for contour lines.
+Modify set-toposm-env, specifying file paths, settings and the
+area of interest. Data imports will be limited to the specified
+area. Source set-toposm-env:
+$ cd <toposm-dir>
+$ mkdir -p temp tile
+$ . set-toposm-env
 
-Preprocessed data files (such as the hillshade and colormap
-images) are stored in the temp directory. Empty .shp files are also
-left here to mark areas where contours have already been imported
-into the database. NOTE: If you clear the data in this directory,
-you should also delete all data from the contours table, or you
-risk ending up with duplicated contours the next time you run
-prepareData.
+Import OSM data, e.g:
+$ ./import_planet geodata/osm/Planet.osm
 
-In TopOSM, rendering quality takes precedence over speed. You'll
-notice.
+Import NHD data:
+$ ./import_nhd
+
+Generate hillshade and colormaps:
+$ ./prep_toposm_data
+
+Add a shortcut for your area(s) of interest to areas.py.
+
+Generate the mapnik style files from templates:
+$ ./generate_xml
+
+Generate raster layers for color-relief tiles:
+$ ./generate_colorrelief_include > colorrelieflayers.inc
+
+Setup contour tables and generate contour lines, for example:
+$ ./prep_contours_table
+$ ./toposm.py prep WhiteMountains
+
+To render tiles for the specified area and zoom levels:
+$ ./toposm.py render WhiteMountains 5 15
+
+To render a PDF, use renderToPdf() in toposm.py

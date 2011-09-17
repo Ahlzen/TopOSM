@@ -44,6 +44,7 @@ export JPEG_QUALITY=90
 # The area we're interested in
 # (this setting limits both import and rendering)
 # E.g. Conterminous US: "-127,23,-65,51"
+
 #export XMINLL=-127
 #export XMAXLL=-65
 #export YMINLL=23

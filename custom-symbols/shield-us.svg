@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   width="21.999998"
+   height="17.599998"
+   viewBox="0 0 21.999998 17.599998"
+   overflow="visible"
+   enable-background="new 0 0 750 600"
+   xml:space="preserve"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="shield-us.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   style="overflow:visible"><metadata
+   id="metadata3511"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs3509"><inkscape:perspective
+   sodipodi:type="inkscape:persp3d"
+   inkscape:vp_x="0 : 300 : 1"
+   inkscape:vp_y="0 : 1000 : 0"
+   inkscape:vp_z="750 : 300 : 1"
+   inkscape:persp3d-origin="375 : 200 : 1"
+   id="perspective3513" />
+	
+	
+</defs><sodipodi:namedview
+   inkscape:window-height="954"
+   inkscape:window-width="1280"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   guidetolerance="10.0"
+   gridtolerance="10.0"
+   objecttolerance="10.0"
+   borderopacity="1.0"
+   bordercolor="#666666"
+   pagecolor="#ffffff"
+   id="base"
+   showgrid="false"
+   inkscape:zoom="23.04"
+   inkscape:cx="13.733968"
+   inkscape:cy="13.143701"
+   inkscape:window-x="0"
+   inkscape:window-y="25"
+   inkscape:current-layer="Layer_1"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0"
+   inkscape:window-maximized="1" />
+<g
+   id="g3492"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-us.png"
+   inkscape:export-xdpi="2.6400001"
+   inkscape:export-ydpi="2.6400001"
+   transform="scale(0.02933333,0.02933333)">
+		<path
+   id="path3494"
+   d="M 0,50 C 0,22.385742 22.385254,0 50,0 l 650,0 c 27.61426,0 50,22.385742 50,50 l 0,500 c 0,27.61523 -22.38574,50 -50,50 L 50,600 C 22.385254,600 0,577.61523 0,550 L 0,50 0,50 z"
+   inkscape:connector-curvature="0" />
+		<path
+   id="path3496"
+   d=""
+   inkscape:connector-curvature="0" />
+	</g><path
+   style="fill:#ffffff;fill-rule:evenodd"
+   id="path3498"
+   d="M 11,0.86376 C 10.005838,1.47851 8.8339552,1.83332 7.5791834,1.83332 6.324412,1.83332 5.1525151,1.47846 4.158367,0.8637 L 1.0112157,4.01085 c 0.5791603,0.82322 0.9191841,1.82679 0.9191841,2.90981 0,0.7816 -0.1771075,1.52182 -0.4933726,2.18272 -0.2729705,0.57114 -0.4258115,1.2107 -0.4258115,1.88594 0,2.4183 1.9603416,4.37864 4.3786454,4.37864 l 2.7398066,0 c 1.1587884,0 2.1929703,0.53349 2.8703323,1.36828 0.677349,-0.83479 1.711531,-1.36828 2.870332,-1.36828 l 2.739807,0 c 2.418304,0 4.378645,-1.96034 4.378645,-4.37864 0,-0.67524 -0.152841,-1.3148 -0.425838,-1.88594 C 20.246681,8.44248 20.0696,7.70226 20.0696,6.92066 c 0,-1.08302 0.340024,-2.08659 0.919184,-2.90981 L 17.841633,0.8637 C 16.847485,1.47846 15.675561,1.83332 14.420817,1.83332 13.166045,1.83332 11.994148,1.47851 11,0.86376 z"
+   clip-rule="evenodd"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-us.png"
+   inkscape:export-xdpi="2.6400001"
+   inkscape:export-ydpi="2.6400001"
+   inkscape:connector-curvature="0" />
+
+</svg>

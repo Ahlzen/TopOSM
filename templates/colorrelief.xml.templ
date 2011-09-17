@@ -10,12 +10,18 @@
 	%colors;
 ]>
 
-<Map background-color="&landcolor;" srs="&srs900913;">
+<Map background-color="#fff" srs="&srs900913;">
 
-<!-- TEST STYLE -->
+<!-- TEST STYLES -->
+<Style name="colormap">
+  <Rule>
+    <RasterSymbolizer scaling="bilinear" opacity="0.5" />
+  </Rule>
+</Style>
+
 <Style name="hillshade">
   <Rule>
-    <RasterSymbolizer scaling="bilinear" />
+    <RasterSymbolizer scaling="bilinear" mode="multiply" />
   </Rule>
 </Style>
 
@@ -56,11 +62,20 @@
 &colorrelieflayers;
 -->
 
+<Layer name="colormap" status="on">
+    <StyleName>colormap</StyleName>
+    <Datasource>
+      <Parameter name="type">gdal</Parameter>
+      <Parameter name="file">geodata/colormap/colormap.vrt</Parameter>
+      <Parameter name="format">vrt</Parameter>
+    </Datasource>
+</Layer>
+
 <Layer name="hillshade" status="on">
     <StyleName>hillshade</StyleName>
     <Datasource>
       <Parameter name="type">gdal</Parameter>
-      <Parameter name="file">geodata/hillshade-overviews/hillshade.vrt</Parameter>
+      <Parameter name="file">geodata/hillshade/hillshade.vrt</Parameter>
       <Parameter name="format">vrt</Parameter>
     </Datasource>
 </Layer>
