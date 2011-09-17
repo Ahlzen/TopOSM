@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27.804878"
+   height="27.804878"
+   id="svg5134"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="New document 93">
+  <defs
+     id="defs5136" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-88.240419"
+     inkscape:cy="-60.383277"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="452"
+     inkscape:window-height="413"
+     inkscape:window-x="800"
+     inkscape:window-y="561"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5139">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-463.24042,-444.17403)">
+    <g
+       style="display:inline"
+       id="g2868"
+       inkscape:export-xdpi="10.421053"
+       inkscape:export-ydpi="10.421053"
+       transform="matrix(0.29268292,0,0,0.29268292,422.26481,345.43388)">
+      <rect
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/path3496.png"
+         ry="10"
+         rx="10"
+         y="337.36218"
+         x="140"
+         height="95"
+         width="95"
+         id="rect3488"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         id="path3496"
+         d="m 160,422.36218 0,-74.67049 24.19406,0 c 9.16823,8e-5 15.14458,0.3736 17.92907,1.12057 4.27847,1.12064 7.86088,3.56551 10.74725,7.33462 2.88624,3.73528 4.3294,8.57409 4.32946,14.51643 -6e-5,4.58418 -0.832,8.43825 -2.49581,11.56221 -1.66393,3.12404 -3.78621,5.58589 -6.36685,7.38556 -2.5468,1.76577 -5.14447,2.93727 -7.79304,3.5145 -3.59944,0.71312 -8.81176,1.06966 -15.63699,1.06963 l -9.83043,0 0,28.16697 -15.07672,0 m 15.07672,-62.03864 0,21.18889 8.25145,0 c 5.94236,5e-5 9.91527,-0.39045 11.91875,-1.1715 2.00339,-0.78096 3.56539,-2.00339 4.68601,-3.66731 1.15447,-1.66382 1.73173,-3.59934 1.73178,-5.80657 -5e-5,-2.71647 -0.79803,-4.9576 -2.39394,-6.7234 -1.596,-1.76568 -3.61641,-2.86927 -6.06124,-3.31077 -1.79974,-0.3395 -5.41611,-0.50928 -10.84913,-0.50934 l -7.28368,0"
+         style="font-size:104.3145752px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:Sans"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

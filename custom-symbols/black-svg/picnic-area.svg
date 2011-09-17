@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27.804878"
+   height="27.804878"
+   id="svg4639"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="New document 69">
+  <defs
+     id="defs4641" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="0.33100567"
+     inkscape:cy="11.0453"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="452"
+     inkscape:window-height="413"
+     inkscape:window-x="800"
+     inkscape:window-y="561"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata4644">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-374.66899,-515.60261)">
+    <g
+       style="display:inline"
+       id="g2798"
+       inkscape:export-xdpi="10.421053"
+       inkscape:export-ydpi="10.421053"
+       transform="matrix(0.29268292,0,0,0.29268292,333.69339,478.32587)">
+      <rect
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/picnic-area.png"
+         ry="10"
+         rx="10"
+         y="127.36218"
+         x="139.99998"
+         height="95"
+         width="95"
+         id="rect3173"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <rect
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/picnic-area.png"
+         y="176.36218"
+         x="150.62502"
+         height="10"
+         width="74.374977"
+         id="rect3267"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.40000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <rect
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/picnic-area.png"
+         y="144.36218"
+         x="163.75"
+         height="10"
+         width="48.124985"
+         id="rect3269"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.40000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/picnic-area.png"
+         id="path3275"
+         d="m 156.53075,207.36218 19.52373,-55 9.76186,0 -19.52372,55 -9.76187,0 z"
+         style="fill:#ffffff;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/picnic-area.png"
+         id="path3277"
+         d="m 199.76188,152.36218 19.52372,55 -9.76187,0 -19.52373,-55 9.76188,0 z"
+         style="fill:#ffffff;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

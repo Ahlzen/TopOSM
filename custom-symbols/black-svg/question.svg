@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27.804878"
+   height="27.804878"
+   id="svg4528"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="New document 63">
+  <defs
+     id="defs4530" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="13.902438"
+     inkscape:cy="13.902443"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="452"
+     inkscape:window-height="413"
+     inkscape:window-x="800"
+     inkscape:window-y="561"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata4533">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-361.09756,-518.45975)">
+    <g
+       style="display:inline"
+       id="g2786"
+       inkscape:export-xdpi="10.421053"
+       inkscape:export-ydpi="10.421053"
+       transform="matrix(0.29268292,0,0,0.29268292,258.65854,511.91472)">
+      <rect
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/text3246.png"
+         ry="10"
+         rx="10"
+         y="22.362179"
+         x="350"
+         height="95"
+         width="95"
+         id="rect3167"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         sodipodi:nodetypes="cccccccccccccccc"
+         id="text3246"
+         d="m 394.67199,32.582153 c -12.01355,0.172126 -23.28338,10.297695 -22.96302,22.657582 4.79054,-0.008 11.49649,2.672556 15.13938,0.994848 0.50396,-6.706373 6.88874,-12.127241 13.5991,-10.268907 5.74774,0.37566 9.20823,8.444762 4.05393,12.050723 -6.79664,5.65321 -15.45947,11.756062 -15.02175,21.685749 -1.374,5.757106 1.60592,7.362603 7.10826,6.247495 4.82412,0.397904 9.44333,0.818136 8.08009,-5.109062 0.16662,-6.665477 8.20327,-9.139425 11.71752,-13.911089 7.43108,-5.942511 8.9179,-17.784257 2.55453,-25.07328 -5.58224,-7.405743 -15.26719,-10.017811 -24.26804,-9.274059 z m -5.19236,60.603114 c 1.03836,4.385386 -2.1722,11.948283 1.77706,13.422763 4.38539,-1.03836 13.0197,2.17221 14.49419,-1.77706 -1.03837,-4.38539 2.17219,-11.948282 -1.77707,-13.422768 -4.10822,1.068015 -13.42797,-2.214204 -14.49418,1.777065 z"
+         style="font-size:104.3145752px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

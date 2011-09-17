@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   width="601"
+   height="601"
+   viewBox="0 0 601 601"
+   overflow="visible"
+   enable-background="new 0 0 601 601"
+   xml:space="preserve"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="shield-ma.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"><metadata
+   id="metadata3647"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs3645"><inkscape:perspective
+     sodipodi:type="inkscape:persp3d"
+     inkscape:vp_x="0 : 300.5 : 1"
+     inkscape:vp_y="0 : 1000 : 0"
+     inkscape:vp_z="601 : 300.5 : 1"
+     inkscape:persp3d-origin="300.5 : 200.33333 : 1"
+     id="perspective3649" /></defs><sodipodi:namedview
+   inkscape:window-height="480"
+   inkscape:window-width="640"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   guidetolerance="10.0"
+   gridtolerance="10.0"
+   objecttolerance="10.0"
+   borderopacity="1.0"
+   bordercolor="#666666"
+   pagecolor="#ffffff"
+   id="base"
+   showgrid="false" />
+<g
+   id="g3610"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-ma.png"
+   inkscape:export-xdpi="2.7"
+   inkscape:export-ydpi="2.7">
+	<g
+   id="g3612">
+		<g
+   id="g3614">
+			<path
+   fill="#FFFFFF"
+   d="M0.5,50.5c0-27.6142578,22.3852539-50,50-50h500c27.6142578,0,50,22.3857422,50,50v500     c0,27.6152344-22.3857422,50-50,50h-500c-27.6147461,0-50-22.3847656-50-50V50.5L0.5,50.5z"
+   id="path3616" />
+			<path
+   fill="#FFFFFF"
+   d="M300.5,300.5"
+   id="path3618" />
+		</g>
+		<g
+   id="g3620">
+			<path
+   fill="none"
+   stroke="#000000"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   stroke-miterlimit="3.863693"
+   d="M0.5,50.5     c0-27.6142578,22.3852539-50,50-50h500c27.6142578,0,50,22.3857422,50,50v500c0,27.6152344-22.3857422,50-50,50h-500     c-27.6147461,0-50-22.3847656-50-50V50.5L0.5,50.5z"
+   id="path3622" />
+			<path
+   fill="none"
+   stroke="#000000"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   stroke-miterlimit="3.863693"
+   d="     M300.5,300.5"
+   id="path3624" />
+		</g>
+	</g>
+	<g
+   id="g3626">
+		<g
+   id="g3628">
+			<path
+   d="M10.5,50.5c0-22.0913086,17.9082031-40,40-40h500c22.0917969,0,40,17.9086914,40,40v500     c0,22.0917969-17.9082031,40-40,40h-500c-22.0917969,0-40-17.9082031-40-40V50.5L10.5,50.5z"
+   id="path3630" />
+			<path
+   d="M300.5,300.5"
+   id="path3632" />
+		</g>
+	</g>
+	<g
+   id="g3634">
+		<g
+   id="g3636">
+			<path
+   fill="#FFFFFF"
+   d="M25.5,50.5c0-13.8071289,11.1923828-25,25-25h500c13.8066406,0,25,11.1928711,25,25v500     c0,13.8076172-11.1933594,25-25,25h-500c-13.8076172,0-25-11.1923828-25-25V50.5L25.5,50.5z"
+   id="path3638" />
+			<path
+   fill="#FFFFFF"
+   d="M300.5,300.5"
+   id="path3640" />
+		</g>
+	</g>
+</g>
+
+</svg>

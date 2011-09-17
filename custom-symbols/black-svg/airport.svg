@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27.804878"
+   height="27.804878"
+   id="svg4477"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="New document 60">
+  <defs
+     id="defs4479" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="13.902435"
+     inkscape:cy="13.902444"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="452"
+     inkscape:window-height="413"
+     inkscape:window-x="800"
+     inkscape:window-y="561"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata4482">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-361.09757,-518.45975)">
+    <g
+       style="display:inline"
+       id="g2781"
+       inkscape:export-xdpi="10.421053"
+       inkscape:export-ydpi="10.421053"
+       transform="matrix(0.29268292,0,0,0.29268292,289.39025,511.91472)">
+      <rect
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/black-m/airport.png"
+         ry="10"
+         rx="10"
+         y="22.362183"
+         x="245"
+         height="95"
+         width="95"
+         id="rect3165"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/black-m/airport.png"
+         sodipodi:nodetypes="csssssccsssscssssccsssssc"
+         d="m 292.7623,106.20705 c 0,0 10.41153,0.61035 11.37691,0.14324 1.15579,-0.55926 1.39704,-3.79374 0.62281,-4.6712 -0.46711,-0.5294 -1.86846,-1.46363 -3.7058,-2.709283 -1.34034,-0.908702 -3.3944,-1.339077 -3.45668,-2.148749 -0.0623,-0.809669 0.74739,-6.073465 0.99652,-10.931506 0.24912,-4.858041 0.38881,-7.411628 0.38881,-7.411628 0,0 6.33771,0.186848 8.57988,0.622827 3.79925,0.871956 21.60476,7.437935 21.98575,6.737204 0.6113,-1.124322 -0.18685,-7.411626 -0.99652,-8.345865 -0.80967,-0.93424 -29.39294,-18.072634 -29.64209,-18.69546 -0.24913,-0.622827 0.0578,-10.927841 -1.31235,-16.782405 -1.37022,-5.854562 -3.48783,-9.6538 -4.83724,-9.6538 -1.34941,0 -3.46703,3.799238 -4.83724,9.6538 -1.3702,5.854564 -1.06322,16.159578 -1.31235,16.782405 -0.24915,0.622826 -28.83243,17.76122 -29.6421,18.69546 -0.80967,0.934239 -1.60782,7.221543 -0.99652,8.345865 0.381,0.700731 18.18651,-5.865248 21.98575,-6.737204 2.24217,-0.435979 8.57989,-0.622827 8.57989,-0.622827 0,0 0.13968,2.553587 0.3888,7.411628 0.24913,4.858041 1.0588,10.121837 0.99653,10.931506 -0.0623,0.809672 -2.11634,1.240047 -3.45669,2.148749 -1.83734,1.245653 -3.23869,2.179883 -3.7058,2.709283 -0.77422,0.87746 -0.53297,4.11194 0.62282,4.6712 0.96537,0.46711 11.37691,-0.14324 11.37691,-0.14324 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path3230"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

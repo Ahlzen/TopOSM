@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   width="22.088396"
+   height="14.767264"
+   viewBox="0 0 22.088396 14.767264"
+   overflow="visible"
+   enable-background="new 0 0 601 601"
+   xml:space="preserve"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="shield-ma-3.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   style="overflow:visible"><metadata
+   id="metadata3647"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs3645"><inkscape:perspective
+   sodipodi:type="inkscape:persp3d"
+   inkscape:vp_x="0 : 300.5 : 1"
+   inkscape:vp_y="0 : 1000 : 0"
+   inkscape:vp_z="601 : 300.5 : 1"
+   inkscape:persp3d-origin="300.5 : 200.33333 : 1"
+   id="perspective3649" />
+	
+	
+	
+
+		
+		
+	</defs><sodipodi:namedview
+   inkscape:window-height="900"
+   inkscape:window-width="1026"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   guidetolerance="10.0"
+   gridtolerance="10.0"
+   objecttolerance="10.0"
+   borderopacity="1.0"
+   bordercolor="#666666"
+   pagecolor="#ffffff"
+   id="base"
+   showgrid="false"
+   inkscape:zoom="13.151414"
+   inkscape:cx="18.631421"
+   inkscape:cy="12.671984"
+   inkscape:window-x="240"
+   inkscape:window-y="74"
+   inkscape:current-layer="Layer_1"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0"
+   inkscape:window-maximized="0" />
+<g
+   id="g3620"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-ma.png"
+   inkscape:export-xdpi="3.1400001"
+   inkscape:export-ydpi="3.1400001"
+   transform="matrix(0.03660566,0,0,0.03660566,0.04419717,0.04419698)">
+			<path
+   sodipodi:nodetypes="cccccccccc"
+   stroke-miterlimit="3.863693"
+   d="m 0.5,50.5 c 0,-27.614258 22.385254,-50 50,-50 l 500,0 c 27.61426,0 50,22.385742 50,50 l 0,300 c 0,27.61523 -22.38574,50 -50,50 l -500,0 c -27.614746,0 -50,-22.38477 -50,-50 l 0,-300 z"
+   id="path3622"
+   style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.863693"
+   inkscape:connector-curvature="0" />
+			<path
+   d=""
+   stroke-miterlimit="3.863693"
+   id="path3624"
+   style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.863693"
+   inkscape:connector-curvature="0" />
+		</g><g
+   id="g3626"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-ma.png"
+   inkscape:export-xdpi="3.1400001"
+   inkscape:export-ydpi="3.1400001"
+   transform="matrix(0.03660566,0,0,0.03660566,0.04419717,0.04419698)">
+		<g
+   id="g3628">
+			<path
+   id="path3630"
+   d="m 10.5,50.5 c 0,-22.091309 17.908203,-40 40,-40 l 500,0 c 22.0918,0 40,17.908691 40,40 l 0,300 c 0,22.0918 -17.9082,40 -40,40 l -500,0 c -22.091797,0 -40,-17.9082 -40,-40 l 0,-300 z"
+   sodipodi:nodetypes="cccccccccc"
+   inkscape:connector-curvature="0" />
+			<path
+   id="path3632"
+   d=""
+   inkscape:connector-curvature="0" />
+		</g>
+	</g><g
+   id="g3634"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-ma.png"
+   inkscape:export-xdpi="3.1400001"
+   inkscape:export-ydpi="3.1400001"
+   transform="matrix(0.03660566,0,0,0.03660566,0.04419717,0.04419698)">
+		<g
+   id="g3636">
+			<path
+   style="fill:#ffffff"
+   id="path3638"
+   d="m 45.5,70.5 c 0,-13.807129 11.192383,-25 25,-25 l 460,0 c 13.80664,0 25,11.192871 25,25 l 0,260 c 0,13.80762 -11.19336,25 -25,25 l -460,0 c -13.807617,0 -25,-11.19238 -25,-25 l 0,-260 z"
+   sodipodi:nodetypes="cccccccccc"
+   inkscape:connector-curvature="0" />
+			<path
+   style="fill:#ffffff"
+   id="path3640"
+   d=""
+   inkscape:connector-curvature="0" />
+		</g>
+	</g>
+
+</svg>

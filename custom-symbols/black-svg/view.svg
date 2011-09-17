@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27.804878"
+   height="27.804878"
+   id="svg4701"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="New document 72">
+  <defs
+     id="defs4703" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="13.902435"
+     inkscape:cy="13.90244"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="452"
+     inkscape:window-height="413"
+     inkscape:window-x="800"
+     inkscape:window-y="561"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata4706">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-361.09757,-518.45975)">
+    <g
+       style="display:inline"
+       id="g2806"
+       inkscape:export-xdpi="10.421053"
+       inkscape:export-ydpi="10.421053"
+       transform="matrix(0.29268292,0,0,0.29268292,289.39025,481.18301)">
+      <rect
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         inkscape:export-filename="/home/lars/delta/projects/toposm/custom-symbols/g3340.png"
+         ry="10"
+         rx="10"
+         y="127.36218"
+         x="245"
+         height="95"
+         width="95"
+         id="rect3175"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <g
+         inkscape:export-ydpi="16.105263"
+         inkscape:export-xdpi="16.105263"
+         transform="matrix(0.2882452,0,0,0.2882452,204.35456,39.43065)"
+         id="g3340"
+         style="fill:#ffffff;stroke:none;display:inline">
+        <path
+           style="fill:#ffffff;fill-rule:evenodd;stroke:none"
+           d="m 307.01392,507.60836 -20.03977,-109.92569 40.07954,0 -20.03977,109.92569 z"
+           id="path3342"
+           inkscape:transform-center-y="-89.716668"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:#ffffff;fill-rule:evenodd;stroke:none;display:inline"
+           d="m 330.73635,516.96387 60.38845,-94.01322 29.29037,27.3577 -89.67882,66.65552 z"
+           id="path3344"
+           inkscape:transform-center-y="-72.404923"
+           inkscape:transform-center-x="-68.56184"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:#ffffff;fill-rule:evenodd;stroke:none;display:inline"
+           d="m 341.52081,538.22668 106.76005,-32.97788 4.76923,39.79477 -111.52928,-6.81689 z"
+           id="path3346"
+           inkscape:transform-center-x="-90.27153"
+           inkscape:transform-center-y="-17.215995"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:#ffffff;fill-rule:evenodd;stroke:none;display:inline"
+           d="m 283.1175,517.12751 -90.13479,-66.03764 29.10167,-27.55835 61.03312,93.59599 z"
+           id="path3348"
+           inkscape:transform-center-y="-72.032668"
+           inkscape:transform-center-x="68.963815"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:#ffffff;fill-rule:evenodd;stroke:none;display:inline"
+           d="m 272.54135,537.94971 -111.58042,5.92105 5.08863,-39.75519 106.49179,33.83414 z"
+           id="path3350"
+           inkscape:transform-center-x="90.26278"
+           inkscape:transform-center-y="-18.369015"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+  </g>
+</svg>

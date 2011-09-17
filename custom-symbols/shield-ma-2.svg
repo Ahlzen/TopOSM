@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   width="601"
+   height="601"
+   viewBox="0 0 601 601"
+   overflow="visible"
+   enable-background="new 0 0 601 601"
+   xml:space="preserve"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="shield-ma-2.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"><metadata
+   id="metadata3647"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs3645"><inkscape:perspective
+   sodipodi:type="inkscape:persp3d"
+   inkscape:vp_x="0 : 300.5 : 1"
+   inkscape:vp_y="0 : 1000 : 0"
+   inkscape:vp_z="601 : 300.5 : 1"
+   inkscape:persp3d-origin="300.5 : 200.33333 : 1"
+   id="perspective3649" />
+	
+	
+	
+
+		
+		
+	</defs><sodipodi:namedview
+   inkscape:window-height="900"
+   inkscape:window-width="1026"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   guidetolerance="10.0"
+   gridtolerance="10.0"
+   objecttolerance="10.0"
+   borderopacity="1.0"
+   bordercolor="#666666"
+   pagecolor="#ffffff"
+   id="base"
+   showgrid="false"
+   inkscape:zoom="0.82196339"
+   inkscape:cx="386.87854"
+   inkscape:cy="343.31324"
+   inkscape:window-x="240"
+   inkscape:window-y="80"
+   inkscape:current-layer="Layer_1" />
+<g
+   id="g3614"
+   transform="matrix(1,0,0,0.8317038,0,8.4148111e-2)"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-ma.png"
+   inkscape:export-xdpi="3.1400001"
+   inkscape:export-ydpi="3.1400001">
+			<path
+   d="M 0.5,50.5 C 0.5,22.885742 22.885254,0.5 50.5,0.5 L 550.5,0.5 C 578.11426,0.5 600.5,22.885742 600.5,50.5 L 600.5,550.5 C 600.5,578.11523 578.11426,600.5 550.5,600.5 L 50.5,600.5 C 22.885254,600.5 0.5,578.11523 0.5,550.5 L 0.5,50.5 L 0.5,50.5 z"
+   id="path3616"
+   style="fill:#ffffff" />
+			<path
+   d=""
+   id="path3618"
+   style="fill:#ffffff" />
+		</g><g
+   id="g3620"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-ma.png"
+   inkscape:export-xdpi="3.1400001"
+   inkscape:export-ydpi="3.1400001">
+			<path
+   sodipodi:nodetypes="cccccccccc"
+   stroke-miterlimit="3.863693"
+   d="M 0.5,50.5 C 0.5,22.885742 22.885254,0.5 50.5,0.5 L 550.5,0.5 C 578.11426,0.5 600.5,22.885742 600.5,50.5 L 600.5,470.5 C 600.5,498.11523 578.11426,520.5 550.5,520.5 L 50.5,520.5 C 22.885254,520.5 0.5,498.11523 0.5,470.5 L 0.5,50.5 L 0.5,50.5 z"
+   id="path3622"
+   style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.863693" />
+			<path
+   d=""
+   stroke-miterlimit="3.863693"
+   id="path3624"
+   style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.863693" />
+		</g><g
+   id="g3626"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-ma.png"
+   inkscape:export-xdpi="3.1400001"
+   inkscape:export-ydpi="3.1400001">
+		<g
+   id="g3628">
+			<path
+   id="path3630"
+   d="M 10.5,50.5 C 10.5,28.408691 28.408203,10.5 50.5,10.5 L 550.5,10.5 C 572.5918,10.5 590.5,28.408691 590.5,50.5 L 590.5,470.5 C 590.5,492.5918 572.5918,510.5 550.5,510.5 L 50.5,510.5 C 28.408203,510.5 10.5,492.5918 10.5,470.5 L 10.5,50.5 L 10.5,50.5 z"
+   sodipodi:nodetypes="cccccccccc" />
+			<path
+   id="path3632"
+   d="" />
+		</g>
+	</g><g
+   id="g3634"
+   inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/shield-ma.png"
+   inkscape:export-xdpi="3.1400001"
+   inkscape:export-ydpi="3.1400001">
+		<g
+   id="g3636">
+			<path
+   style="fill:#ffffff"
+   id="path3638"
+   d="M 45.5,70.5 C 45.5,56.692871 56.692383,45.5 70.5,45.5 L 530.5,45.5 C 544.30664,45.5 555.5,56.692871 555.5,70.5 L 555.5,450.5 C 555.5,464.30762 544.30664,475.5 530.5,475.5 L 70.5,475.5 C 56.692383,475.5 45.5,464.30762 45.5,450.5 L 45.5,70.5 L 45.5,70.5 z"
+   sodipodi:nodetypes="cccccccccc" />
+			<path
+   style="fill:#ffffff"
+   id="path3640"
+   d="" />
+		</g>
+	</g>
+
+</svg>
