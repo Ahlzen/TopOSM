@@ -13,17 +13,44 @@
 <Map background-color="#fff" srs="&srs900913;">
 
 <!-- TEST STYLES -->
-<Style name="colormap">
+
+<!-- ok, slightly washed out: landcover 0.6, hillshade grain_merge -->
+<!-- pretty good: #666, landcover 0.5, hillshade grain_merge -->
+
+<Style name="landcover">
   <Rule>
-    <RasterSymbolizer scaling="bilinear" opacity="0.5" />
+    <RasterSymbolizer scaling="bilinear" opacity="0.65" />
   </Rule>
 </Style>
 
 <Style name="hillshade">
   <Rule>
-    <RasterSymbolizer scaling="bilinear" mode="multiply" />
+    <RasterSymbolizer scaling="bilinear" mode="grain_merge" opacity="0.55" />
   </Rule>
 </Style>
+
+
+<!--
+<Style name="colormap">
+  <Rule>
+    <RasterSymbolizer scaling="bilinear" opacity="0.25" />
+  </Rule>
+</Style>
+<Style name="landcover">
+  <Rule>
+    <RasterSymbolizer scaling="bilinear" opacity="0.5" />
+  </Rule>
+</Style>
+-->
+
+<!--
+<Style name="hillshade">
+  <Rule>
+    <RasterSymbolizer scaling="bilinear" mode="multiply2" />
+  </Rule>
+</Style>
+-->
+
 
 
 <!-- Full-resolution color relief -->
@@ -62,12 +89,20 @@
 &colorrelieflayers;
 -->
 
-<Layer name="colormap" status="on">
+<Layer name="colormap" status="off">
     <StyleName>colormap</StyleName>
     <Datasource>
       <Parameter name="type">gdal</Parameter>
       <Parameter name="file">geodata/colormap/colormap.vrt</Parameter>
       <Parameter name="format">vrt</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="landcover" status="on">
+    <StyleName>landcover</StyleName>
+    <Datasource>
+      <Parameter name="type">gdal</Parameter>
+      <Parameter name="file">geodata/nlcd2006/nlcd2006_cadetail.tif</Parameter>
     </Datasource>
 </Layer>
 
@@ -79,6 +114,8 @@
       <Parameter name="format">vrt</Parameter>
     </Datasource>
 </Layer>
+
+
 
 </Map>
 
