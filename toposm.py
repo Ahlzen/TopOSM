@@ -95,8 +95,11 @@ class RenderThread:
             msg = "Rendering meta tile %s %s %s (%sx%s)" % \
                 (z, x, y, ntiles, ntiles)
             self.runAndLog(msg, renderMetaTile, (z, x, y, ntiles, \
-                self.maps['colorrelief'], self.maps['areas'],
-                self.maps['ocean'], self.maps['contours'], \
+                self.maps['hypsorelief'], \
+                self.maps['landcoverrelief'], \
+                self.maps['areas'], \
+                self.maps['ocean'], \
+                self.maps['contours'], \
                 self.maps['features']))
 
     #def combineAndSliceTopoMetaTile(self, z, x, y, ntiles):
@@ -202,32 +205,38 @@ def allConstituentTilesExist(z, x, y, ntiles):
 #        allTilesExist('composite', z, fromx, tox, fromy, toy, 'png') and \
 #        allTilesExist('jpeg90', z, fromx, tox, fromy, toy, 'png')
 
-def renderMetaTile(z, x, y, ntiles, colorreliefMap, areasMap, oceanMap, contoursMap, featuresMap):
+def renderMetaTile(z, x, y, ntiles, hypsoreliefMap, landcoverreliefMap, areasMap, oceanMap, contoursMap, featuresMap):
     """Renders the specified map tile and saves the result (including the
     composite) as individual tiles."""
-    colorrelief = renderLayer(z, x, y, ntiles, colorreliefMap, 'png')
-    areas = renderLayer(z, x, y, ntiles, areasMap, 'png')
-    ocean = renderLayer(z, x, y, ntiles, oceanMap, 'png', True)
-    base = getComposite((colorrelief, areas, ocean))
-    contours = renderLayer(z, x, y, ntiles, contoursMap, 'png', True)
-    features = renderLayer(z, x, y, ntiles, featuresMap, 'png', True)
-    composite = getComposite((base, contours, features))
-    saveTiles(z, x, y, ntiles, 'base', base)
+    hypsorelief = renderLayer('hypsorelief', z, x, y, ntiles, hypsoreliefMap, 'png')
+    landcoverrelief = renderLayer('landcoverrelief', z, x, y, ntiles, landcoverreliefMap, 'png')
+    areas = renderLayer('areas', z, x, y, ntiles, areasMap, 'png')
+    ocean = renderLayer('ocean', z, x, y, ntiles, oceanMap, 'png', True)
+    contours = renderLayer('contours', z, x, y, ntiles, contoursMap, 'png', True)
+    features = renderLayer('features', z, x, y, ntiles, featuresMap, 'png', True)
+    base_h = getComposite((hypsorelief, areas, ocean))
+    base_l = getComposite((landcoverrelief, ocean))
+    composite_h = getComposite((base_h, contours, features))
+    composite_l = getComposite((base_l, contours, features))
+    saveTiles(z, x, y, ntiles, 'base_h', base_h)
+    saveTiles(z, x, y, ntiles, 'base_l', base_l)
     saveTiles(z, x, y, ntiles, 'contours', contours)
-    saveTiles(z, x, y, ntiles, 'composite', composite)
+    saveTiles(z, x, y, ntiles, 'composite_h', composite_h)
+    saveTiles(z, x, y, ntiles, 'composite_l', composite_l)
     saveTiles(z, x, y, ntiles, 'features', features)
     if SAVE_JPEG_COMPOSITE:
-        layername = 'jpeg' + str(JPEG_COMPOSITE_QUALITY)
-        saveTiles(z, x, y, ntiles, layername, composite, 'jpg', layername)
+        basename = 'jpeg' + str(JPEG_COMPOSITE_QUALITY)
+        saveTiles(z, x, y, ntiles, basename + '_h', composite_h, 'jpg', basename)
+        saveTiles(z, x, y, ntiles, basename + '_l', composite_l, 'jpg', basename)
     if SAVE_INTERMEDIATE_TILES:
-        saveTiles(z, x, y, ntiles, 'colorrelief', colorrelief)
+        saveTiles(z, x, y, ntiles, 'hypsorelief', hypsorelief)
+        saveTiles(z, x, y, ntiles, 'landcoverrelief', landcoverrelief)
         saveTiles(z, x, y, ntiles, 'areas', areas)
         saveTiles(z, x, y, ntiles, 'ocean', ocean)
     
-
-def renderLayer(z, x, y, ntiles, map, suffix = 'png', useCairo = False):
+def renderLayer(name, z, x, y, ntiles, map, suffix = 'png', useCairo = False):
     """Renders the specified map tile (layer) as a mapnik.Image."""
-    console.debugMessage(' Rendering map layers: ' + str(map.layers))
+    console.debugMessage(' Rendering layer: ' + name)
     env = getMercTileEnv(z, x, y, ntiles, True)
     tilesize = getTileSize(ntiles, True)
     map.zoom_to_box(env)

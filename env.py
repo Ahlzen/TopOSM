@@ -38,10 +38,9 @@ TOPOSM_DEBUG = os.environ['TOPOSM_DEBUG']
 #CONTOUR_INTERVAL = 7.62 # 25 ft in meters
 CONTOUR_INTERVAL = 12.192 # 40 ft in meters
 
-#MAPNIK_LAYERS = ['colorrelief', 'areas', 'ocean', 'features']
-MAPNIK_LAYERS = ['colorrelief', 'areas', 'ocean', 'contours', 'features']
+MAPNIK_LAYERS = ['hypsorelief', 'landcoverrelief', 'areas', 'ocean', 'contours', 'features']
 
-# Optimal supertile size (N x N subtiles) by zoom level.
+# Optimal metatile size (N x N subtiles) by zoom level.
 # A too low number is inefficient. A too high number uses
 # large amounts of memory and sometimes breaks the gdal tools.
 NTILES = {

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[
+    <!ENTITY % utils SYSTEM "include/utils.inc">
+    <!ENTITY % colors SYSTEM "include/colors.inc">
+	<!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
+	<!ENTITY extents SYSTEM "include/extents.inc">
+	<!ENTITY extentsLatLon SYSTEM "include/extentsLatLon.inc">
+    <!ENTITY colorrelieflayers SYSTEM "colorrelieflayers.inc">	
+	%utils;
+	%colors;
+]>
+
+<Map background-color="#fff" srs="&srs900913;">
+
+<Style name="landcover">
+  <Rule>
+    <RasterSymbolizer scaling="bilinear" opacity="0.65" />
+  </Rule>
+</Style>
+
+<Style name="hillshade">
+  <Rule>
+    <RasterSymbolizer scaling="bilinear" mode="grain_merge" opacity="0.55" />
+  </Rule>
+</Style>
+
+
+<Layer name="landcover" status="on">
+    <StyleName>landcover</StyleName>
+    <Datasource>
+      <Parameter name="type">gdal</Parameter>
+      <Parameter name="file">geodata/nlcd2006/nlcd2006_cadetail.tif</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="hillshade" status="on">
+    <StyleName>hillshade</StyleName>
+    <Datasource>
+      <Parameter name="type">gdal</Parameter>
+      <Parameter name="file">geodata/hillshade/hillshade.vrt</Parameter>
+      <Parameter name="format">vrt</Parameter>
+    </Datasource>
+</Layer>
+
+</Map>
+
