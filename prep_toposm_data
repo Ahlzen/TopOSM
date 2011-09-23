@@ -32,40 +32,47 @@ for y in `seq $BOTTOM $TOP`; do
     # result than vice versa.
 
     # Render and reproject hillshade
+    if [[ ! -f $HILLSHADE_DIR/$BASE.tif ]] ; then
     echo "Rendering hillshade..."
     hillshade $NEDPATH $HILLSHADE_DIR/$BASE.unproj.tif -z 0.00001
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
        -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
        $HILLSHADE_DIR/$BASE.unproj.tif $HILLSHADE_DIR/$BASE.tif
     rm $HILLSHADE_DIR/$BASE.unproj.tif
+    fi
 
     # Render and reproject colormap
+    if [[ ! -f $COLORMAP_DIR/$BASE.tif ]] ; then
     echo "Rendering colormap..."
     color-relief $NEDPATH $COLORFILE $COLORMAP_DIR/$BASE.unproj.tif
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
        -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
        $COLORMAP_DIR/$BASE.unproj.tif $COLORMAP_DIR/$BASE.tif
     rm $COLORMAP_DIR/$BASE.unproj.tif
+    fi
  
     # Render hypsorelief (relief shade with hypsometric tinting)
-    # (imagemagick strips any georeferencing in the file, so we have to go through
+    # (IM strips any georeferencing in the file, so we have to use
     # a world file to put it back)
+    if [[ ! -f $HYPSORELIEF_DIR/$BASE.tif ]] ; then
     COLORMAP=$COLORMAP_DIR/$BASE.tif
     HILLSHADE=$HILLSHADE_DIR/$BASE.tif
     # Translate hillshade to PNG+WLD (just to get a valid .wld file)
     gdal_translate -of PNG -co WORLDFILE=YES \
 	$COLORMAP_DIR/$BASE.tif $HYPSORELIEF_DIR/$BASE.png 
-    
     # Create the actual PNG file
     convert $COLORMAP -modulate 120 \
-        \( $HILLSHADE -level 70,95% +level 0%,80% \) -compose screen -composite \
-        \( $HILLSHADE -level 0,75% +level 40%,100% \) -compose multiply -composite \
+        \( $HILLSHADE -level 70,95% +level 0%,80% \) \
+	-compose screen -composite \
+        \( $HILLSHADE -level 0,75% +level 40%,100% \) \
+	-compose multiply -composite \
         -modulate 92 $HYPSORELIEF_DIR/$BASE.png
     # PNG+WLD -> GeoTIFF
     gdal_translate -a_srs "$SRS900913" -of GTiff \
        -co COMPRESS=DEFLATE -co PREDICTOR=2 -co ZLEVEL=9 \
         $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.tif
-    rm $HYPSORELIEF_DIR/$BASE.png
+    rm $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.png.aux.xml
+    fi
  
     fi;
 done; done
