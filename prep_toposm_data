@@ -16,9 +16,11 @@ TOP=$YMAXLL
 
 mkdir -pv $HILLSHADE_DIR
 mkdir -pv $COLORMAP_DIR
+mkdir -pv $HYPSORELIEF_DIR
 
 for x in `seq $RIGHT $LEFT`; do
 for y in `seq $BOTTOM $TOP`; do
+
     BASE=`printf "n%02dw%03d" $y $x`
     FILE=$BASE.tif
     NEDPATH=$NED13_DIR/$FILE
@@ -26,13 +28,14 @@ for y in `seq $BOTTOM $TOP`; do
     if [ -f $NEDPATH ] ; then
     echo; echo "***** $NEDPATH"
 
-    # NOTE: Hillshading first then reprojecting seems to yield a better
+    # NOTE: First hillshading, then reprojecting seems to yield a better
     # result than vice versa.
 
     # Render and reproject hillshade
     echo "Rendering hillshade..."
     hillshade $NEDPATH $HILLSHADE_DIR/$BASE.unproj.tif -z 0.00001
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
+       -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
        $HILLSHADE_DIR/$BASE.unproj.tif $HILLSHADE_DIR/$BASE.tif
     rm $HILLSHADE_DIR/$BASE.unproj.tif
 
@@ -40,9 +43,37 @@ for y in `seq $BOTTOM $TOP`; do
     echo "Rendering colormap..."
     color-relief $NEDPATH $COLORFILE $COLORMAP_DIR/$BASE.unproj.tif
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
+       -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
        $COLORMAP_DIR/$BASE.unproj.tif $COLORMAP_DIR/$BASE.tif
     rm $COLORMAP_DIR/$BASE.unproj.tif
-       
+ 
+    # Render hypsorelief (relief shade with hypsometric tinting)
+    # (imagemagick strips any georeferencing in the file, so we have to go through
+    # a world file to put it back)
+    COLORMAP=$COLORMAP_DIR/$BASE.tif
+    HILLSHADE=$HILLSHADE_DIR/$BASE.tif
+    # Translate hillshade to PNG+WLD (just to get a valid .wld file)
+    gdal_translate -of PNG -co WORLDFILE=YES \
+	$COLORMAP_DIR/$BASE.tif $HYPSORELIEF_DIR/$BASE.png 
+    
+    # Create the actual PNG file
+    convert $COLORMAP -modulate 120 \
+        \( $HILLSHADE -level 70,95% +level 0%,80% \) -compose screen -composite \
+        \( $HILLSHADE -level 0,75% +level 40%,100% \) -compose multiply -composite \
+        -modulate 92 $HYPSORELIEF_DIR/$BASE.png
+    # PNG+WLD -> GeoTIFF
+    gdal_translate -a_srs "$SRS900913" -of GTiff \
+       -co COMPRESS=DEFLATE -co PREDICTOR=2 -co ZLEVEL=9 \
+        $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.tif
+    rm $HYPSORELIEF_DIR/$BASE.png
+ 
     fi;
 done; done
 
+# generate overviews and VRT layers
+for d in $COLORMAP_DIR $HILLSHADE_DIR $HYPSORELIEF_DIR ; do
+    pushd . ; cd $d
+    for f in *.tif ; do gdaladdo -r gauss $f 2 4 8 16 32 ; done
+    gdalbuildvrt all.vrt *.tif
+    popd
+done

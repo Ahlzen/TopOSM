@@ -17,6 +17,7 @@ export NHD_DIR="/home/lars/titan/projects/toposm/geodata/NHD" # NHD shapefiles
 export NED13_DIR="geodata/ned13" # NED 1/3" GeoTIFFs
 export HILLSHADE_DIR="geodata/hillshade" # Hillshade GeoTIFFs
 export COLORMAP_DIR="geodata/colormap" # Colormap GeoTIFFs
+export HYPSORELIEF_DIR="geodata/hypsorelief" # Hillshade with hypsometric tinting
 
 # Output directories
 export BASE_TILE_DIR="tile" # output directory

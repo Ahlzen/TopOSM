@@ -10,8 +10,25 @@
 	%colors;
 ]>
 
-<Map background-color="#fff" srs="&srs900913;">
+<Map background-color="#bbb" srs="&srs900913;">
 
+<Style name="hypsorelief">
+  <Rule>
+    <RasterSymbolizer scaling="bilinear" />
+  </Rule>
+</Style>
+
+<Layer name="hypsorelief" status="on">
+    <StyleName>hypsorelief</StyleName>
+    <Datasource>
+      <Parameter name="type">gdal</Parameter>
+      <Parameter name="file">geodata/hypsorelief/all.vrt</Parameter>
+      <Parameter name="format">vrt</Parameter>
+    </Datasource>
+</Layer>
+
+
+<!--
 <Style name="hillshade">
   <Rule>
     <RasterSymbolizer scaling="bilinear" opacity="0.75" />
@@ -23,7 +40,6 @@
     <RasterSymbolizer scaling="bilinear" opacity="0.3" />
   </Rule>
 </Style>
-
 
 <Layer name="hillshade" status="on">
     <StyleName>hillshade</StyleName>
@@ -42,6 +58,7 @@
       <Parameter name="format">vrt</Parameter>
     </Datasource>
 </Layer>
+-->
 
 </Map>
 

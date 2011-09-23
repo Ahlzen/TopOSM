@@ -68,6 +68,9 @@ $ ./import_nhd
 
 Generate hillshade and colormaps:
 $ ./prep_toposm_data
+$ cd <hillshade dir>
+$ for f in *.tif ; do gdaladdo -r gauss $f 2 4 8 16 32 ; done
+$ (repeat for colormap, hypsorelief)
 
 Add a shortcut for your area(s) of interest to areas.py.
 
