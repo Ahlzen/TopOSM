@@ -31,6 +31,7 @@ BORDER_WIDTH = int(os.environ['BORDER_WIDTH'])
 ERRORLOG = os.environ['ERROR_LOG']
 JPEG_QUALITY = os.environ['JPEG_QUALITY']
 TOPOSM_DEBUG = os.environ['TOPOSM_DEBUG']
+EXTRA_FONTS_DIR = os.environ['EXTRA_FONTS_DIR']
 
 ##### Common constants
 

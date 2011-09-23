@@ -11,6 +11,9 @@ Setting up TopOSM rendering - Ubuntu 10.04/10.10/11.04
 Required packages:
 python-mapnik mapnik-utils gdal-bin gdal-contrib python-gdal libgdal-dev proj libproj-dev python-pyproj python-numpy imagemagick gcc g++ optipng subversion postgresql postgresql-contrib postgresql-server-dev-8.4 postgis wget libxml2-dev python-libxml2 libgeos-dev libbz2-dev make htop python-cairo python-cairo-dev osm2pgsql unzip python-pypdf libboost-all-dev libicu-dev libpng-dev libjpeg-dev libtiff-dev libz-dev libfreetype6-dev libxml2-dev libproj-dev libcairo-dev libcairomm-1.0-dev python-cairo-dev libpq-dev libgdal-dev libsqlite3-dev libcurl4-gnutls-dev libsigc++-dev libsigc++-2.0-dev
 
+Install additional fonts:
+$ sudo apt-get install ttf-sil-gentium ttf-mscorefonts-installer "ttf-adf-*"
+
 Set up PostgreSQL with PostGIS, see:
 http://wiki.openstreetmap.org/wiki/Mapnik/PostGIS
 

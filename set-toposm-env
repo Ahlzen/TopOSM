@@ -31,6 +31,9 @@ export COLORRELIEF="$HOME/bin/color-relief"
 export OSM2PGSQL_STYLE_FILE="/usr/share/osm2pgsql/default.style"
 export COLORFILE="colors.txt" # elevation-to-color mapping
 
+# Extra TrueType fonts directory (for Mapnik)
+export EXTRA_FONTS_DIR="/usr/share/fonts/truetype"
+
 # Render settings
 # NOTE: Apparently the Cairo backend is not thread safe (because,
 # it turns out, cairo/pixman is not, so let's leave this at 1 for now...

@@ -17,7 +17,7 @@ try:
 except ImportError:
     print "WARNING: PyPdf not found. Render to PDF will not work."
 
-# Use mapnik2 if available, mapnik otherwise.
+# Use mapnik2 if available
 try:
     import mapnik2 as mapnik
     from mapnik2 import Coord, Box2d
@@ -25,7 +25,7 @@ except ImportError:
     import mapnik
     from mapnik import Coord
     from mapnik import Envelope as Box2d
-print "Using mapnik version:", mapnik.mapnik_version()
+
 if not mapnik.has_cairo():
     print "ERROR: Your mapnik does not have Cairo support."
     sys.exit(1)
@@ -42,6 +42,13 @@ __copyright__   = "(c) Lars Ahlzen and contributors 2008-2011"
 __license__     = "GPLv2"
 
 
+##### Initialize Mapnik
+
+# Import extra fonts
+if EXTRA_FONTS_DIR != '':
+    mapnik.register_fonts(EXTRA_FONTS_DIR)
+
+
 ##### Render settings
 
 # Set to true to save intermediate layers that are normally
@@ -55,6 +62,8 @@ JPEG_COMPOSITE_QUALITY = 90
 
 # Enable/disable the use of the cairo renderer altogether
 USE_CAIRO = True
+
+
 
 class RenderThread:
     def __init__(self, q, maxz, threadNumber):
@@ -218,21 +227,21 @@ def renderMetaTile(z, x, y, ntiles, hypsoreliefMap, landcoverreliefMap, areasMap
     base_l = getComposite((landcoverrelief, ocean))
     composite_h = getComposite((base_h, contours, features))
     composite_l = getComposite((base_l, contours, features))
-    saveTiles(z, x, y, ntiles, 'base_h', base_h)
-    saveTiles(z, x, y, ntiles, 'base_l', base_l)
-    saveTiles(z, x, y, ntiles, 'contours', contours)
     saveTiles(z, x, y, ntiles, 'composite_h', composite_h)
     saveTiles(z, x, y, ntiles, 'composite_l', composite_l)
-    saveTiles(z, x, y, ntiles, 'features', features)
     if SAVE_JPEG_COMPOSITE:
         basename = 'jpeg' + str(JPEG_COMPOSITE_QUALITY)
-        saveTiles(z, x, y, ntiles, basename + '_h', composite_h, 'jpg', basename)
-        saveTiles(z, x, y, ntiles, basename + '_l', composite_l, 'jpg', basename)
+        saveTiles(z, x, y, ntiles, basename+'_h', composite_h, 'jpg', basename)
+        saveTiles(z, x, y, ntiles, basename+'_l', composite_l, 'jpg', basename)
     if SAVE_INTERMEDIATE_TILES:
+        saveTiles(z, x, y, ntiles, 'base_h', base_h)
+        saveTiles(z, x, y, ntiles, 'base_l', base_l)
+        saveTiles(z, x, y, ntiles, 'contours', contours)
         saveTiles(z, x, y, ntiles, 'hypsorelief', hypsorelief)
         saveTiles(z, x, y, ntiles, 'landcoverrelief', landcoverrelief)
         saveTiles(z, x, y, ntiles, 'areas', areas)
         saveTiles(z, x, y, ntiles, 'ocean', ocean)
+        saveTiles(z, x, y, ntiles, 'features', features)
     
 def renderLayer(name, z, x, y, ntiles, map, suffix = 'png', useCairo = False):
     """Renders the specified map tile (layer) as a mapnik.Image."""
@@ -415,6 +424,13 @@ def getComposite(images):
 
 ##### Public methods
 
+def toposmInfo():
+    print "Using mapnik version:", mapnik.mapnik_version()
+    print "Has Cairo:", mapnik.has_cairo()
+    print "Fonts:"
+    for face in mapnik.FontEngine.face_names():
+        print "\t", face
+
 def prepareData(envLLs):
     if not hasattr(envLLs, '__iter__'):
         envLLs = (envLLs,)
@@ -497,11 +513,13 @@ def printSyntax():
     print "Syntax:"
     print " toposm.py render <area(s)> <minZoom> <maxZoom>"
     print " toposm.py prep <area(s)>"
+    print " toposm.py info"
     print "Areas are named entities in areas.py."
 
 if __name__ == "__main__":
     try:
-        if sys.argv[1] == 'render':
+        cmd = sys.argv[1]
+        if cmd == 'render':
             areaname = sys.argv[2]
             minzoom = int(sys.argv[3])
             maxzoom = int(sys.argv[4])
@@ -509,11 +527,13 @@ if __name__ == "__main__":
             print "Render: %s %s, z: %d-%d" % (areaname, env, minzoom, maxzoom)
             BASE_TILE_DIR = path.join(BASE_TILE_DIR, areaname)
             renderTiles(env, minzoom, maxzoom)
-        elif sys.argv[1] == 'prep':
+        elif cmd == 'prep':
             areaname = sys.argv[2]
             env = vars(areas)[areaname]
             print "Prepare data: %s %s" % (areaname, env)
             prepareData(env)
+        elif cmd == 'info':
+            toposmInfo()
         else:
             raise Exception()
     except:
