@@ -1,0 +1,13 @@
+# These are generated from templates
+areas.xml
+contours.xml
+features.xml
+hypsorelief.xml
+landcoverrelief.xml
+ocean.xml
+include/*.inc
+
+*.pyc
+errors.log
+geodata
+tile

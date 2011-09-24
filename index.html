@@ -1,0 +1,139 @@
+<html>
+
+<head>
+<title>OSM Topo Map Test</title>
+
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script type="text/javascript" src="js/ScaleBar.js"></script>
+
+<script type="text/javascript">
+
+var tileroot = "tile/oakland"; var lat = 37.8 ; var lon = -122.2
+//var tileroot = "tile/cadetail";var lat = 37.8 ; var lon = -122.2
+//var tileroot = "tile/yosdetail"; var lat = 37.75 ; var lon = -119.64
+
+var zoom = 13;
+
+var levels = 16; // including level 0
+
+var map;
+function init()
+{ 
+  map = new OpenLayers.Map ("map", {
+      controls:[
+        new OpenLayers.Control.Navigation(),
+        new OpenLayers.Control.PanZoomBar(),
+        new OpenLayers.Control.Permalink('permalink', null, {}),
+        new OpenLayers.Control.ScaleLine(
+            {minWidth: 150,
+             maxWidth: 250,
+             topOutUnits: 'mi',
+             topInUnits: 'ft',
+             geodesic: true})
+      ],
+      maxExtent: new OpenLayers.Bounds(
+          -20037508.34,-20037508.34,20037508.34,20037508.34),
+      maxResolution: 156543.0399,
+      units: 'm',
+      projection: new OpenLayers.Projection("EPSG:900913"),
+      displayProjection: new OpenLayers.Projection("EPSG:4326")
+  } );
+  
+  path = "/jpeg90_h/${z}/${x}/${y}.jpg";
+  jpeg90h = new OpenLayers.Layer.OSM("Hypsometric Tint - jpeg90",
+     tileroot+path,
+     {numZoomLevels: levels});  
+  jpeg90h.setIsBaseLayer(true);
+  jpeg90h.setVisibility(true);
+  map.addLayer(jpeg90h);
+
+  path = "/jpeg90_l/${z}/${x}/${y}.jpg";
+  jpeg90l = new OpenLayers.Layer.OSM("NLCD Landcover - jpeg90",
+     tileroot+path,
+     {numZoomLevels: levels});  
+  jpeg90l.setIsBaseLayer(true);
+  jpeg90l.setVisibility(false);
+  map.addLayer(jpeg90l);
+
+  map.addControl(new OpenLayers.Control.LayerSwitcher());
+  var lonLat = new OpenLayers.LonLat(lon, lat).transform(new
+  OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+  if (!map.getCenter()) {
+    map.setCenter (lonLat, zoom);
+  }
+}
+
+OpenLayers.Util.onImageLoadError = function() {
+    this.src = "na.png";
+}
+</script>
+
+<style type="text/css" rel="stylesheet">
+body {
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif;
+}
+#map {
+    witdh: 100%;
+    height: 100%;
+}
+#logo {
+	position: absolute;
+	top: 15px;
+	left: 58px;
+        z-index: 1000;
+}
+#infobar {
+    font-size: 8pt;
+    color: #ffe;
+}
+#infobar {
+    position: absolute;
+    z-index: 1000;
+    bottom: 0px;
+    width: 100%;
+    background-color: #000;
+    opacity: 0.7;
+    text-align: right;
+}
+a {
+    color: #adf;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+#infobar span {
+    margin: 2px 6px;
+}
+.olControlScaleLine {
+    padding: 3px;
+    margin-bottom: 5px;
+    background-image: url(white50p.png);
+}
+.olControlScaleLineBottom {
+    display: none;
+}
+</style>
+</head>
+
+<body onload="init();">
+<div id="map"></div>
+<img id="logo" src="logo_small.png" alt="TopOSM"></img>
+<div id="infobar">
+    <span>
+        <a href="" id="permalink">Permalink</a>
+    </span>
+    &bull;
+    <span>
+        Data from <a href="http://www.openstreetmap.org">OpenStreetMap</a>
+	and <a href="http://www.usgs.gov">USGS</a>
+    </span>
+    &bull;
+    <span>
+        License: <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>
+    </span>
+</div>
+</body>
+</html>
