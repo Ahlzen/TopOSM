@@ -8,11 +8,11 @@
 
 <script type="text/javascript">
 
-var tileroot = "tile/oakland"; var lat = 37.8 ; var lon = -122.2
+//var tileroot = "tile/oakland"; var lat = 37.8 ; var lon = -122.2
 //var tileroot = "tile/cadetail";var lat = 37.8 ; var lon = -122.2
-//var tileroot = "tile/yosdetail"; var lat = 37.75 ; var lon = -119.64
+var tileroot = "tile/yosdetail"; var lat = 37.75 ; var lon = -119.64
 
-var zoom = 13;
+var zoom = 12;
 
 var levels = 16; // including level 0
 
@@ -44,7 +44,7 @@ function init()
      tileroot+path,
      {numZoomLevels: levels});  
   jpeg90h.setIsBaseLayer(true);
-  jpeg90h.setVisibility(true);
+  jpeg90h.setVisibility(false);
   map.addLayer(jpeg90h);
 
   path = "/jpeg90_l/${z}/${x}/${y}.jpg";
@@ -52,7 +52,7 @@ function init()
      tileroot+path,
      {numZoomLevels: levels});  
   jpeg90l.setIsBaseLayer(true);
-  jpeg90l.setVisibility(false);
+  jpeg90l.setVisibility(true);
   map.addLayer(jpeg90l);
 
   map.addControl(new OpenLayers.Control.LayerSwitcher());

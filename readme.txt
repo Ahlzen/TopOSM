@@ -24,7 +24,7 @@ $ cd demtools
 $ make
 $ mkdir -p ~/bin
 $ cp bin/* ~/bin
-NOTE: You may need to make the following changes:
+NOTE: To build these, you may need to make the following changes:
 * Makefile: GDAL_LIB=-lgdal1.6.0
 * Makefile: CPP=g++ -O3 -I/usr/include/gdal
 * stringtok.h may require a "using namespace std;" since it's
@@ -47,14 +47,15 @@ to the scons configure step:
     BOOST_LIBS=$HOME/lib
 
 Download required data files:
-http://tile.openstreetmap.org/world_boundaries-spherical.tgz
-http://tile.openstreetmap.org/processed_p.tar.bz2
-http://tile.openstreetmap.org/shoreline_300.tar.bz2
-http://www.naturalearthdata.com/download/10m/cultural/10m-populated-places.zip
-http://www.naturalearthdata.com/download/110m/cultural/110m-admin-0-boundary-lines.zip
-All NHD shapefiles: http://www.openstreetmap.us/nhd/
-USGS NED data, as needed: http://openstreetmap.us/ned/13arcsec/grid/
-Planet.osm or other OSM dataset: http://planet.openstreetmap.org/
+* http://tile.openstreetmap.org/world_boundaries-spherical.tgz
+* http://tile.openstreetmap.org/processed_p.tar.bz2
+* http://tile.openstreetmap.org/shoreline_300.tar.bz2
+* http://www.naturalearthdata.com/download/10m/cultural/10m-populated-places.zip
+* http://www.naturalearthdata.com/download/110m/cultural/110m-admin-0-boundary-lines.zip
+* USGS NHD shapefiles: http://www.openstreetmap.us/nhd/
+* USGS NED data, as needed: http://openstreetmap.us/ned/13arcsec/grid/
+* NLCD 2006 (Land cover) data: http://www.mrlc.gov/nlcd06_data.php
+* Planet.osm or other OSM dataset: http://planet.openstreetmap.org/
 
 Modify set-toposm-env, specifying file paths, settings and the
 area of interest. Data imports will be limited to the specified
@@ -75,15 +76,19 @@ $ cd <hillshade dir>
 $ for f in *.tif ; do gdaladdo -r gauss $f 2 4 8 16 32 ; done
 $ (repeat for colormap, hypsorelief)
 
+Prepare landcover data:
+TODO: Translate NLCD to GeoTIFF and reproject to 900913
+TODO: Build overviews
+Copy nlcd2006.vrt to the NLCD directory, making sure it references
+the landcover GeoTIFF. The VRT file is only used to modify the
+color table.
+
 Add a shortcut for your area(s) of interest to areas.py.
 
 Generate the mapnik style files from templates:
 $ ./generate_xml
 
-Generate raster layers for color-relief tiles:
-$ ./generate_colorrelief_include > colorrelieflayers.inc
-
-Setup contour tables and generate contour lines, for example:
+Create contour tables and generate contour lines, for example:
 $ ./prep_contours_table
 $ ./toposm.py prep WhiteMountains
 

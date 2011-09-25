@@ -10,17 +10,19 @@
 	%colors;
 ]>
 
-<Map background-color="#fff" srs="&srs900913;">
+<Map background-color="#ccc" srs="&srs900913;">
+
+<!-- original landcover palette: #fff, .65 .55 -->
 
 <Style name="landcover">
   <Rule>
-    <RasterSymbolizer scaling="bilinear" opacity="0.65" />
+    <RasterSymbolizer scaling="bilinear" opacity="0.7" />
   </Rule>
 </Style>
 
 <Style name="hillshade">
   <Rule>
-    <RasterSymbolizer scaling="bilinear" mode="grain_merge" opacity="0.55" />
+    <RasterSymbolizer scaling="bilinear" mode="grain_merge" opacity="0.75" />
   </Rule>
 </Style>
 
@@ -29,9 +31,7 @@
     <StyleName>landcover</StyleName>
     <Datasource>
       <Parameter name="type">gdal</Parameter>
-      <!--Parameter name="file">geodata/nlcd2006/nlcd2006_cadetail.tif</Parameter-->
-      <Parameter name="file">geodata/nlcd2006/nlcd2006_yos_x3.png</Parameter>
-      <Parameter name="format">png</Parameter>
+      <Parameter name="file">geodata/nlcd2006/nlcd2006.vrt</Parameter>
     </Datasource>
 </Layer>
 
