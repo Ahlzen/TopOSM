@@ -26,10 +26,6 @@ except ImportError:
     from mapnik import Coord
     from mapnik import Envelope as Box2d
 
-if not mapnik.has_cairo():
-    print "ERROR: Your mapnik does not have Cairo support."
-    sys.exit(1)
-
 from env import *
 from coords import *
 from common import *
@@ -48,6 +44,11 @@ __license__     = "GPLv2"
 if EXTRA_FONTS_DIR != '':
     mapnik.register_fonts(EXTRA_FONTS_DIR)
 
+# Check for cairo support
+if not mapnik.has_cairo():
+    print "ERROR: Your mapnik does not have Cairo support."
+    sys.exit(1)
+
 
 ##### Render settings
 
@@ -62,7 +63,6 @@ JPEG_COMPOSITE_QUALITY = 90
 
 # Enable/disable the use of the cairo renderer altogether
 USE_CAIRO = True
-
 
 
 class RenderThread:
@@ -91,11 +91,6 @@ class RenderThread:
             errorLog.log('Failed: ' + message, ex)
             raise
 
-    #def renderTopoMetaTile(self, z, x, y, ntiles):
-    #    for mapname in ['hillshade', 'colormap']:    
-    #        msg = "Rendering %s %s %s %s" % (mapname, z, x, y)
-    #        self.runAndLog(msg, renderTopoMetaTile, (z, x, y, ntiles, mapname))
-            
     def renderMetaTile(self, z, x, y):
         ntiles = NTILES[z]
         if (z != self.currentz):
@@ -111,33 +106,6 @@ class RenderThread:
                 self.maps['contours'], \
                 self.maps['features']))
 
-    #def combineAndSliceTopoMetaTile(self, z, x, y, ntiles):
-    #    msg = "Combining topo tiles %s %s %s" % (z, x, y)
-    #    layers = (('color-relief', '.jpg'),)
-    #    self.runAndLog(msg, combineAndSlice, (z, x, y, ntiles, \
-    #        './combine-color-relief-tiles', layers))
-
-    #def combineAndSliceMapnikMetaTile(self, z, x, y, ntiles):
-    #    msg = "Combining mapnik tiles %s %s %s" % (z, x, y)
-    #    layers = (('contours', '.png'), ('features', '.png'))
-    #    self.runAndLog(msg, combineAndSlice, (z, x, y, ntiles, \
-    #        './combine-mapnik-tiles', layers))
-    
-    #def mergeTopoTiles(self, z, x, y, ntiles):
-    #    for dx in range(x*ntiles, (x+1)*ntiles):
-    #        for dy in range(y*ntiles, (y+1)*ntiles):
-    #            if not tileExists('color-relief', z, dx, xy, '.jpg'):
-    #                msg = "Merging topo tiles %s %s %s" % (z, x, y)
-    #                self.runAndLog(msg, mergeSubtiles, \
-    #                    (z, x, y, 'color-relief'))
-                    
-    #def createJpegTiles(self, z, x, y, quality, ntiles):
-    #    for dx in range(x*ntiles, (x+1)*ntiles):
-    #        for dy in range(y*ntiles, (y+1)*ntiles):
-    #            if not tileExists('jpeg' + str(quality), z, dx, dy, '.jpg'):
-    #                msg = "Creating JPEG%s %s %s %s" % (quality, z, dx, dy)
-    #                self.runAndLog(msg, createJpegTile, (z, dx, dy, quality))
-            
     def renderLoop(self):
         self.currentz = 0
         while True:
@@ -147,19 +115,6 @@ class RenderThread:
                 break
             self.renderMetaTile(*r)
             self.q.task_done()
-
-#    def render(self, z, x, y):
-#        
-#        self.renderMetaTile(z, x, y, ntiles[z])
-            #self.renderMapnikMetaTile(z, x, y, ntiles)
-            #self.combineAndSliceMapnikMetaTile(z, x, y, ntiles)
-            #if z == self.maxz or \
-            #    not allConstituentTopoTilesExist(z, x, y, ntiles):
-            #    self.renderTopoMetaTile(z, x, y, ntiles)
-            #    self.combineAndSliceTopoMetaTile(z, x, y, ntiles)
-            #else:
-            #    self.mergeTopoTiles(z, x, y, ntiles)
-            #self.createJpegTiles(z, x, y, JPEG_QUALITY, ntiles)
 
 
 def getMetaTileDir(mapname, z):
@@ -193,13 +148,7 @@ def allTilesExist(mapname, z, fromx, tox, fromy, toy, suffix = "png"):
             if not tileExists(mapname, z, x, y, suffix):
                 return False
     return True
-    
-#def allConstituentTopoTilesExist(z, x, y, ntiles):
-#    subx = ntiles * x
-#    suby = ntiles * y
-#    return allTilesExist('color-relief', z+1, \
-#        2*subx, 2*(subx+ntiles)-1, 2*suby, 2*(suby+ntiles)-1)
-        
+            
 def allConstituentTilesExist(z, x, y, ntiles):
     fromx = x*ntiles
     tox = (x+1)*ntiles - 1
@@ -207,12 +156,6 @@ def allConstituentTilesExist(z, x, y, ntiles):
     toy = (y+1)*ntiles - 1
     # NOTE: This only checks for the final "composite" tile set...
     return allTilesExist('composite', z, fromx, tox, fromy, toy, 'png')
-#    return \
-#        allTilesExist('base', z, fromx, tox, fromy, toy, 'png') and \
-#        allTilesExist('contours', z, fromx, tox, fromy, toy, 'png') and \
-#        allTilesExist('features', z, fromx, tox, fromy, toy, 'png') and \
-#        allTilesExist('composite', z, fromx, tox, fromy, toy, 'png') and \
-#        allTilesExist('jpeg90', z, fromx, tox, fromy, toy, 'png')
 
 def renderMetaTile(z, x, y, ntiles, hypsoreliefMap, landcoverreliefMap, areasMap, oceanMap, contoursMap, featuresMap):
     """Renders the specified map tile and saves the result (including the
@@ -281,146 +224,6 @@ def getComposite(images):
         composite.blend(0, 0, image, 1.0)
     return composite
 
-#    file = open(filename, 'wb')
-#    surface = cairo.PDFSurface(file.name, sizex, sizey) 
-#    envMerc = LLToMerc(envLL)
-
-    # Combine all maps into one, since mapnik can't render
-    # a single-page PDF otherwise.
-#    comboMap = mapnik.Map(sizex, sizey)
-#    for mapname in MAPNIK_LAYERS:
-#        map = mapnik.Map(sizex, sizey)
-#        mapnik.load_map(map, mapname + ".xml")
-#        for layer in map.layers:
-#           for stylename in layer.styles:
-#                print 'adding style', stylename
-#                comboMap.append_style(stylename, map.find_style(stylename))
-#            comboMap.layers.append(layer)
-#        #comboMap.layers.extend(map.layers)
-#    comboMap.zoom_to_box(envMerc)
-#    print "Scale:", comboMap.scale()
-#    mapnik.render(comboMap, surface)
-#    surface.finish()
-   
-#    for mapname in MAPNIK_LAYERS:
-#        print "Rendering:", mapname
-#        map = mapnik.Map(sizex, sizey)
-#        mapnik.load_map(map, mapname + ".xml")
-#        map.zoom_to_box(envMerc)
-#        print "Scale:", map.scale()
-#        mapnik.render(map, surface)
-#    surface.finish()
-
-
-    
-#def renderMapnikMetaTile(z, x, y, ntiles, mapname, map):
-#    env = getMercTileEnv(z, x, y, ntiles, True)
-#    tilesize = getTileSize(ntiles, True)
-#    if not metaTileExists(mapname, z, x, y, '.png'):
-#        map.zoom_to_box(env)
-#        image = mapnik.Image(tilesize, tilesize)
-#        mapnik.render(map, image)
-#        view = image.view(BORDER_WIDTH, BORDER_WIDTH, tilesize, tilesize)
-#        ensureDirExists(getMetaTileDir(mapname, z))
-#        view.save(getMetaTilePath(mapname, z, x, y, '.png'))
-
-#def renderTopoMetaTile(z, x, y, ntiles, mapname):
-#    env = getMercTileEnv(z, x, y, ntiles, False)
-#    envLL = getLLTileEnv(z, x, y, ntiles, False)
-#    destdir = getMetaTileDir(mapname, z)
-#    # NOTE: gdalwarp won't save as png directly, hence this "hack"
-#    destTilePath = getMetaTilePath(mapname, z, x, y, '.tif')
-#    finalTilePath = getMetaTilePath(mapname, z, x, y, '.png')
-#    if os.path.isfile(finalTilePath):
-#        pass
-#    else:
-#        ensureDirExists(destdir)
-#        nedSlices = NED.getSlices(mapname, envLL, '.png')
-#        tilesize = getTileSize(ntiles, False)
-#        if len(nedSlices) > 0:
-#            cmd = 'gdalwarp -q -t_srs "%s" -te %f %f %f %f -ts %d %d -r lanczos -dstnodata 255 ' % \
-#                (MERCATOR_PROJECTION_DEF, env.minx, env.miny, env.maxx, env.maxy, tilesize, tilesize)
-#            for slice in nedSlices:
-#                cmd = cmd + '"' + slice + '" '
-#            cmd = cmd + '"' + destTilePath + '"'
-#            os.system(cmd)
-#            # convert to png and remove tif (to conserve space)
-#            cmd = 'convert "%s" "%s" && rm "%s"' % \
-#                (destTilePath, finalTilePath, destTilePath)
-#            os.system(cmd)
-#        else:
-#            return False
-#    return True
-
-#def sliceMetaTile(z, x, y, ntiles, mapname, destSuffix = '.png'):
-#    srcTilePath = getMetaTilePath(mapname, z, x, y, '.png')
-#    for dx in range(0, ntiles):
-#        destDir = path.join(getMetaTileDir(mapname, z), str((x*ntiles)+dx))
-#        ensureDirExists(destDir)
-#        for dy in range(0, ntiles):
-#            destfile = path.join(destDir, str((y*ntiles)+dy) + destSuffix)
-#            if not path.isfile(destfile):
-#                offsetx = dx * TILE_SIZE
-#                offsety = dy * TILE_SIZE
-#                cmd = 'convert "%s" -crop %dx%d+%d+%d +repage "%s"' % \
-#                    (srcTilePath, TILE_SIZE, TILE_SIZE, offsetx, offsety, \
-#                     path.join(destDir, str((y*ntiles)+dy) + destSuffix))
-#                os.system(cmd)
-#            else:
-#                pass
-#    tryRemove(srcTilePath)
-
-#def combineAndSlice(z, x, y, ntiles, script, namesAndExts):
-#    allExist = True
-#    for n in namesAndExts:
-#        if not allTilesExist(n[0], z, x*ntiles, (x+1)*ntiles-1, \
-#            y*ntiles, (y+1)*ntiles-1, n[1]):
-#            allExist = False
-#            break
-#    if not allExist:
-#        cmd = "%s %s %d %d %d %d" % \
-#            (script, BASE_TILE_DIR, z, x, y, getTileSize(ntiles, False))
-#        os.system(cmd)
-#        for n in namesAndExts:
-#            sliceMetaTile(z, x, y, ntiles, n[0], n[1])
-
-#def mergeSubtiles(z, x, y, mapname, suffix = '.jpg'):
-#    """Merges (up to) four subtiles from the next higher
-#    zoom level into one subtile at the specified location"""
-#    cmd = 'convert -size 512x512 xc:white'
-#    for dx in range(0,2):
-#        for dy in range(0,2):
-#            srcx = x*2 + dx
-#            srcy = y*2 + dy
-#            srcpath = getTilePath(mapname, z+1, srcx, srcy, suffix)
-#            if os.path.isfile(srcpath):
-#                cmd = cmd + ' "' + srcpath + '"'
-#                cmd = cmd + ' -geometry +' + str(dx*256) + '+' + str(dy*256)
-#                cmd = cmd + ' -composite'
-#    cmd = cmd + ' -scale 256x256'
-#    ensureDirExists(getTileDir(mapname, z, x))
-#    destpath = getTilePath(mapname, z, x, y, suffix)
-#    cmd = cmd + ' "' + destpath + '"'
-#   os.system(cmd)
-
-# NOTE: This should be obsolete once all the issues with the
-# raster layers are sorted out...
-#def createJpegTile(z, x, y, quality):
-#    colorreliefsrc = getTilePath('color-relief', z, x, y, '.jpg')
-#    contourssrc = getTilePath('contours', z, x, y, '.png')
-#    featuressrc = getTilePath('features', z, x, y, '.png')
-#    desttile = getTilePath('jpeg' + str(quality), z, x, y, '.jpg')
-#    if path.isfile(colorreliefsrc) and path.isfile(featuressrc):
-#        ensureDirExists(path.dirname(desttile))        
-#        # PIL generates internal errors opening the JPEG
-#        # tiles so it's back to ImageMagick for now...
-#        cmd = "convert " + colorreliefsrc;
-#        if path.isfile(contourssrc):
-#            cmd = cmd + " " + contourssrc + " -composite"
-#       cmd = cmd + " " + featuressrc + " -composite"
-#        cmd = cmd + " -quality " + str(quality) + " -strip " + desttile
-#        os.system(cmd)
- 
 
 ##### Public methods
 
