@@ -1,17 +1,12 @@
 <Style name="interstateshields">
 
-<!--
-NOTE: 2011-06-14: SVG rendering still appears to have issues on
-some systems. Disabling SVG shields for now.
--->
-
     <!-- Normal shield -->
     <Rule>
       &minz6;
       <Filter>[textlen] &lt;= 2</Filter>
       <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Bold" size="10"
       	fill="white" placement="line"
-      	file="&customsymbolsdir;/shield-interstate.png"
+      	file="&customsymbolsdir;/shield-interstate.svg"
       	transform="scale(0.9,0.9)" dx="-0.5"
       	minimum-distance="50" spacing="1000" />
     </Rule>
@@ -22,7 +17,7 @@ some systems. Disabling SVG shields for now.
       <Filter>[textlen] &gt; 2</Filter>
       <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Bold" size="9"
       	fill="white" placement="line"
-      	file="&customsymbolsdir;/shield-interstate.png"
+      	file="&customsymbolsdir;/shield-interstate.svg"
       	transform="scale(1.15,0.95)" dy="-0.5"
       	minimum-distance="50" spacing="1000" />
     </Rule>    
@@ -30,20 +25,20 @@ some systems. Disabling SVG shields for now.
 </Style>
 
 <Style name="usshields">
-	<Rule>
+    <Rule>
       &minz9;
       <Filter>[highway] = 'motorway' or [highway] = 'trunk'</Filter>
       <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Bold" size="10"
-      	fill="black" placement="line"
-      	file="&customsymbolsdir;/shield-us.png"
+      	fill="black" placement="line" dx="-0.5" dy="-1"
+      	file="&customsymbolsdir;/shield-us-3.svg"
       	minimum-distance="45" spacing="750" />
     </Rule>
-	<Rule>
+    <Rule>
       &minz11;
       <Filter>[highway] &lt;&gt; 'motorway' and [highway] &lt;&gt; 'trunk'</Filter>
       <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Bold" size="10"
-      	fill="black" placement="line"
-      	file="&customsymbolsdir;/shield-us.png"
+      	fill="black" placement="line" dx="-0.5" dy="-1"
+      	file="&customsymbolsdir;/shield-us-3.svg"
       	minimum-distance="45" spacing="750" />
     </Rule>
 </Style>
@@ -54,7 +49,7 @@ some systems. Disabling SVG shields for now.
       <Filter>[highway] = 'motorway' or [highway] = 'trunk'</Filter>
       <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Book" size="9"
       	fill="black" placement="line"
-      	file="&customsymbolsdir;/shield-ma.png"
+      	file="&customsymbolsdir;/shield-ma-3.svg"
       	dx="-0.5" dy="-0.5"
       	minimum-distance="45" spacing="750" />
     </Rule>
@@ -63,7 +58,7 @@ some systems. Disabling SVG shields for now.
       <Filter>[highway] &lt;&gt; 'motorway' and [highway] &lt;&gt; 'trunk'</Filter>
       <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Book" size="9"
       	fill="black" placement="line"
-      	file="&customsymbolsdir;/shield-ma.png"
+      	file="&customsymbolsdir;/shield-ma-3.svg"
       	dx="-0.5" dy="-0.5"
       	minimum-distance="45" spacing="750" />
     </Rule>
