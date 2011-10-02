@@ -29,7 +29,7 @@ export COLORRELIEF="$HOME/bin/color-relief"
 
 # Misc files
 export OSM2PGSQL_STYLE_FILE="/usr/share/osm2pgsql/default.style"
-export COLORFILE="colors.txt" # elevation-to-color mapping
+export COLORFILE="$HOME/projects/toposm/colors.txt" # elevation-to-color mapping
 
 # Extra TrueType fonts directory (for Mapnik)
 export EXTRA_FONTS_DIR="/usr/share/fonts/truetype"
