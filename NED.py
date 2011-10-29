@@ -72,19 +72,34 @@ def getTilename(lat, lon, step = 1):
         return 'n%02dw%03d' % (y, -x)
     return 'n%02.2fw%03.2f' % (y, -x) 
 
-def simplifyContours():
-    cmd = 'UPDATE %s SET way = ST_Simplify(way, 1.0);' % (CONTOURS_TABLE)
-    # TODO: Finish
+def convertContourElevationsToFt():
+    
+    templ = 'UPDATE %s SET height_ft = CAST(height * 3.28085 AS INT)' + \
+        ' WHERE height_ft IS NULL'
+    sql = templ % (CONTOURS_TABLE)
+    runSql(sql)
+
+# NOTE: This removes a LOT of artifacts around shorelines. Unfortunately,
+# it also removes any legitimate 0ft contours (which may exist around
+# areas below sea-level).
+# TODO: Find a better workaround.
+def removeSeaLevelContours():
+    sql = 'DELETE FROM %s WHERE height_ft = 0;' % (CONTOURS_TABLE)
+    runSql(sql)
+
+def simplifyContours(level = 1.0):
+    sql = 'UPDATE %s SET way = ST_Simplify(way, %f);' % (CONTOURS_TABLE, level)
+    runSql(sql)
+
+def clusterContoursOnGeoColumn():
+    sql = 'CLUSTER %s_way_gist ON %s;' % (CONTOURS_TABLE, CONTOURS_TABLE)
+    runSql(sql)
+
+def analyzeContoursTable():
+    sql = 'ANALYZE %s;' % (CONTOURS_TABLE)
+    runSql(sql)
 
 def prepDataFile(basename, env):
-    #print 'Preparing NED 1/3" data file:', basename
-    #print '  Converting to GeoTIFF...'
-    #sourcepath = getTilepath(basename)
-    #geotiff = path.join(TEMPDIR, basename + '.tif')
-    #if not path.isfile(geotiff):
-    #    cmd = 'gdal_translate "%s" "%s"' % (sourcepath, geotiff)
-    #    #call(cmd, shell = True)
-    #    os.system(cmd)
     geotiff = getTilepath(basename)
 
     # split the GeoTIFF, since it's often too large otherwise
@@ -126,33 +141,5 @@ def prepDataFile(basename, env):
                 tryRemove(contourbasefile + ".shx")
                 tryRemove(contourbasefile + ".dbf")
 
-            #hillshadeslice = getSlice('hillshade', x, y)
-            #hillshadeslicePng = getSlice('hillshade', x, y, '.png')
-            #if not path.isfile(hillshadeslicePng):
-            #    print '  Generating hillshade slice...'
-            #    cmd = '"%s" "%s" "%s" -z 0.00001' % \
-            #        (HILLSHADE, nedslice, hillshadeslice)
-            #    os.system(cmd)
-            #    # convert to PNG + world file to save space
-            #    cmd = 'gdal_translate -quiet -of PNG -co WORLDFILE=YES "%s" "%s"' % \
-            #        (hillshadeslice, hillshadeslicePng)
-            #    os.system(cmd)
-            #    tryRemove(hillshadeslice)
-
-            #colormapslice = getSlice('colormap', x, y)
-            #colormapslicePng = getSlice('colormap', x, y, '.png')
-            #if not path.isfile(colormapslicePng):
-            #    print '  Generating colormap slice...'
-            #    cmd = '"%s" "%s" "%s" "%s"' % \
-            #        (COLORRELIEF, nedslice, COLORFILE, colormapslice)
-            #    os.system(cmd)
-            #    # convert to PNG + world file to save space
-            #    cmd = 'gdal_translate -quiet -of PNG -co WORLDFILE=YES "%s" "%s"' % \
-            #        (colormapslice, colormapslicePng)
-            #    os.system(cmd)
-            #    tryRemove(colormapslice)
-
             writeEmpty(nedslice) # don't need the raw slice anymore.
-                
-    #writeEmpty(geotiff) # done with this GeoTIFF.
-
+ 

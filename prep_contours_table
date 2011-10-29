@@ -9,4 +9,3 @@ DBCMD="psql -q -p $DB_PORT $DB_NAME $DB_USER"
 
 shp2pgsql -p -I -g way contours.shp $CONTOURS_TABLE | $DBCMD
 echo "ALTER TABLE $CONTOURS_TABLE ADD COLUMN height_ft INT" | $DBCMD
-

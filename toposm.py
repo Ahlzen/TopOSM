@@ -244,20 +244,12 @@ def prepareData(envLLs):
             manager.addJob("Preparing %s" % (tile[0]), NED.prepDataFile, tile)
     manager.finish()
     
-    console.printMessage("Converting m to ft")
-    templ = 'echo "UPDATE %s SET height_ft = CAST(height * 3.28085 AS INT) ' \
-        + 'WHERE height_ft IS NULL;" | psql -q "%s"'
-    cmd = templ % (CONTOURS_TABLE, DATABASE)
-    os.system(cmd)
-    
-    # NOTE: This removes a LOT of artifacts around shorelines. Unfortunately,
-    # it also removes any legitimate 0ft contours (which may exist around
-    # areas below sea-level).
-    # TODO: Find a better workaround.
-    console.printMessage('Removing sea-level contours')
-    templ = 'echo "DELETE FROM %s WHERE height_ft = 0;" | psql -q "%s"'
-    cmd = templ % (CONTOURS_TABLE, DATABASE)
-    os.system(cmd)
+    console.printMessage("Postprocessing contours...")
+    NED.removeSeaLevelContours()
+    NED.simplifyContours(1.0)
+    NED.convertContourElevationsToFt()
+    NED.clusterContoursOnGeoColumn()
+    NED.analyzeContoursTable()
 
 def renderTiles(envLLs, minz, maxz):
     if not hasattr(envLLs, '__iter__'):
@@ -320,26 +312,22 @@ def printSyntax():
     print "Areas are named entities in areas.py."
 
 if __name__ == "__main__":
-    try:
-        cmd = sys.argv[1]
-        if cmd == 'render':
-            areaname = sys.argv[2]
-            minzoom = int(sys.argv[3])
-            maxzoom = int(sys.argv[4])
-            env = vars(areas)[areaname]            
-            print "Render: %s %s, z: %d-%d" % (areaname, env, minzoom, maxzoom)
-            BASE_TILE_DIR = path.join(BASE_TILE_DIR, areaname)
-            renderTiles(env, minzoom, maxzoom)
-        elif cmd == 'prep':
-            areaname = sys.argv[2]
-            env = vars(areas)[areaname]
-            print "Prepare data: %s %s" % (areaname, env)
-            prepareData(env)
-        elif cmd == 'info':
-            toposmInfo()
-        else:
-            raise Exception()
-    except:
+    cmd = sys.argv[1]
+    if cmd == 'render':
+        areaname = sys.argv[2]
+        minzoom = int(sys.argv[3])
+        maxzoom = int(sys.argv[4])
+        env = vars(areas)[areaname]            
+        print "Render: %s %s, z: %d-%d" % (areaname, env, minzoom, maxzoom)
+        BASE_TILE_DIR = path.join(BASE_TILE_DIR, areaname)
+        renderTiles(env, minzoom, maxzoom)
+    elif cmd == 'prep':
+        areaname = sys.argv[2]
+        env = vars(areas)[areaname]
+        print "Prepare data: %s %s" % (areaname, env)
+        prepareData(env)
+    elif cmd == 'info':
+        toposmInfo()
+    else:
         printSyntax()
         sys.exit(1)
-    

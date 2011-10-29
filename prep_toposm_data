@@ -83,3 +83,13 @@ for d in $COLORMAP_DIR $HILLSHADE_DIR $HYPSORELIEF_DIR ; do
     gdalbuildvrt all.vrt *.tif
     popd
 done
+
+# reproject NLCD data, add overviews, and copy VRT file (with
+# the custom color table).
+gdalwarp -multi-of GTiff \
+    -co ZLEVEL=9 -co COMPRESS=DEFLATE -co PREDICTOR=2 -co BIGTIFF=YES \
+    -t_srs EPSG:900913 $NLCD_DIR/nlcd2006_landcover_2-14-11.img \
+    $NLCD_DIR/nlcd2006.tif
+gdaladdo $NLCD_DIR/nlcd2006.tif 2 4 8 16 32 64
+cp nlcd2006.vrt $NLCD_DIR
+
