@@ -2,8 +2,8 @@
 <!DOCTYPE Map[
     <!ENTITY % utils SYSTEM "include/utils.inc">
     <!ENTITY % colors SYSTEM "include/colors.inc">
-	<!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
-	<!ENTITY extentsLatLon SYSTEM "include/extentsLatLon.inc">
+    <!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
+    <!ENTITY extents SYSTEM "include/extents.inc">
     %utils;
     %colors;
 ]>
@@ -134,7 +134,6 @@ z16-: major 2/3, minor 1 (labels on 1/2/3)
 
 <!-- LAYERS -->
 
-<!--Layer name="contours" status="on" srs="&srsLatLongNAD83;"-->
 <Layer name="contours" status="on" srs="&srs900913;">
   <StyleName>contourlines</StyleName>
   <StyleName>contourlabels</StyleName>
