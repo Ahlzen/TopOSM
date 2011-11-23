@@ -14,11 +14,25 @@ Artificial Path (55800)
 
 
 <Style name="water-outline-lowzoom">
+  <!-- NOTE: Size (the area or length of a feature) is a very crude
+  filter, but it's better than nothing. -->
   <Rule>
-  	&minz7; &maxz9;
-  	<!-- NOTE: Size (the area or length of a feature) is a very crude
-    filter, but it's better than nothing. -->
+    &minz7; &maxz8;
     <Filter>
+        ([fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
+		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
+    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
+    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
+    	[fcode] = 46007
+    	) and [size] > 8
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+  </Rule>
+  <Rule>
+     &minz9; &maxz10;
+     <Filter>
         ([fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
     	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
 		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
@@ -51,7 +65,7 @@ Artificial Path (55800)
 <Style name="water-outline">
   <!-- Perennial hydrographic features -->
   <Rule>
-  	&minz10; &maxz13;
+  	&minz11; &maxz13;
     <Filter>
     	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
     	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
