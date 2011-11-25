@@ -1,21 +1,45 @@
 <Style name="interstateshields">
 
-    <!-- Normal shield -->
+    <!-- Small Normal (1-2 digits) -->
     <Rule>
-      &minz6;
+      &minz6; &maxz8;
       <Filter>[textlen] &lt;= 2</Filter>
-      <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Bold" size="10"
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans" size="7"
+      	fill="white" placement="line"
+      	file="&customsymbolsdir;/shield-interstate.svg"
+      	transform="scale(0.7,0.7)" dx="-0.5"
+      	minimum-distance="40" spacing="500" />
+    </Rule>
+    <!-- Small Wide (3 digits) -->
+    <Rule>
+      &minz6; &maxz8;
+      <Filter>[textlen] &gt; 2</Filter>
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans" size="7"
+      	fill="white" placement="line"
+      	file="&customsymbolsdir;/shield-interstate.svg"
+      	transform="scale(0.9,0.75)" dy="-0.5"
+      	minimum-distance="40" spacing="500" />
+    </Rule>    
+
+    <!-- Normal (1-2 digits) -->
+    <Rule>
+      &minz9;
+      <Filter>[textlen] &lt;= 2</Filter>
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans Bold" size="10"
       	fill="white" placement="line"
       	file="&customsymbolsdir;/shield-interstate.svg"
       	transform="scale(0.9,0.9)" dx="-0.5"
       	minimum-distance="50" spacing="1000" />
     </Rule>
-    
-    <!-- Wide shield -->
+    <!-- Wide (3 digits) -->
     <Rule>
-      &minz6;
+      &minz9;
       <Filter>[textlen] &gt; 2</Filter>
-      <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Bold" size="9"
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans Bold" size="9"
       	fill="white" placement="line"
       	file="&customsymbolsdir;/shield-interstate.svg"
       	transform="scale(1.15,0.95)" dy="-0.5"
@@ -26,17 +50,18 @@
 
 <Style name="usshields">
     <Rule>
-      &minz9;
-      <Filter>[highway] = 'motorway' or [highway] = 'trunk'</Filter>
-      <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Bold" size="10"
+      &minz7; &maxz9;
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans" size="7"
       	fill="black" placement="line" dx="-0.5" dy="-1"
+	transform="scale(0.7,0.7)"
       	file="&customsymbolsdir;/shield-us-3.svg"
-      	minimum-distance="45" spacing="750" />
+      	minimum-distance="35" spacing="500" />
     </Rule>
     <Rule>
-      &minz11;
-      <Filter>[highway] &lt;&gt; 'motorway' and [highway] &lt;&gt; 'trunk'</Filter>
-      <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Bold" size="10"
+      &minz10;
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans Bold" size="10"
       	fill="black" placement="line" dx="-0.5" dy="-1"
       	file="&customsymbolsdir;/shield-us-3.svg"
       	minimum-distance="45" spacing="750" />
@@ -45,21 +70,34 @@
 
 <Style name="stateshields">
     <Rule>
-      &minz9;
+      &minz8; &maxz8;
       <Filter>[highway] = 'motorway' or [highway] = 'trunk'</Filter>
-      <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Book" size="9"
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans Book" size="7"
       	fill="black" placement="line"
       	file="&customsymbolsdir;/shield-ma-3.svg"
       	dx="-0.5" dy="-0.5"
-      	minimum-distance="45" spacing="750" />
+	transform="scale(0.8,0.8)"
+      	minimum-distance="40" spacing="500" />
     </Rule>
-	<Rule>
-      &minz12;
-      <Filter>[highway] &lt;&gt; 'motorway' and [highway] &lt;&gt; 'trunk'</Filter>
-      <ShieldSymbolizer name="[roadnumber]" face-name="DejaVu Sans Book" size="9"
+    <Rule>
+      &minz9; &maxz9;
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans Book" size="8"
       	fill="black" placement="line"
       	file="&customsymbolsdir;/shield-ma-3.svg"
       	dx="-0.5" dy="-0.5"
+	transform="scale(0.85,0.85)"
+      	minimum-distance="40" spacing="500" />
+    </Rule>
+    <Rule>
+      &minz10;
+      <ShieldSymbolizer name="[roadnumber]"
+        face-name="DejaVu Sans Book" size="9"
+      	fill="black" placement="line"
+      	file="&customsymbolsdir;/shield-ma-3.svg"
+      	dx="-0.5" dy="-0.5"
+	transform="scale(0.9,0.9)"
       	minimum-distance="45" spacing="750" />
     </Rule>
 </Style>

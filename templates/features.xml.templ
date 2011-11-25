@@ -253,6 +253,7 @@
       <Parameter name="table">
       	(SELECT way, highway, tunnel FROM ${DB_PREFIX}_roads
       	WHERE highway = 'motorway' OR highway = 'trunk'
+	   OR highway = 'primary'
       	ORDER BY z_order) AS lines
       </Parameter>
     </Datasource>
