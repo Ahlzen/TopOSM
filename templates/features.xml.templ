@@ -25,6 +25,63 @@
 
 &nhd;
 
+<Style name="nature-areas">
+    <Rule>
+      &minz7; &maxz9;
+      <Filter>[way_area] &gt; 50000000</Filter>
+      <PolygonSymbolizer
+        fill="#170"
+        fill-opacity="0.05" />
+      <LineSymbolizer
+        stroke="#170"
+        stroke-width="1.0"
+        stroke-dasharray="5,2"
+        stroke-opacity="0.7" />
+    </Rule>
+    <Rule>
+      <Filter>[way_area] &gt; 10000000</Filter>
+      &minz10; &maxz11;
+      <PolygonSymbolizer
+        fill="#170"
+        fill-opacity="0.05" />
+      <LineSymbolizer
+        stroke="#170"
+        stroke-width="1.8"
+        stroke-dasharray="7,3"
+        stroke-opacity="0.7" />
+    </Rule>
+
+    <!-- High zoom: Outline large areas, shade small areas -->
+    <!-- This is a workaround for the fact that some large areas,
+    like some national parks, are just tagged as 'park' -->
+    <Rule>
+      <Filter>[way_area] &gt; 5000000</Filter>
+      &minz12; &maxz18;
+      <LineSymbolizer
+        stroke="#170"
+        stroke-width="3"
+        stroke-dasharray="8,3"
+        stroke-opacity="0.7" />
+    </Rule>
+    <Rule>
+      <Filter>[way_area] &lt; 5000000</Filter>
+      <PolygonSymbolizer
+        fill="#170"
+        fill-opacity="0.1" />
+    </Rule>
+    <!--
+    <Rule>
+      <Filter>[way_area] &gt;= 200 000 000</Filter>
+      &minz8; &maxz9;
+      <TextSymbolizer name="[name]" face-name="DejaVu Sans Book" size="7" fill="#170" halo-radius="1" wrap-width="14"/>
+    </Rule>
+    <Rule>
+      &minz10; &maxz11;
+      <TextSymbolizer name="[name]" face-name="DejaVu Sans Book" size="9" fill="#170" halo-radius="1" wrap-width="14"/>
+    </Rule>
+    -->
+</Style>
+
 <!-- adapted from OSM mapnik stylesheet -->
 <Style name="ferry-routes">
     <Rule>
@@ -58,7 +115,6 @@
 		<LinePatternSymbolizer file="symbols/chair_lift.png" />
 	</Rule>
 </Style>
-
 
 <Style name="buildings">
   <Rule>
@@ -215,6 +271,19 @@
 		&dbsettings; &extents;
 		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm FROM ${NHD_TABLE_PREFIX}_area) AS nhdarea</Parameter>
 	</Datasource>
+</Layer>
+
+<Layer name="nature-areas" status="on">
+  <StyleName>nature-areas</StyleName>
+    <Datasource>
+      &dbsettings; &extents;
+      <Parameter name="table">
+      (SELECT way, way_area, name, boundary FROM ${DB_PREFIX}_polygon
+      WHERE boundary='national_park' OR
+      leisure IN ('park', 'nature_reserve', 'common', 'playground', 'garden', 'golf_course', 'recreation_ground')
+      OR landuse IN ('forest', 'vineyard', 'conservation', 'recreation_ground', 'village_green', 'allotments')) as areas
+      </Parameter>
+    </Datasource>
 </Layer>
 
 <Layer name="ferry-routes" status="on">
@@ -495,7 +564,8 @@
 		-->
 		<Parameter name="table">
 		(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
-		    0 as way_area, CAST(ele_ft AS VARCHAR) || ' ft' as ele_w_unit
+		    boundary, 0 as way_area, CAST(ele_ft AS VARCHAR) ||
+		 ' ft' as ele_w_unit
 		 FROM ${DB_PREFIX}_point) AS featurenames
 		</Parameter>
     </Datasource>
@@ -507,7 +577,7 @@
 		&dbsettings; &extents;
 		<Parameter name="table">
 		(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
-		 way_area, '' AS ele_w_unit
+		 boundary, way_area, '' AS ele_w_unit
 		 FROM ${DB_PREFIX}_polygon ORDER BY z_order, way_area DESC)
 		 AS areafeaturenames</Parameter>
     </Datasource>

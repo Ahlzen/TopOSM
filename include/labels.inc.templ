@@ -205,9 +205,10 @@
     </Rule>
     
     <Rule>
-        &minz10; &maxz11; <!-- very large nature areas -->
+        &minz8; &maxz9; <!-- very large nature areas -->
         <Filter>
           ([leisure] = 'nature_reserve' or
+	    [boundary] = 'national_park' or
             [leisure] = 'park' or
             [leisure] = 'common' or
             [leisure] = 'playground' or
@@ -220,15 +221,16 @@
             [leisure] = 'recreation_ground' or
             [landuse] = 'village_green' or
             [landuse] = 'allotments')
-          and [way_area] &gt; 20000000
+          and [way_area] &gt; 50000000
         </Filter>
-        <TextSymbolizer name="[name]" face-name="DejaVu Sans Oblique" size="8"
-            fill="#050" dy="0" wrap-width="0" halo-fill="transparent" halo-radius="4" />
+        <TextSymbolizer name="[name]" face-name="DejaVu Sans Oblique" size="9"
+            fill="#040" dy="0" wrap-width="20" halo-fill="transparent" halo-radius="4" />
     </Rule>
     <Rule>
-        &minz12; &maxz12; <!-- large nature areas -->
+        &minz10; &maxz11; <!-- large nature areas -->
         <Filter>
           ([leisure] = 'nature_reserve' or
+	    [boundary] = 'national_park' or
             [leisure] = 'park' or
             [leisure] = 'common' or
             [leisure] = 'playground' or
@@ -241,15 +243,16 @@
 		    [leisure] = 'recreation_ground' or
 		    [landuse] = 'village_green' or
 		    [landuse] = 'allotments')
-          and [way_area] &gt; 2000000
+          and [way_area] &gt; 5000000
         </Filter>
-        <TextSymbolizer name="[name]" face-name="DejaVu Sans Oblique" size="9"
-            fill="#050" dy="0" wrap-width="0" halo-fill="transparent" halo-radius="4" />
+        <TextSymbolizer name="[name]" face-name="DejaVu Sans Oblique" size="10"
+            fill="#040" dy="0" wrap-width="20" halo-fill="transparent" halo-radius="4" />
     </Rule>
     <Rule>
-        &minz13; &maxz13; <!-- medium nature areas -->
+        &minz12; &maxz13; <!-- medium nature areas -->
         <Filter>
           ([leisure] = 'nature_reserve' or
+	    [boundary] = 'national_park' or
             [leisure] = 'park' or
             [leisure] = 'common' or
             [leisure] = 'playground' or
@@ -264,13 +267,14 @@
 		    [landuse] = 'allotments')
           and [way_area] &gt; 200000
         </Filter>
-        <TextSymbolizer name="[name]" face-name="DejaVu Sans Oblique" size="10"
-            fill="#050" dy="0" wrap-width="0" halo-fill="transparent" halo-radius="4" />
+        <TextSymbolizer name="[name]" face-name="DejaVu Sans Oblique" size="11"
+            fill="#040" dy="0" wrap-width="20" halo-fill="transparent" halo-radius="4" />
     </Rule>
     <Rule>
         &minz14; <!-- all nature areas -->
         <Filter>
           [leisure] = 'nature_reserve' or
+	  [boundary] = 'national_park' or
           [leisure] = 'park' or
           [leisure] = 'common' or
           [leisure] = 'playground' or
@@ -284,8 +288,8 @@
 	      [landuse] = 'village_green' or
 	      [landuse] = 'allotments'
         </Filter>
-        <TextSymbolizer name="[name]" face-name="DejaVu Sans Oblique" size="11"
-            fill="#050" dy="0" wrap-width="0" halo-fill="transparent" halo-radius="4" />
+        <TextSymbolizer name="[name]" face-name="DejaVu Sans Oblique" size="12"
+            fill="#040" dy="0" wrap-width="20" halo-fill="transparent" halo-radius="4" />
     </Rule>
 </Style>
 
