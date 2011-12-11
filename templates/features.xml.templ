@@ -82,6 +82,46 @@
     -->
 </Style>
 
+<Style name="misc-areas">
+
+  <!-- Military areas -->
+  <Rule>
+    &minz6; &maxz13;
+    <Filter>[landuse] = 'military'</Filter>
+    <PolygonPatternSymbolizer file="&customsymbolsdir;/hatch-red-10.png" />
+    <LineSymbolizer stroke="#f00" stroke-width="1" stroke-opacity="1.0" />
+  </Rule>
+  <Rule>
+    &minz14;
+    <Filter>[landuse] = 'military'</Filter>
+    <PolygonPatternSymbolizer file="&customsymbolsdir;/hatch-red-16.png" />
+    <LineSymbolizer stroke="#f00" stroke-width="1.5" stroke-opacity="1.0" />
+  </Rule>
+
+  <Rule>
+      &minz10;
+      <Filter>  
+        [landuse] = 'cemetary' or
+        [amenity] = 'grave_yard'
+      </Filter>
+      <PolygonSymbolizer fill="#8b8" fill-opacity="&areaopacity;" />
+      <LineSymbolizer stroke="#8b8" stroke-width="1" />
+  </Rule>
+  <Rule>
+      &minz10;
+      <Filter>[landuse] = 'construction'</Filter>
+      <PolygonSymbolizer fill="#bb3" fill-opacity="&areaopacity;" />
+      <LineSymbolizer stroke="#bb3" stroke-width="1" />
+  </Rule>
+  <Rule>
+      &minz10;
+      <Filter>[natural] = 'beach'</Filter>
+      <PolygonSymbolizer fill="#fec" fill-opacity="&areaopacity;" />
+      <LineSymbolizer stroke="#fec" stroke-width="1" />
+  </Rule>
+
+</Style>
+
 <!-- adapted from OSM mapnik stylesheet -->
 <Style name="ferry-routes">
     <Rule>
@@ -282,6 +322,19 @@
       WHERE boundary='national_park' OR
       leisure IN ('park', 'nature_reserve', 'common', 'playground', 'garden', 'golf_course', 'recreation_ground')
       OR landuse IN ('forest', 'vineyard', 'conservation', 'recreation_ground', 'village_green', 'allotments')) as areas
+      </Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="misc-areas" status="on">
+  <StyleName>misc-areas</StyleName>
+    <Datasource>
+      &dbsettings; &extents;
+      <Parameter name="table">
+      (SELECT way, way_area, name, landuse, "natural", amenity
+      FROM ${DB_PREFIX}_polygon
+      WHERE landuse IS NOT NULL OR "natural" IS NOT NULL or amenity IS NOT NULL)
+      AS areas
       </Parameter>
     </Datasource>
 </Layer>
