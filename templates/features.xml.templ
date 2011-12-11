@@ -318,10 +318,12 @@
     <Datasource>
       &dbsettings; &extents;
       <Parameter name="table">
-      (SELECT way, way_area, name, boundary FROM ${DB_PREFIX}_polygon
-      WHERE boundary='national_park' OR
-      leisure IN ('park', 'nature_reserve', 'common', 'playground', 'garden', 'golf_course', 'recreation_ground')
-      OR landuse IN ('forest', 'vineyard', 'conservation', 'recreation_ground', 'village_green', 'allotments')) as areas
+      (SELECT way, way_area, name, boundary, "natural" FROM ${DB_PREFIX}_polygon WHERE
+      boundary='national_park' OR
+      leisure IN ('park', 'nature_reserve', 'common', 'playground', 'garden', 'golf_course', 'recreation_ground') OR
+      landuse IN ('forest', 'vineyard', 'conservation', 'recreation_ground', 'village_green', 'allotments') OR
+      "natural" IN ('wood')
+      ) AS areas
       </Parameter>
     </Datasource>
 </Layer>
