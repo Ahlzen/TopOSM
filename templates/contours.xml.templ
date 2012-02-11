@@ -102,32 +102,48 @@ z16-: major 2/3, minor 1 (labels on 1/2/3)
    <Rule>
      &minz11; &maxz11;
      <Filter>[class] = 3</Filter>
-     <TextSymbolizer name="[height_ft]" face-name="DejaVu Sans Book"
+     <TextSymbolizer face-name="DejaVu Sans Book"
         size="8" fill="&contourcolor;" placement="line" halo-fill="transparent"
-        halo-radius="4" minimum-distance="100" max-char-angle-delta="30"/>
+        halo-radius="4" minimum-distance="100" max-char-angle-delta="30"
+	>[height_ft]</TextSymbolizer>
    </Rule>
    <Rule>
      &minz12; &maxz12;
      <Filter>[class] = 3</Filter>
-     <TextSymbolizer name="[height_ft]" face-name="DejaVu Sans Book"
+     <TextSymbolizer face-name="DejaVu Sans Book"
         size="9" fill="&contourcolor;" placement="line" halo-fill="transparent"
-        halo-radius="5" minimum-distance="100" max-char-angle-delta="30"/>
+        halo-radius="5" minimum-distance="100" max-char-angle-delta="30"
+	>[height_ft]</TextSymbolizer>
    </Rule>
    <Rule>
-     &minz13;
+     &minz13; &maxz14;
      <Filter>[class] = 2 or [class] = 3</Filter>
-     <TextSymbolizer name="[height_ft]" face-name="DejaVu Sans Book"
+     <TextSymbolizer face-name="DejaVu Sans Book"
         size="9" fill="&contourcolor;" placement="line" halo-fill="transparent"
-        halo-radius="5" minimum-distance="100" max-char-angle-delta="30"/>
+	spacing="550"
+        halo-radius="5" minimum-distance="150" max-char-angle-delta="30"
+	>[height_ft]</TextSymbolizer>
    </Rule>
+   <Rule>
+     &minz15;
+     <Filter>[class] = 2 or [class] = 3</Filter>
+     <TextSymbolizer face-name="DejaVu Sans Book"
+        size="9" fill="&contourcolor;" placement="line" halo-fill="transparent"
+	spacing="550"
+        halo-radius="5" minimum-distance="150" max-char-angle-delta="30"
+	>[height_ft]</TextSymbolizer>
+   </Rule>
+
 
    <!-- Minor labels -->
    <Rule>
      &minz16;
      <Filter>[class] = 1</Filter>
-     <TextSymbolizer name="[height_ft]" face-name="DejaVu Sans Book"
+     <TextSymbolizer face-name="DejaVu Sans Book"
         size="8" fill="&contourcolor;" placement="line" halo-fill="transparent"
-        halo-radius="4" minimum-distance="100" max-char-angle-delta="30"/>
+	spacing="750"
+        halo-radius="4" minimum-distance="150" max-char-angle-delta="30"
+	>[height_ft]</TextSymbolizer>
    </Rule>
    
 </Style>
