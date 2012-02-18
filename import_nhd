@@ -24,7 +24,7 @@ for SRCFILE in $NHD_DIR/nhdarhi*.shp; do
     echo $SRCFILE
 
     echo "Reprojecting and applying bbox..."
-    ogr2ogr -overwrite -t_srs "$SRS900913" \
+    ogr2ogr -t_srs "$SRS900913" \
         -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
         "$TEMPFILE" "$SRCFILE"
    
@@ -52,7 +52,7 @@ for SRCFILE in $NHD_DIR/nhdflh??.shp; do
     echo $SRCFILE
     
     echo "Reprojecting and applying bbox..."   
-    ogr2ogr -overwrite -t_srs "$SRS900913" \
+    ogr2ogr -t_srs "$SRS900913" \
         -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
         "$TEMPFILE" "$SRCFILE"
 
@@ -78,7 +78,7 @@ for SRCFILE in $NHD_DIR/nhdpthi*.shp; do
     echo $SRCFILE
 
     echo "Reprojecting and applying bbox..."   
-    ogr2ogr -overwrite -t_srs "$SRS900913" \
+    ogr2ogr -t_srs "$SRS900913" \
         -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
         "$TEMPFILE" "$SRCFILE"
 
@@ -100,7 +100,7 @@ for SRCFILE in $NHD_DIR/nhdwbhi*.shp; do
     echo $SRCFILE
     
     echo "Reprojecting and applying bbox..."   
-    ogr2ogr -overwrite -t_srs "$SRS900913" \
+    ogr2ogr -t_srs "$SRS900913" \
         -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
         "$TEMPFILE" "$SRCFILE"
     
