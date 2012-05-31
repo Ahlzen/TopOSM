@@ -72,16 +72,6 @@ $ ./import_nhd
 
 Generate hillshade and colormaps:
 $ ./prep_toposm_data
-$ cd <hillshade dir>
-$ for f in *.tif ; do gdaladdo -r gauss $f 2 4 8 16 32 ; done
-$ (repeat for colormap, hypsorelief)
-
-Prepare landcover data:
-TODO: Translate NLCD to GeoTIFF and reproject to 900913
-TODO: Build overviews
-Copy nlcd2006.vrt to the NLCD directory, making sure it references
-the landcover GeoTIFF. The VRT file is only used to modify the
-color table.
 
 Add a shortcut for your area(s) of interest to areas.py.
 
