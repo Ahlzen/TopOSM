@@ -70,7 +70,7 @@ for y in `seq $BOTTOM $TOP`; do
     gdal_translate -a_srs "$SRS900913" -of GTiff \
        -co COMPRESS=DEFLATE -co PREDICTOR=2 -co ZLEVEL=9 \
         $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.tif
-    rm $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.png.aux.xml
+    rm $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.png.aux.xml $HYPSORELIEF_DIR/$BASE.wld
     fi
  
     fi;
