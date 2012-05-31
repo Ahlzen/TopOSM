@@ -24,10 +24,6 @@ export HYPSORELIEF_DIR="geodata/hypsorelief" # Hillshade with hypsometric tintin
 export BASE_TILE_DIR="tile" # output directory
 export TEMP_DIR="temp" # preprocessed data and temporary files
 
-# Program locations
-export HILLSHADE="$HOME/bin/hillshade"
-export COLORRELIEF="$HOME/bin/color-relief"
-
 # Misc files
 export OSM2PGSQL_STYLE_FILE="/usr/share/osm2pgsql/default.style"
 export COLORFILE="$HOME/projects/toposm/colors.txt" # elevation-to-color mapping

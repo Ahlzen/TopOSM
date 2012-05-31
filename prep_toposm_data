@@ -33,7 +33,7 @@ for y in `seq $BOTTOM $TOP`; do
     # Render and reproject hillshade
     if [[ ! -f $HILLSHADE_DIR/$BASE.tif ]] ; then
     echo "Rendering hillshade..."
-    hillshade $NEDPATH $HILLSHADE_DIR/$BASE.unproj.tif -z 0.00001
+    gdaldem hillshade $NEDPATH $HILLSHADE_DIR/$BASE.unproj.tif -z 0.00001
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
        -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
        $HILLSHADE_DIR/$BASE.unproj.tif $HILLSHADE_DIR/$BASE.tif
@@ -43,7 +43,7 @@ for y in `seq $BOTTOM $TOP`; do
     # Render and reproject colormap
     if [[ ! -f $COLORMAP_DIR/$BASE.tif ]] ; then
     echo "Rendering colormap..."
-    color-relief $NEDPATH $COLORFILE $COLORMAP_DIR/$BASE.unproj.tif
+    gdaldem color-relief $NEDPATH $COLORFILE $COLORMAP_DIR/$BASE.unproj.tif
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
        -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
        $COLORMAP_DIR/$BASE.unproj.tif $COLORMAP_DIR/$BASE.tif
