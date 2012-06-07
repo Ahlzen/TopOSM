@@ -315,6 +315,28 @@ def renderToPdf(envLL, filename, sizex, sizey):
     mergedpdf.write(output)
     output.close()
 
+def renderToPng(envLL, filename, sizex, sizey, base='hypsorelief'):
+    """Renders the specified Box2d and zoom level as a PNG"""
+    layers = [base, 'areas', 'ocean', 'contours', 'features']
+    if base == 'landcoverrelief':
+        layers.remove('areas')
+    images = {}
+    for mapname in layers:
+        console.debugMessage(' Rendering layer: ' + mapname)
+        map = mapnik.Map(sizex, sizey)
+        mapnik.load_map(map, mapname + ".xml")
+        map.zoom_to_box(LLToMerc(envLL))
+        if USE_CAIRO and mapname in ['ocean', 'contours', 'features']:
+            assert mapnik.has_cairo()
+            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, sizex, sizey)
+            mapnik.render(map, surface)
+            images[mapname] = mapnik.Image.from_cairo(surface)
+        else:
+            images[mapname] = mapnik.Image(sizex, sizey)
+            mapnik.render(map, images[mapname])
+    image = getComposite([images[m] for m in layers])
+    image.save(filename, 'png')
+
 def printSyntax():
     print "Syntax:"
     print " toposm.py render <area(s)> <minZoom> <maxZoom>"
