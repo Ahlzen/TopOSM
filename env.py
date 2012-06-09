@@ -30,6 +30,7 @@ ERRORLOG = os.environ['ERROR_LOG']
 JPEG_QUALITY = os.environ['JPEG_QUALITY']
 TOPOSM_DEBUG = os.environ['TOPOSM_DEBUG']
 EXTRA_FONTS_DIR = os.environ['EXTRA_FONTS_DIR']
+CACHE_LAYERS = frozenset(os.environ['CACHE_LAYERS'].split(','))
 
 ##### Common constants
 

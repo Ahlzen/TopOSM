@@ -111,6 +111,15 @@ class RenderThread:
             self.q.task_done()
 
 
+def getCachedMetaTileDir(mapname, z, x):
+    return path.join(TEMPDIR, mapname, str(z), str(x))
+
+def getCachedMetaTilePath(mapname, z, x, y, suffix = "png"):
+    return path.join(getCachedMetaTileDir(mapname, z, x), str(y) + '.' + suffix)
+
+def cachedMetaTileExists(mapname, z, x, y, suffix = "png"):
+    return path.isfile(getCachedMetaTilePath(mapname, z, x, y, suffix))
+
 def getMetaTileDir(mapname, z):
     return path.join(BASE_TILE_DIR, mapname, str(z))
 
@@ -187,6 +196,8 @@ def renderMetaTile(z, x, y, ntiles, maps):
 def renderLayer(name, z, x, y, ntiles, map, suffix = 'png'):
     """Renders the specified map tile (layer) as a mapnik.Image."""
     console.debugMessage(' Rendering layer: ' + name)
+    if name in CACHE_LAYERS and cachedMetaTileExists(name, z, x, y, 'png'):
+        return mapnik.Image.open(getCachedMetaTilePath(name, z, x, y, 'png'))
     env = getMercTileEnv(z, x, y, ntiles, True)
     tilesize = getTileSize(ntiles, True)
     map.zoom_to_box(env)
@@ -198,6 +209,9 @@ def renderLayer(name, z, x, y, ntiles, map, suffix = 'png'):
     else:            
         image = mapnik.Image(tilesize, tilesize)
         mapnik.render(map, image)
+    if name in CACHE_LAYERS:
+        ensureDirExists(getCachedMetaTileDir(name, z, x))
+        image.save(getCachedMetaTilePath(name, z, x, y, 'png'))
     return image
 
 def saveTiles(z, x, y, ntiles, mapname, image, suffix = 'png', imgtype = None):
