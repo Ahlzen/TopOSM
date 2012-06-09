@@ -167,9 +167,9 @@ def renderMetaTile(z, x, y, ntiles, maps):
     hypsorelief = renderLayer('hypsorelief', z, x, y, ntiles, maps['hypsorelief'], 'png')
     landcoverrelief = renderLayer('landcoverrelief', z, x, y, ntiles, maps['landcoverrelief'], 'png')
     areas = renderLayer('areas', z, x, y, ntiles, maps['areas'], 'png')
-    ocean = renderLayer('ocean', z, x, y, ntiles, maps['ocean'], 'png', True)
-    contours = renderLayer('contours', z, x, y, ntiles, maps['contours'], 'png', True)
-    features = renderLayer('features', z, x, y, ntiles, maps['features'], 'png', True)
+    ocean = renderLayer('ocean', z, x, y, ntiles, maps['ocean'], 'png')
+    contours = renderLayer('contours', z, x, y, ntiles, maps['contours'], 'png')
+    features = renderLayer('features', z, x, y, ntiles, maps['features'], 'png')
     base_h = getComposite((hypsorelief, areas, ocean))
     base_l = getComposite((landcoverrelief, ocean))
     composite_h = getComposite((base_h, contours, features))
@@ -191,13 +191,13 @@ def renderMetaTile(z, x, y, ntiles, maps):
         saveTiles(z, x, y, ntiles, 'ocean', ocean)
         saveTiles(z, x, y, ntiles, 'features', features)
     
-def renderLayer(name, z, x, y, ntiles, map, suffix = 'png', useCairo = False):
+def renderLayer(name, z, x, y, ntiles, map, suffix = 'png'):
     """Renders the specified map tile (layer) as a mapnik.Image."""
     console.debugMessage(' Rendering layer: ' + name)
     env = getMercTileEnv(z, x, y, ntiles, True)
     tilesize = getTileSize(ntiles, True)
     map.zoom_to_box(env)
-    if useCairo and USE_CAIRO:
+    if USE_CAIRO and name in CAIRO_LAYERS:
         assert mapnik.has_cairo()
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, tilesize, tilesize)
         mapnik.render(map, surface)

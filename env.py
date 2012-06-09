@@ -37,7 +37,9 @@ EXTRA_FONTS_DIR = os.environ['EXTRA_FONTS_DIR']
 #CONTOUR_INTERVAL = 7.62 # 25 ft in meters
 CONTOUR_INTERVAL = 12.192 # 40 ft in meters
 
-MAPNIK_LAYERS = ['hypsorelief', 'landcoverrelief', 'areas', 'ocean', 'contours', 'features']
+AGG_LAYERS = frozenset(['hypsorelief', 'landcoverrelief', 'areas'])
+CAIRO_LAYERS = frozenset(['ocean', 'contours', 'features'])
+MAPNIK_LAYERS = AGG_LAYERS | CAIRO_LAYERS
 
 # Optimal metatile size (N x N subtiles) by zoom level.
 # A too low number is inefficient. A too high number uses
