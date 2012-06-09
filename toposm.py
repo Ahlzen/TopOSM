@@ -164,16 +164,13 @@ def allConstituentTilesExist(z, x, y, ntiles):
 def renderMetaTile(z, x, y, ntiles, maps):
     """Renders the specified map tile and saves the result (including the
     composite) as individual tiles."""
-    hypsorelief = renderLayer('hypsorelief', z, x, y, ntiles, maps['hypsorelief'], 'png')
-    landcoverrelief = renderLayer('landcoverrelief', z, x, y, ntiles, maps['landcoverrelief'], 'png')
-    areas = renderLayer('areas', z, x, y, ntiles, maps['areas'], 'png')
-    ocean = renderLayer('ocean', z, x, y, ntiles, maps['ocean'], 'png')
-    contours = renderLayer('contours', z, x, y, ntiles, maps['contours'], 'png')
-    features = renderLayer('features', z, x, y, ntiles, maps['features'], 'png')
-    base_h = getComposite((hypsorelief, areas, ocean))
-    base_l = getComposite((landcoverrelief, ocean))
-    composite_h = getComposite((base_h, contours, features))
-    composite_l = getComposite((base_l, contours, features))
+    images = {}
+    for layer in MAPNIK_LAYERS:
+        images[layer] = renderLayer(layer, z, x, y, ntiles, maps[layer], 'png')
+    base_h = getComposite((images['hypsorelief'], images['areas'], images['ocean']))
+    base_l = getComposite((images['landcoverrelief'], images['ocean']))
+    composite_h = getComposite((base_h, images['contours'], images['features']))
+    composite_l = getComposite((base_l, images['contours'], images['features']))
     if SAVE_PNG_COMPOSITE:
         saveTiles(z, x, y, ntiles, 'composite_h', composite_h)
         saveTiles(z, x, y, ntiles, 'composite_l', composite_l)
@@ -184,12 +181,8 @@ def renderMetaTile(z, x, y, ntiles, maps):
     if SAVE_INTERMEDIATE_TILES:
         saveTiles(z, x, y, ntiles, 'base_h', base_h)
         saveTiles(z, x, y, ntiles, 'base_l', base_l)
-        saveTiles(z, x, y, ntiles, 'contours', contours)
-        saveTiles(z, x, y, ntiles, 'hypsorelief', hypsorelief)
-        saveTiles(z, x, y, ntiles, 'landcoverrelief', landcoverrelief)
-        saveTiles(z, x, y, ntiles, 'areas', areas)
-        saveTiles(z, x, y, ntiles, 'ocean', ocean)
-        saveTiles(z, x, y, ntiles, 'features', features)
+        for layer in MAPNIK_LAYERS:
+            saveTiles(z, x, y, ntiles, layer, images['layer'])
     
 def renderLayer(name, z, x, y, ntiles, map, suffix = 'png'):
     """Renders the specified map tile (layer) as a mapnik.Image."""
