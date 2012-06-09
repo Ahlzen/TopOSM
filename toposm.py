@@ -98,13 +98,7 @@ class RenderThread:
         if not (allConstituentTilesExist(z, x, y, ntiles)):
             msg = "Rendering meta tile %s %s %s (%sx%s)" % \
                 (z, x, y, ntiles, ntiles)
-            self.runAndLog(msg, renderMetaTile, (z, x, y, ntiles, \
-                self.maps['hypsorelief'], \
-                self.maps['landcoverrelief'], \
-                self.maps['areas'], \
-                self.maps['ocean'], \
-                self.maps['contours'], \
-                self.maps['features']))
+            self.runAndLog(msg, renderMetaTile, (z, x, y, ntiles, self.maps))
 
     def renderLoop(self):
         self.currentz = 0
@@ -167,15 +161,15 @@ def allConstituentTilesExist(z, x, y, ntiles):
             return False
     return True
 
-def renderMetaTile(z, x, y, ntiles, hypsoreliefMap, landcoverreliefMap, areasMap, oceanMap, contoursMap, featuresMap):
+def renderMetaTile(z, x, y, ntiles, maps):
     """Renders the specified map tile and saves the result (including the
     composite) as individual tiles."""
-    hypsorelief = renderLayer('hypsorelief', z, x, y, ntiles, hypsoreliefMap, 'png')
-    landcoverrelief = renderLayer('landcoverrelief', z, x, y, ntiles, landcoverreliefMap, 'png')
-    areas = renderLayer('areas', z, x, y, ntiles, areasMap, 'png')
-    ocean = renderLayer('ocean', z, x, y, ntiles, oceanMap, 'png', True)
-    contours = renderLayer('contours', z, x, y, ntiles, contoursMap, 'png', True)
-    features = renderLayer('features', z, x, y, ntiles, featuresMap, 'png', True)
+    hypsorelief = renderLayer('hypsorelief', z, x, y, ntiles, maps['hypsorelief'], 'png')
+    landcoverrelief = renderLayer('landcoverrelief', z, x, y, ntiles, maps['landcoverrelief'], 'png')
+    areas = renderLayer('areas', z, x, y, ntiles, maps['areas'], 'png')
+    ocean = renderLayer('ocean', z, x, y, ntiles, maps['ocean'], 'png', True)
+    contours = renderLayer('contours', z, x, y, ntiles, maps['contours'], 'png', True)
+    features = renderLayer('features', z, x, y, ntiles, maps['features'], 'png', True)
     base_h = getComposite((hypsorelief, areas, ocean))
     base_l = getComposite((landcoverrelief, ocean))
     composite_h = getComposite((base_h, contours, features))
