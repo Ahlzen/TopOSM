@@ -389,6 +389,15 @@
     <StyleName>highway-highzoom-fill</StyleName>
     <Datasource>
         &dbsettings; &extents;
+        <!--
+        asciiphil: By default, osm2pgsql gives link roads the
+        same z_order value as their corresponding main classification.
+        This results in, e.g., motorway_link roads being rendered on
+        top of everything else, which looks kind of bad,
+        especially at high zoom levels.  This alters the rendering order
+        so link roads are always rendered before any other roads,
+        which makes the map look nicer.
+        -->
         <Parameter name="table">
             (SELECT way, highway, bridge, tunnel, bicycle,
                     CASE WHEN bridge = 'yes' THEN UNNEST(ARRAY[1,2])
