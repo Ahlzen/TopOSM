@@ -176,10 +176,12 @@ def renderMetaTile(z, x, y, ntiles, maps):
     images = {}
     for layer in MAPNIK_LAYERS:
         images[layer] = renderLayer(layer, z, x, y, ntiles, maps[layer], 'png')
+    console.debugMessage(' Combining tiles')
     base_h = getComposite((images['hypsorelief'], images['areas'], images['ocean']))
     base_l = getComposite((images['landcoverrelief'], images['ocean']))
     composite_h = getComposite((base_h, images['contours'], images['features']))
     composite_l = getComposite((base_l, images['contours'], images['features']))
+    console.debugMessage(' Saving tiles')
     if SAVE_PNG_COMPOSITE:
         saveTiles(z, x, y, ntiles, 'composite_h', composite_h)
         saveTiles(z, x, y, ntiles, 'composite_l', composite_l)
