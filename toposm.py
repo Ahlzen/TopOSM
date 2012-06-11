@@ -56,8 +56,8 @@ if not mapnik.has_cairo():
 # merged. Primarily useful for debugging and style editing.
 SAVE_INTERMEDIATE_TILES = True
 
-# If true, a composite JPEG layer is saved along with
-# the standard PNG.
+# Enables/disables saving the composite layers
+SAVE_PNG_COMPOSITE = True
 SAVE_JPEG_COMPOSITE = True
 JPEG_COMPOSITE_QUALITY = 90
 
@@ -154,8 +154,18 @@ def allConstituentTilesExist(z, x, y, ntiles):
     tox = (x+1)*ntiles - 1
     fromy = y*ntiles
     toy = (y+1)*ntiles - 1
-    # NOTE: This only checks for the final "composite" tile set...
-    return allTilesExist('composite', z, fromx, tox, fromy, toy, 'png')
+    # NOTE: This only checks for the final "composite" tile set(s)...
+    if SAVE_PNG_COMPOSITE:
+        chExists = allTilesExist('composite_h', z, fromx, tox, fromy, toy, 'png')
+        clExists = allTilesExist('composite_l', z, fromx, tox, fromy, toy, 'png')
+        if (not chExists) or (not clExists):
+            return False
+    if SAVE_JPEG_COMPOSITE:
+        jhExists = allTilesExist('jpeg90_h', z, fromx, tox, fromy, toy, 'jpg')
+        jlExists = allTilesExist('jpeg90_l', z, fromx, tox, fromy, toy, 'jpg')
+        if (not jhExists) or (not jlExists):
+            return False
+    return True
 
 def renderMetaTile(z, x, y, ntiles, hypsoreliefMap, landcoverreliefMap, areasMap, oceanMap, contoursMap, featuresMap):
     """Renders the specified map tile and saves the result (including the
@@ -170,8 +180,9 @@ def renderMetaTile(z, x, y, ntiles, hypsoreliefMap, landcoverreliefMap, areasMap
     base_l = getComposite((landcoverrelief, ocean))
     composite_h = getComposite((base_h, contours, features))
     composite_l = getComposite((base_l, contours, features))
-    saveTiles(z, x, y, ntiles, 'composite_h', composite_h)
-    saveTiles(z, x, y, ntiles, 'composite_l', composite_l)
+    if SAVE_PNG_COMPOSITE:
+        saveTiles(z, x, y, ntiles, 'composite_h', composite_h)
+        saveTiles(z, x, y, ntiles, 'composite_l', composite_l)
     if SAVE_JPEG_COMPOSITE:
         basename = 'jpeg' + str(JPEG_COMPOSITE_QUALITY)
         saveTiles(z, x, y, ntiles, basename+'_h', composite_h, 'jpg', basename)
