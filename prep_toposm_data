@@ -38,6 +38,7 @@ for y in `seq $BOTTOM $TOP`; do
        -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
        $HILLSHADE_DIR/$BASE.unproj.tif $HILLSHADE_DIR/$BASE.tif
     rm $HILLSHADE_DIR/$BASE.unproj.tif
+    gdaladdo -r gauss $HILLSHADE_DIR/$BASE.tif 2 4 8 16 32
     fi
 
     # Render and reproject colormap
@@ -48,6 +49,7 @@ for y in `seq $BOTTOM $TOP`; do
        -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
        $COLORMAP_DIR/$BASE.unproj.tif $COLORMAP_DIR/$BASE.tif
     rm $COLORMAP_DIR/$BASE.unproj.tif
+    gdaladdo -r gauss $COLORMAP_DIR/$BASE.tif 2 4 8 16 32
     fi
  
     # Render hypsorelief (relief shade with hypsometric tinting)
@@ -71,6 +73,7 @@ for y in `seq $BOTTOM $TOP`; do
        -co COMPRESS=DEFLATE -co PREDICTOR=2 -co ZLEVEL=9 \
         $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.tif
     rm $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.png.aux.xml $HYPSORELIEF_DIR/$BASE.wld
+    gdaladdo -r gauss $HYPSORELIEF_DIR/$BASE.tif 2 4 8 16 32
     fi
  
     fi;
@@ -79,7 +82,6 @@ done; done
 # generate overviews and VRT layers
 for d in $COLORMAP_DIR $HILLSHADE_DIR $HYPSORELIEF_DIR ; do
     pushd . ; cd $d
-    for f in *.tif ; do gdaladdo -r gauss $f 2 4 8 16 32 ; done
     gdalbuildvrt all.vrt *.tif
     popd
 done
