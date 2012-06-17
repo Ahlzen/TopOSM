@@ -27,37 +27,38 @@ for y in `seq $BOTTOM $TOP`; do
     if [ -f $NEDPATH ] ; then
     echo; echo "***** $NEDPATH"
 
+    if [[ ! -f $HYPSORELIEF_DIR/$BASE.tif ]] ; then
+
     # NOTE: First hillshading, then reprojecting seems to yield a better
     # result than vice versa.
 
+    # NOTE: JPEG compression in the TIFFs saves a lot of disk space, but
+    # ImageMagick doesn't like it.  Thus, we make JPEG-compressed TIFFs
+    # to keep around, but use uncompressed files as inputs to IM and
+    # delete them when we're done.
+
     # Render and reproject hillshade
-    if [[ ! -f $HILLSHADE_DIR/$BASE.tif ]] ; then
     echo "Rendering hillshade..."
     gdaldem hillshade $NEDPATH $HILLSHADE_DIR/$BASE.unproj.tif -z 0.00001
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
-       -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
-       $HILLSHADE_DIR/$BASE.unproj.tif $HILLSHADE_DIR/$BASE.tif
+        $HILLSHADE_DIR/$BASE.unproj.tif $HILLSHADE_DIR/$BASE.uncomp.tif
     rm $HILLSHADE_DIR/$BASE.unproj.tif
+    gdal_translate -of GTiff -co COMPRESS=JPEG \
+        $HILLSHADE_DIR/$BASE.uncomp.tif $HILLSHADE_DIR/$BASE.tif
     gdaladdo -r gauss $HILLSHADE_DIR/$BASE.tif 2 4 8 16 32
-    fi
 
     # Render and reproject colormap
-    if [[ ! -f $COLORMAP_DIR/$BASE.tif ]] ; then
     echo "Rendering colormap..."
     gdaldem color-relief $NEDPATH $COLORFILE $COLORMAP_DIR/$BASE.unproj.tif
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
-       -co "COMPRESS=DEFLATE" -co "PREDICTOR=2" -co "ZLEVEL=9" \
-       $COLORMAP_DIR/$BASE.unproj.tif $COLORMAP_DIR/$BASE.tif
+       $COLORMAP_DIR/$BASE.unproj.tif $COLORMAP_DIR/$BASE.uncomp.tif
     rm $COLORMAP_DIR/$BASE.unproj.tif
-    gdaladdo -r gauss $COLORMAP_DIR/$BASE.tif 2 4 8 16 32
-    fi
  
     # Render hypsorelief (relief shade with hypsometric tinting)
     # (IM strips any georeferencing in the file, so we have to use
     # a world file to put it back)
-    if [[ ! -f $HYPSORELIEF_DIR/$BASE.tif ]] ; then
-    COLORMAP=$COLORMAP_DIR/$BASE.tif
-    HILLSHADE=$HILLSHADE_DIR/$BASE.tif
+    COLORMAP=$COLORMAP_DIR/$BASE.uncomp.tif
+    HILLSHADE=$HILLSHADE_DIR/$BASE.uncomp.tif
     # Translate hillshade to PNG+WLD (just to get a valid .wld file)
     gdal_translate -of PNG -co WORLDFILE=YES \
 	$COLORMAP_DIR/$BASE.tif $HYPSORELIEF_DIR/$BASE.png 
@@ -70,9 +71,10 @@ for y in `seq $BOTTOM $TOP`; do
         -modulate 92 $HYPSORELIEF_DIR/$BASE.png
     # PNG+WLD -> GeoTIFF
     gdal_translate -a_srs "$SRS900913" -of GTiff \
-       -co COMPRESS=DEFLATE -co PREDICTOR=2 -co ZLEVEL=9 \
+       -co COMPRESS=JPEG \
         $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.tif
     rm $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.png.aux.xml $HYPSORELIEF_DIR/$BASE.wld
+    rm $COLORMAP $HILLSHADE
     gdaladdo -r gauss $HYPSORELIEF_DIR/$BASE.tif 2 4 8 16 32
     fi
  
