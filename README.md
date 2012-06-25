@@ -71,23 +71,29 @@ BOOST_INCLUDES=$HOME/include BOOST_LIBS=$HOME/lib
 * Planet.osm or other OSM dataset: http://planet.openstreetmap.org/
 
 
-### Configure environment ###
+### Configuring the Rendering Environment ###
 
-Modify set-toposm-env, specifying file paths, settings and the
-area of interest. Data imports will be limited to the specified
-area.
+Create the required directories for tiles and temp files:
 
-Source set-toposm-env:
 ```
-$ cd <toposm-dir>
 $ mkdir -p temp tile
+```
+
+TopOSM is configured through environment variables. A template for this is included. Make a copy, modify it according to you system, and source it:
+
+```
+$ cp set-toposm-env.templ set-toposm-env
+$ emacs set-toposm-env
 $ . set-toposm-env
 ```
 
-Import OSM data, e.g:
+Import OSM data. The import will be cropped to the area specified in set-toposm-env.
 ```
 $ ./import_planet geodata/osm/Planet.osm
 ```
+
+The import script can also import OSM daily diffs (ending in .osc.gz).
+
 
 Import NHD data:
 ```

@@ -1,4 +1,5 @@
 # These are generated from templates
+set-toposm-env
 areas.xml
 contours.xml
 features.xml
