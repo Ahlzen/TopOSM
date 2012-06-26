@@ -69,6 +69,7 @@ BOOST_INCLUDES=$HOME/include BOOST_LIBS=$HOME/lib
 * USGS NED data, as needed: http://openstreetmap.us/ned/13arcsec/grid/
 * NLCD 2006 (Land cover) data: http://www.mrlc.gov/nlcd06_data.php
 * Planet.osm or other OSM dataset: http://planet.openstreetmap.org/
+* Water polygons (in spherical mercator) from http://openstreetmapdata.com/
 
 
 ### Configuring the Rendering Environment ###

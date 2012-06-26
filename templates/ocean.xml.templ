@@ -8,30 +8,29 @@
 	%colors;
 ]>
 
-<Map background-color="&waterfillcolor;" srs="&srs900913;">
+<Map background-color="transparent" srs="&srs900913;">
 
-<Style name="coastline-outline">
+<Style name="coastline">
   <Rule>
-    <!-- Twice the actual width, since half will get cut next... -->
+    <!-- Twice the actual width, since half will get filled in... -->
     <LineSymbolizer stroke="&waterlinecolor;" stroke-width="2.0" />
   </Rule>
 </Style>
 
-<Style name="land-hole">
+<Style name="ocean">
   <Rule>
-    <!-- NOTE: This requires a patched mapnik. -->
-    <PolygonSymbolizer fill="transparent" />
+    <PolygonSymbolizer fill="&waterfillcolor;" />
   </Rule>
 </Style>
 
 
-<Layer name="land-poly-hires" status="on" srs="&srs900913;">
-    <StyleName>coastline-outline</StyleName>
-    <StyleName>land-hole</StyleName>
+<Layer name="water-polygons" status="on" srs="&srs900913;">
+    <StyleName>coastline</StyleName>
+    <StyleName>ocean</StyleName>
     <Datasource>
         &extents;
         <Parameter name="type">shape</Parameter>
-        <Parameter name="file">${WORLD_BOUNDARIES_DIR}/processed_p</Parameter>
+        <Parameter name="file">${OSM_DATADIR}/water_polygons</Parameter>
     </Datasource>
 </Layer>
 
