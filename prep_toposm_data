@@ -39,17 +39,23 @@ for y in `seq $BOTTOM $TOP`; do
 
     # Render and reproject hillshade
     echo "Rendering hillshade..."
+    echo -n "shade: "
     gdaldem hillshade $NEDPATH $HILLSHADE_DIR/$BASE.unproj.tif -z 0.00001
+    echo -n "warp: "
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
         $HILLSHADE_DIR/$BASE.unproj.tif $HILLSHADE_DIR/$BASE.uncomp.tif
     rm $HILLSHADE_DIR/$BASE.unproj.tif
+    echo -n "compress: "
     gdal_translate -of GTiff -co COMPRESS=JPEG \
         $HILLSHADE_DIR/$BASE.uncomp.tif $HILLSHADE_DIR/$BASE.tif
+    echo -n "overview: "
     gdaladdo -r gauss $HILLSHADE_DIR/$BASE.tif 2 4 8 16 32
 
     # Render and reproject colormap
     echo "Rendering colormap..."
+    echo -n "color: "
     gdaldem color-relief $NEDPATH $COLORFILE $COLORMAP_DIR/$BASE.unproj.tif
+    echo -n "warp: "
     gdalwarp -t_srs "$SRS900913" -r cubicspline -multi -of GTiff \
        $COLORMAP_DIR/$BASE.unproj.tif $COLORMAP_DIR/$BASE.uncomp.tif
     rm $COLORMAP_DIR/$BASE.unproj.tif
@@ -60,23 +66,28 @@ for y in `seq $BOTTOM $TOP`; do
     COLORMAP=$COLORMAP_DIR/$BASE.uncomp.tif
     HILLSHADE=$HILLSHADE_DIR/$BASE.uncomp.tif
     # Translate hillshade to PNG+WLD (just to get a valid .wld file)
+    echo -n "world: "
     gdal_translate -of PNG -co WORLDFILE=YES \
         $COLORMAP $HYPSORELIEF_DIR/$BASE.png
     # Create the actual PNG file.  We have to force IM to output RGB, since
     # it'll use a palette if it thinks it can, but JPEG compression only works
     # with RGB images.
+    echo -n "compose: "
     convert $COLORMAP -modulate 120 \
         \( $HILLSHADE -level 70,95% +level 0%,80% \) \
 	-compose screen -composite \
         \( $HILLSHADE -level 0,75% +level 40%,100% \) \
 	-compose multiply -composite \
         -modulate 92 -define png:color-type=2 $HYPSORELIEF_DIR/$BASE.png
+    echo "."
     # PNG+WLD -> GeoTIFF
+    echo -n "compress: "
     gdal_translate -a_srs "$SRS900913" -of GTiff \
        -co COMPRESS=JPEG \
         $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.tif
     rm $HYPSORELIEF_DIR/$BASE.png $HYPSORELIEF_DIR/$BASE.png.aux.xml $HYPSORELIEF_DIR/$BASE.wld
     rm $COLORMAP $HILLSHADE
+    echo -n "overview: "
     gdaladdo -r gauss $HYPSORELIEF_DIR/$BASE.tif 2 4 8 16 32
     fi
  
