@@ -61,14 +61,16 @@ for y in `seq $BOTTOM $TOP`; do
     HILLSHADE=$HILLSHADE_DIR/$BASE.uncomp.tif
     # Translate hillshade to PNG+WLD (just to get a valid .wld file)
     gdal_translate -of PNG -co WORLDFILE=YES \
-	$COLORMAP_DIR/$BASE.tif $HYPSORELIEF_DIR/$BASE.png 
-    # Create the actual PNG file
+        $COLORMAP $HYPSORELIEF_DIR/$BASE.png
+    # Create the actual PNG file.  We have to force IM to output RGB, since
+    # it'll use a palette if it thinks it can, but JPEG compression only works
+    # with RGB images.
     convert $COLORMAP -modulate 120 \
         \( $HILLSHADE -level 70,95% +level 0%,80% \) \
 	-compose screen -composite \
         \( $HILLSHADE -level 0,75% +level 40%,100% \) \
 	-compose multiply -composite \
-        -modulate 92 $HYPSORELIEF_DIR/$BASE.png
+        -modulate 92 -define png:color-type=2 $HYPSORELIEF_DIR/$BASE.png
     # PNG+WLD -> GeoTIFF
     gdal_translate -a_srs "$SRS900913" -of GTiff \
        -co COMPRESS=JPEG \
