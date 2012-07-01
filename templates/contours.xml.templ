@@ -8,9 +8,12 @@
     %colors;
 ]>
 
-<Map background-color="transparent" srs="&srs900913;">
+<Map background-color="black" srs="&srs900913;">
 
 <!--
+NOTE: This layer creates a white-on-black rendering of contour
+lines with labels. TileStache uses this layer as a mask.
+
 z11: 3 (labels on 3)
 z12: major 3, minor 2 (labels on 3)
 z13-15: major 2/3, minor 1 (labels on 2/3)
@@ -22,78 +25,42 @@ z16-: major 2/3, minor 1 (labels on 1/2/3)
   <Rule>
      &minz10; &maxz10;
      <Filter>[class] = 3</Filter>
-     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.2" /> 
+     <LineSymbolizer stroke="white" stroke-width="0.2" /> 
   </Rule>
   
   <Rule>
      &minz11; &maxz12;
      <Filter>[class] = 3</Filter>
-     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.4" /> 
+     <LineSymbolizer stroke="white" stroke-width="0.4" /> 
   </Rule>
   <Rule>
      &minz11; &maxz12;
      <Filter>[class] = 2</Filter>
-     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.2" /> 
+     <LineSymbolizer stroke="white" stroke-width="0.2" /> 
   </Rule>
   
   <Rule>
      &minz13; &maxz13;
      <Filter>[class] = 2 or [class] = 3</Filter>
-     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.4" /> 
+     <LineSymbolizer stroke="white" stroke-width="0.4" /> 
   </Rule>
   <Rule>
      &minz13; &maxz13;
      <Filter>[class] = 1</Filter>
-     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.15" /> 
+     <LineSymbolizer stroke="white" stroke-width="0.15" /> 
   </Rule>
   
   <Rule>
      &minz14;
      <Filter>[class] = 2 or [class] = 3</Filter>
-     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.5" /> 
+     <LineSymbolizer stroke="white" stroke-width="0.5" /> 
   </Rule>
   <Rule>
      &minz14;
      <Filter>[class] = 1</Filter>
-     <LineSymbolizer stroke="&contourcolor;" stroke-width="0.2" /> 
+     <LineSymbolizer stroke="white" stroke-width="0.2" /> 
   </Rule>
   
-  <!-- Major lines -->
-  <!--
-  <Rule>
-    &minz11; &maxz12;
-    <Filter>[mod250] = 0</Filter>
-    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.15" />
-  </Rule>
-  -->
-  <!--
-  <Rule>
-    &minz13; &maxz14;
-    <Filter>[mod250] = 0</Filter>
-    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.4" />
-  </Rule>
-  <Rule>
-    &minz14;
-    <Filter>[mod250] = 0</Filter>
-    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.8" />
-  </Rule>
-  -->
-  
-  <!-- Minor lines -->
-  <!--
-  <Rule> 
-    &minz13; &maxz13;
-    <Filter>[mod250] &lt;&gt; 0</Filter>
-    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.15" />
-  </Rule>
-  -->
-  <!--
-  <Rule> 
-    &minz14;
-    <Filter>[mod250] &lt;&gt; 0</Filter>
-    <LineSymbolizer stroke="&contourcolor;" stroke-width="0.3" />
-  </Rule>
-  -->
 </Style>
 
 <Style name="contourlabels">
@@ -103,34 +70,33 @@ z16-: major 2/3, minor 1 (labels on 1/2/3)
      &minz11; &maxz11;
      <Filter>[class] = 3</Filter>
      <TextSymbolizer face-name="DejaVu Sans Book"
-        size="8" fill="&contourcolor;" placement="line" halo-fill="transparent"
-        halo-radius="4" minimum-distance="100" max-char-angle-delta="30"
+        size="8" fill="white" placement="line" halo-fill="black"
+        halo-radius="2" minimum-distance="100" max-char-angle-delta="30"
 	>[height_ft]</TextSymbolizer>
    </Rule>
    <Rule>
      &minz12; &maxz12;
      <Filter>[class] = 3</Filter>
      <TextSymbolizer face-name="DejaVu Sans Book"
-        size="9" fill="&contourcolor;" placement="line" halo-fill="transparent"
-        halo-radius="5" minimum-distance="100" max-char-angle-delta="30"
+        size="9" fill="white" placement="line" halo-fill="black"
+        halo-radius="2" minimum-distance="100" max-char-angle-delta="30"
 	>[height_ft]</TextSymbolizer>
    </Rule>
    <Rule>
      &minz13; &maxz14;
      <Filter>[class] = 2 or [class] = 3</Filter>
      <TextSymbolizer face-name="DejaVu Sans Book"
-        size="9" fill="&contourcolor;" placement="line" halo-fill="transparent"
-	spacing="550"
-        halo-radius="5" minimum-distance="150" max-char-angle-delta="30"
+        size="9" fill="white" placement="line" halo-fill="black" spacing="550"
+        halo-radius="2" minimum-distance="150" max-char-angle-delta="30"
 	>[height_ft]</TextSymbolizer>
    </Rule>
    <Rule>
      &minz15;
      <Filter>[class] = 2 or [class] = 3</Filter>
      <TextSymbolizer face-name="DejaVu Sans Book"
-        size="9" fill="&contourcolor;" placement="line" halo-fill="transparent"
+        size="9" fill="white" placement="line" halo-fill="transparent"
 	spacing="550"
-        halo-radius="5" minimum-distance="150" max-char-angle-delta="30"
+        halo-radius="2" minimum-distance="150" max-char-angle-delta="30"
 	>[height_ft]</TextSymbolizer>
    </Rule>
 
@@ -140,9 +106,8 @@ z16-: major 2/3, minor 1 (labels on 1/2/3)
      &minz16;
      <Filter>[class] = 1</Filter>
      <TextSymbolizer face-name="DejaVu Sans Book"
-        size="8" fill="&contourcolor;" placement="line" halo-fill="transparent"
-	spacing="750"
-        halo-radius="4" minimum-distance="150" max-char-angle-delta="30"
+        size="8" fill="white" placement="line" halo-fill="black" spacing="750"
+        halo-radius="2" minimum-distance="150" max-char-angle-delta="30"
 	>[height_ft]</TextSymbolizer>
    </Rule>
    

@@ -8,17 +8,30 @@
 
 <script type="text/javascript">
 
-// Test areas - modify as needed:
+// TileStache base url:
+var tileroot = "http://localhost:8080"
 
-var tileroot = "tile/oakland"; var lat = 37.8 ; var lon = -122.2
-//var tileroot = "tile/cadetail";var lat = 37.8 ; var lon = -122.2
-//var tileroot = "tile/yosdetail"; var lat = 37.75 ; var lon = -119.64
-
+// Default starting location:
+var lat = 37.8
+var lon = -122.2
 var zoom = 12;
 
-var levels = 16; // including level 0
+// Max number of zoom levels (incl level 0):
+var levels = 19;
+
 
 var map;
+
+function addLayer(prettyName, name, extension, isBaseLayer, isVisible)
+{
+  path = tileroot + "/" + name + "/${z}/${x}/${y}." + extension;
+  layer = new OpenLayers.Layer.OSM(
+    prettyName, path, {numZoomLevels: levels});
+  layer.setIsBaseLayer(isBaseLayer);
+  layer.setVisibility(isVisible);
+  map.addLayer(layer);
+}
+
 function init()
 { 
   map = new OpenLayers.Map ("map", {
@@ -39,31 +52,25 @@ function init()
       units: 'm',
       projection: new OpenLayers.Projection("EPSG:900913"),
       displayProjection: new OpenLayers.Projection("EPSG:4326")
-  } );
-  
-  path = "/jpeg90_h/${z}/${x}/${y}.jpg";
-  jpeg90h = new OpenLayers.Layer.OSM("Hypsometric Tint - jpeg90",
-     tileroot+path,
-     {numZoomLevels: levels});  
-  jpeg90h.setIsBaseLayer(true);
-  jpeg90h.setVisibility(false);
-  map.addLayer(jpeg90h);
+  });
 
-  path = "/jpeg90_l/${z}/${x}/${y}.jpg";
-  jpeg90l = new OpenLayers.Layer.OSM("NLCD Landcover - jpeg90",
-     tileroot+path,
-     {numZoomLevels: levels});  
-  jpeg90l.setIsBaseLayer(true);
-  jpeg90l.setVisibility(true);
-  map.addLayer(jpeg90l);
+  addLayer("Landcoverrelief", "landcoverrelief", "png", true, true);
+  addLayer("Ocean", "ocean", "png", false, true);
+  addLayer("Contours", "contours", "png", false, true);
+  addLayer("Features", "features", "png", false, true);
+  addLayer("Contours mask", "contours-mask", "png", false, false);
 
   map.addControl(new OpenLayers.Control.LayerSwitcher());
-  var lonLat = new OpenLayers.LonLat(lon, lat).transform(new
-  OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-  if (!map.getCenter()) {
+  var lonLat = new OpenLayers.LonLat(lon, lat).transform(
+    new OpenLayers.Projection("EPSG:4326"),
+    map.getProjectionObject());
+
+  if (!map.getCenter())
+  {
     map.setCenter (lonLat, zoom);
   }
 }
+
 </script>
 
 <style type="text/css" rel="stylesheet">
