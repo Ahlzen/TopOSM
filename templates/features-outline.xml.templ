@@ -10,13 +10,10 @@
 	<!ENTITY rounded SYSTEM "include/rounded.inc">
 	<!ENTITY roadoutline SYSTEM "include/roadoutline.inc">
 	<!ENTITY bridgeoutline SYSTEM "include/bridgeoutline.inc">
-	<!ENTITY highway SYSTEM "include/highway.inc">
+	<!ENTITY highway-outline SYSTEM "include/highway-outline.inc">
 	<!ENTITY rail SYSTEM "include/rail.inc">
 	<!ENTITY aeroway SYSTEM "include/aeroway.inc">
 	<!ENTITY nhd SYSTEM "include/nhd.inc">
-	<!ENTITY label SYSTEM "include/labels.inc">
-	<!ENTITY shield SYSTEM "include/shields.inc">
-	<!ENTITY symbol SYSTEM "include/symbols.inc">
 	%utils;
 	%colors;
 ]>
@@ -29,9 +26,6 @@
     <Rule>
       &minz7; &maxz9;
       <Filter>[way_area] &gt; 50000000</Filter>
-      <PolygonSymbolizer
-        fill="#170"
-        fill-opacity="0.05" />
       <LineSymbolizer
         stroke="#170"
         stroke-width="1.0"
@@ -41,9 +35,6 @@
     <Rule>
       <Filter>[way_area] &gt; 10000000</Filter>
       &minz10; &maxz11;
-      <PolygonSymbolizer
-        fill="#170"
-        fill-opacity="0.05" />
       <LineSymbolizer
         stroke="#170"
         stroke-width="1.8"
@@ -63,23 +54,6 @@
         stroke-dasharray="8,3"
         stroke-opacity="0.7" />
     </Rule>
-    <Rule>
-      <Filter>[way_area] &lt; 5000000</Filter>
-      <PolygonSymbolizer
-        fill="#170"
-        fill-opacity="0.1" />
-    </Rule>
-    <!--
-    <Rule>
-      <Filter>[way_area] &gt;= 200 000 000</Filter>
-      &minz8; &maxz9;
-      <TextSymbolizer name="[name]" face-name="DejaVu Sans Book" size="7" fill="#170" halo-radius="1" wrap-width="14"/>
-    </Rule>
-    <Rule>
-      &minz10; &maxz11;
-      <TextSymbolizer name="[name]" face-name="DejaVu Sans Book" size="9" fill="#170" halo-radius="1" wrap-width="14"/>
-    </Rule>
-    -->
 </Style>
 
 <Style name="misc-areas">
@@ -98,28 +72,6 @@
     <LineSymbolizer stroke="#f00" stroke-width="1.5" stroke-opacity="1.0" />
   </Rule>
 
-  <Rule>
-      &minz10;
-      <Filter>  
-        [landuse] = 'cemetery' or
-        [amenity] = 'grave_yard'
-      </Filter>
-      <PolygonSymbolizer fill="#8b8" fill-opacity="&areaopacity;" />
-      <LineSymbolizer stroke="#8b8" stroke-width="1" />
-  </Rule>
-  <Rule>
-      &minz10;
-      <Filter>[landuse] = 'construction'</Filter>
-      <PolygonSymbolizer fill="#bb3" fill-opacity="&areaopacity;" />
-      <LineSymbolizer stroke="#bb3" stroke-width="1" />
-  </Rule>
-  <Rule>
-      &minz10;
-      <Filter>[natural] = 'beach'</Filter>
-      <PolygonSymbolizer fill="#fec" fill-opacity="&areaopacity;" />
-      <LineSymbolizer stroke="#fec" stroke-width="1" />
-  </Rule>
-
 </Style>
 
 <!-- adapted from OSM mapnik stylesheet -->
@@ -136,12 +88,9 @@
     </Rule>
 </Style>
 
-&highway;
+&highway-outline;
 &rail;
 &aeroway;
-&label;
-&shield;
-&symbol;
 
 <Style name="aerialway">
 	<Rule>
@@ -159,7 +108,7 @@
 <Style name="buildings">
   <Rule>
       &minz12;
-      <PolygonSymbolizer fill="black" fill-opacity="0.6" />
+      <PolygonSymbolizer fill="black" fill-opacity="0.5" />
   </Rule>
 </Style>
 
@@ -208,7 +157,6 @@
 	<Rule>
 		&minz11;
 		<Filter>[boundary] = 'administrative' and [admin_level] = '4'</Filter>
-		<LineSymbolizer stroke="#825" stroke-width="8" stroke-opacity="0.5" />
 		<LineSymbolizer stroke="black" stroke-width="1.5" stroke-dasharray="20,5,4,5" />
 	</Rule>
 </Style>
@@ -227,7 +175,6 @@
 	<Rule>
 		&minz11;
 		<Filter>[boundary] = 'administrative' and [admin_level] = '2'</Filter>
-        <LineSymbolizer stroke="#880" stroke-width="12" stroke-opacity="0.5" />
 		<LineSymbolizer stroke="black" stroke-width="3" stroke-dasharray="30,5,4,5" />
 	</Rule>
 </Style>
@@ -258,20 +205,6 @@
 		<Parameter name="table">(SELECT way, fcode, ftype, lengthkm as size FROM ${NHD_TABLE_PREFIX}_flowline_major) AS nhdarea</Parameter>
 	</Datasource>
 </Layer>
-<Layer name="nhdarea-major-fill" status="on">
-	<StyleName>water-fill-lowzoom</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm as size FROM ${NHD_TABLE_PREFIX}_area_major) AS nhdarea</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdwaterbody-major-fill" status="on">
-	<StyleName>water-fill-lowzoom</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm as size FROM ${NHD_TABLE_PREFIX}_waterbody_major) AS nhdwaterbody</Parameter>
-	</Datasource>
-</Layer>
 
 <!-- NHD features at z10+ -->
 <Layer name="nhdwaterbody-lower" status="on" srs="&srs900913;">
@@ -295,21 +228,6 @@
 	<Datasource>
 		&dbsettings; &extents;
 		<Parameter name="table">(SELECT way, fcode, ftype, lengthkm FROM ${NHD_TABLE_PREFIX}_flowline) AS nhdflowline</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdwaterbody-upper" status="on" srs="&srs900913;">
-	<StyleName>water-fill</StyleName>
-	<StyleName>ice</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm FROM ${NHD_TABLE_PREFIX}_waterbody) AS nhdwaterbody</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdarea-fill" status="on" srs="&srs900913;">
-	<StyleName>water-fill</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm FROM ${NHD_TABLE_PREFIX}_area) AS nhdarea</Parameter>
 	</Datasource>
 </Layer>
 
@@ -386,7 +304,6 @@
 <!-- Roads at z9+ (all roads) -->
 <Layer name="highway-highzoom" status="on">
     <StyleName>highway-highzoom-outline</StyleName>
-    <StyleName>highway-highzoom-fill</StyleName>
     <Datasource>
         &dbsettings; &extents;
         <!--
@@ -410,14 +327,6 @@
                WHERE highway IS NOT NULL
                ORDER BY FLOOR(z_order / 10.0), link DESC, z_order, pass) AS lines
         </Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="parking-fill" status="on">
-    <StyleName>parking-fill</StyleName>
-    <Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, amenity, access FROM ${DB_PREFIX}_polygon ORDER BY z_order, way_area DESC) AS parking</Parameter>
     </Datasource>
 </Layer>
 
@@ -445,26 +354,6 @@
 
 <Layer name="aeroway-area-outline" status="on">
     <StyleName>aeroway-outline</StyleName>
-    <Datasource>
-	  &dbsettings; &extents;
-      <Parameter name="table">
-      	(SELECT way, aeroway FROM ${DB_PREFIX}_polygon WHERE aeroway IS NOT NULL ORDER BY z_order) AS areas
-      </Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="aeroway-line-fill" status="on">
-    <StyleName>aeroway-fill</StyleName>
-    <Datasource>
-	  &dbsettings; &extents;
-      <Parameter name="table">
-      	(SELECT way, aeroway FROM ${DB_PREFIX}_line WHERE aeroway IS NOT NULL ORDER BY z_order) AS lines
-      </Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="aeroway-area-fill" status="on">
-    <StyleName>aeroway-fill</StyleName>
     <Datasource>
 	  &dbsettings; &extents;
       <Parameter name="table">
@@ -515,146 +404,6 @@
         WHERE "boundary"='administrative' AND admin_level IN ('2','4'))
         AS borders
         </Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="statenames" status="on">
-    <StyleName>statenames</StyleName>
-    <Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, place, name, ref FROM ${DB_PREFIX}_point
-		WHERE place = 'state') AS statenames
-		</Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="placenames" status="on">
-    <StyleName>placenames</StyleName>
-    <Datasource>
-        &dbsettings; &extents;
-        <Parameter name="table">
-            (SELECT way, name, place,
-                    CASE WHEN place = 'city' THEN 2
-                         WHEN place = 'town' THEN 4
-                         WHEN place = 'suburb' THEN 5
-                         WHEN place = 'village' THEN 6
-                         WHEN place = 'hamlet' THEN 7
-                         WHEN place = 'island' THEN 8
-                         WHEN place = 'locality' THEN 9
-                         ELSE 10
-                     END AS place_order
-             FROM ${DB_PREFIX}_point
-             WHERE place IS NOT NULL AND name IS NOT NULL
-             ORDER BY place_order) AS placenames
-        </Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="interstateshields" status="on">
-    <StyleName>interstateshields</StyleName>
-    <Datasource>
-    	&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, highway, roadnumber, char_length(roadnumber) as textlen FROM ${DB_PREFIX}_roads
-		WHERE (highway = 'motorway' OR highway = 'trunk') AND roadtype = 'I')
-		AS interstateshields</Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="usshields" status="on">
-    <StyleName>usshields</StyleName>
-    <Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, highway, roadnumber FROM ${DB_PREFIX}_roads
-		WHERE (highway &lt;&gt; '' AND highway IS NOT NULL) AND roadtype = 'U')
-		AS usshields</Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="stateshields" status="on">
-    <StyleName>stateshields</StyleName>
-    <Datasource>
-    	&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT * FROM ${DB_PREFIX}_roads
-		WHERE (highway &lt;&gt; '' AND highway IS NOT NULL) AND roadtype = 'S')
-		AS stateshields</Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="streetnames" status="on">
-    <StyleName>streetnames</StyleName>
-    <StyleName>trailnames</StyleName>
-    <Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, highway, name, tunnel FROM ${DB_PREFIX}_line ORDER BY z_order)
-		AS streetnames</Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="nhdflowlinenames" status="on">
-    <StyleName>water-line-labels</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, fcode, ftype, lengthkm, gnis_name FROM ${NHD_TABLE_PREFIX}_flowline) AS nhdflowline</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdwaterbodynames" status="on">
-	<StyleName>water-area-labels</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, fcode, ftype, areasqkm, gnis_name FROM ${NHD_TABLE_PREFIX}_waterbody) AS nhdwaterbody</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdareanames" status="on">
-	<StyleName>water-area-labels</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, fcode, ftype, areasqkm, gnis_name FROM ${NHD_TABLE_PREFIX}_area) AS nhdarea</Parameter>
-	</Datasource>
-</Layer>
-
-<Layer name="pointfeaturenames" status="on">
-    <StyleName>featurenames</StyleName>
-    <Datasource>
-		&dbsettings; &extents;
-		<!--
-		HACK: postgres converts elevation m -> ft, and appends unit
-		NOTE: The CASE is a workaround for when 'm' is explicitly specified
-		as the unit.
-		-->
-		<Parameter name="table">
-		(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
-		    boundary, 0 as way_area, CAST(ele_ft AS VARCHAR) ||
-		 ' ft' as ele_w_unit
-		 FROM ${DB_PREFIX}_point) AS featurenames
-		</Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="areafeaturenames" status="on">
-    <StyleName>featurenames</StyleName>
-    <Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
-		 boundary, way_area, '' AS ele_w_unit
-		 FROM ${DB_PREFIX}_polygon ORDER BY z_order, way_area DESC)
-		 AS areafeaturenames</Parameter>
-    </Datasource>
-</Layer>
-
-<Layer name="points" status="on">
-    <StyleName>symbols</StyleName>
-    <Datasource>
-      &dbsettings; &extents;
-      <Parameter name="table">${DB_PREFIX}_point</Parameter>
     </Datasource>
 </Layer>
 

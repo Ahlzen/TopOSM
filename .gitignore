@@ -2,13 +2,18 @@
 set-toposm-env
 areas.xml
 contours.xml
-features.xml
+contours-mask.xml
+features-fill.xml
+features-outline.xml
 hypsorelief.xml
 landcoverrelief.xml
 ocean.xml
+labels.xml
+labels-mask.xml
 include/*.inc
 
 *.pyc
 errors.log
 geodata
 tile
+temp

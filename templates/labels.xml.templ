@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[
+    <!ENTITY % utils SYSTEM "include/utils.inc">
+    <!ENTITY % colors SYSTEM "include/colors.inc">
+    <!ENTITY symbolsdir "symbols">
+    <!ENTITY customsymbolsdir "custom-symbols">
+    <!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
+    <!ENTITY extents SYSTEM "include/extents.inc">
+    <!ENTITY extentsLatLon SYSTEM "include/extentsLatLon.inc">
+    <!ENTITY rounded SYSTEM "include/rounded.inc">
+    %utils;
+    %colors;
+]>
+
+<Map background-color="transparent" srs="&srs900913;">
+
+
+<!-- TEXT LABELS -->
+
+<Style name="water-line-labels">
+   <Rule>
+      &minz12; &maxz13;
+      <Filter>
+          ([ftype] = 460 or [ftype] = 336 or [ftype] = 428)
+            and [lengthkm] &gt; 3
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="9"
+          fill="&waterlinecolor;" placement="line" max-char-angle-delta="35"
+          >[gnis_name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>
+         [ftype] = 460 or [ftype] = 336 or [ftype] = 428
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10"
+          fill="&waterlinecolor;" placement="line" max-char-angle-delta="35"
+          >[gnis_name]</TextSymbolizer>
+   </Rule>
+</Style>
+
+<Style name="water-area-labels">
+
+    <Rule>
+      &minz10; &maxz11;
+       <Filter>
+         ([fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or
+         ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+         [fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or
+         [fcode] = 46006 or
+         ([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+         ([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
+         [fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or
+         [fcode] = 39006 or
+         [fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003)
+         and [areasqkm] &gt; 4
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="10"
+          fill="&waterlinecolor;" dy="0" wrap-width="0"
+          >[gnis_name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz12; &maxz13;
+      <Filter>
+         ([fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or
+         ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+         [fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or
+         [fcode] = 46006 or ([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+         ([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
+         [fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or
+         [fcode] = 39006 or
+         [fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003)
+         and [areasqkm] &gt; 1
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="10"
+          fill="&waterlinecolor;" dy="0" wrap-width="0"
+          >[gnis_name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>
+         [fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or
+         ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
+         [fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or
+         [fcode] = 46006 or ([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
+         ([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
+         [fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or
+         [fcode] = 39006 or
+         [fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="11"
+          fill="&waterlinecolor;" dy="0" wrap-width="0"
+          >[gnis_name]</TextSymbolizer>
+   </Rule>
+
+</Style>
+
+<Style name="statenames">
+    <Rule>
+      <Filter>[place] = 'state'</Filter>
+      &minz4; &maxz4;
+      <TextSymbolizer face-name="DejaVu Sans Book"
+         size="10" fill="#640" dy="0" wrap-width="0"
+         >[ref]</TextSymbolizer>
+    </Rule>
+    <Rule>
+      <Filter>[place] = 'state'</Filter>
+      &minz5; &maxz5;
+      <TextSymbolizer face-name="DejaVu Sans Book"
+         size="12" fill="#640" dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+    </Rule>
+    <Rule>
+      <Filter>[place] = 'state'</Filter>
+      &minz6; &maxz7;
+      <TextSymbolizer face-name="DejaVu Sans Book"
+         size="14" fill="#640" dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+    </Rule>
+</Style>
+
+
+<Style name="placenames">
+   <Rule>
+      &minz5; &maxz7;
+      <Filter>[place] = 'city'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="9" fill="#000"
+         dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz8; &maxz9;
+      <Filter>[place] = 'city'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Condensed Bold" size="10"
+         fill="#000" dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz10;
+      <Filter>[place] = 'city'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Condensed Bold" size="17"
+         fill="#000" dy="0" wrap-width="0" halo-fill="transparent"
+         halo-radius="2"
+         >[name]</TextSymbolizer>
+   </Rule>
+    
+   <Rule>
+      &minz8; &maxz9;
+      <Filter>[place] = 'town'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="9" fill="#000"
+         dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz10; &maxz10;
+      <Filter>[place] = 'town' or [place] = 'suburb'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Condensed Bold" size="10"
+         fill="#000" dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz11;
+      <Filter>[place] = 'town' or [place] = 'suburb'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Condensed Bold" size="13"
+         fill="#000" dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+    
+   <Rule>
+      &minz11; &maxz12;
+      <Filter>
+         [place] = 'village'
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Condensed Bold" size="10"
+         fill="#000" dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz13;
+      <Filter>[place] = 'village'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Condensed Bold" size="12"
+         fill="#000" dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+    
+   <Rule>
+      &minz13;
+      <Filter>[place] = 'locality' or [place] = 'hamlet'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Condensed Bold" size="10"
+         fill="#000" dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+    
+   <Rule>
+       &minz13; &maxz13;
+       <Filter>[place] = 'island'</Filter>
+       <TextSymbolizer face-name="DejaVu Sans Oblique" size="10" fill="#050"
+          dy="0" wrap-width="0"
+          >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>[place] = 'island'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="11" fill="#050"
+         dy="0" wrap-width="0"
+         >[name]</TextSymbolizer>
+   </Rule>
+</Style>
+
+
+<Style name="featurenames">
+   <Rule>
+      &minz14;
+      <Filter>[natural] = 'peak'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="11"
+         fill="&contourcolor;" dy="10" wrap-width="100"
+         >[name]</TextSymbolizer>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10"
+         fill="&contourcolor;" dy="22" wrap-width="100"
+         >[ele_w_unit]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz13;
+      <Filter>[aeroway] = 'aerodrome'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10"
+         fill="&transportationcolor;" dy="10" wrap-width="150"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz15;
+      <Filter>[railway] = 'station'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10"
+         fill="&transportationcolor;" dy="10" wrap-width="150"
+         >[name]</TextSymbolizer>
+   </Rule>
+    
+   <Rule>
+      &minz8; &maxz9; <!-- very large nature areas -->
+      <Filter>
+          ([leisure] = 'nature_reserve' or
+           [boundary] = 'national_park' or
+           [natural] = 'wood' or
+           [leisure] = 'park' or
+           [leisure] = 'common' or
+           [leisure] = 'playground' or
+           [leisure] = 'garden' or
+           [leisure] = 'golf_course' or
+           [landuse] = 'forest' or
+           [landuse] = 'vineyard' or
+           [landuse] = 'conservation' or
+           [landuse] = 'recreation_ground' or
+           [leisure] = 'recreation_ground' or
+           [landuse] = 'village_green' or
+           [landuse] = 'allotments')
+          and [way_area] &gt; 50000000
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="9"
+         fill="#040" dy="0" wrap-width="20"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz10; &maxz11; <!-- large nature areas -->
+      <Filter>
+         ([leisure] = 'nature_reserve' or
+          [boundary] = 'national_park' or
+          [natural] = 'wood' or
+          [leisure] = 'park' or
+          [leisure] = 'common' or
+          [leisure] = 'playground' or
+          [leisure] = 'garden' or
+          [leisure] = 'golf_course' or
+          [landuse] = 'forest' or
+          [landuse] = 'vineyard' or
+          [landuse] = 'conservation' or
+          [landuse] = 'recreation_ground' or
+          [leisure] = 'recreation_ground' or
+          [landuse] = 'village_green' or
+          [landuse] = 'allotments')
+         and [way_area] &gt; 5000000
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="10"
+         fill="#040" dy="0" wrap-width="20"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz12; &maxz13; <!-- medium nature areas -->
+      <Filter>
+         ([leisure] = 'nature_reserve' or
+          [boundary] = 'national_park' or
+          [natural] = 'wood' or
+          [leisure] = 'park' or
+          [leisure] = 'common' or
+          [leisure] = 'playground' or
+          [leisure] = 'garden' or
+          [leisure] = 'golf_course' or
+          [landuse] = 'forest' or
+          [landuse] = 'vineyard' or
+          [landuse] = 'conservation' or
+          [landuse] = 'recreation_ground' or
+          [leisure] = 'recreation_ground' or
+          [landuse] = 'village_green' or
+          [landuse] = 'allotments')
+         and [way_area] &gt; 200000
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="11"
+         fill="#040" dy="0" wrap-width="20"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14; <!-- all nature areas -->
+      <Filter>
+         [leisure] = 'nature_reserve' or
+         [boundary] = 'national_park' or
+         [natural] = 'wood' or
+         [leisure] = 'park' or
+         [leisure] = 'common' or
+         [leisure] = 'playground' or
+         [leisure] = 'garden' or
+         [leisure] = 'golf_course' or
+         [landuse] = 'forest' or
+         [landuse] = 'vineyard' or
+         [landuse] = 'conservation' or
+         [landuse] = 'recreation_ground' or
+         [leisure] = 'recreation_ground' or
+         [landuse] = 'village_green' or
+         [landuse] = 'allotments'
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="12"
+         fill="#040" dy="0" wrap-width="20"
+         >[name]</TextSymbolizer>
+    </Rule>
+</Style>
+
+<Style name="streetnames">
+   <Rule>
+      &minz13;
+      <Filter>[highway] = 'motorway' and not [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="11" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz13;
+      <Filter>[highway] = 'motorway' and [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="11" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz13;
+      <Filter>[highway] = 'trunk' and not [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="11" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz13;
+      <Filter>[highway] = 'trunk' and [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="11" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>[highway] = 'primary' and not [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>[highway] = 'primary' and [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>[highway] = 'secondary' and not [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>[highway] = 'secondary' and [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>[highway] = 'tertiary' and not [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>[highway] = 'tertiary' and [tunnel] = 'yes'</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="10" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz15;
+      <Filter>
+         [highway] = 'residential' or
+         [highway] = 'unclassified' or
+         [highway] = 'track' or
+         [highway] = 'service' or
+         [highway] = 'proposed'
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="9" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="35"
+         >[name]</TextSymbolizer>
+   </Rule>
+</Style>
+
+<Style name="trailnames">
+   <Rule>
+      &minz15;
+      <Filter>
+         [highway] = 'path' or
+         [highway] = 'cycleway' or
+         [highway] = 'footway'
+      </Filter>
+      <TextSymbolizer face-name="DejaVu Sans Book" size="9" fill="black"
+         spacing="300" placement="line" max-char-angle-delta="40"
+         >[name]</TextSymbolizer>
+   </Rule>
+</Style>
+
+
+
+<!-- SHIELDS -->
+
+<Style name="interstateshields">
+
+   <!-- Small Normal (1-2 digits) -->
+   <Rule>
+      &minz6; &maxz8;
+      <Filter>[textlen] &lt;= 2</Filter>
+      <ShieldSymbolizer
+         face-name="DejaVu Sans" size="7"
+         fill="white" placement="line"
+         file="&customsymbolsdir;/shield-interstate.svg"
+         transform="scale(0.7,0.7)" dx="-0.5"
+         minimum-distance="40" spacing="500"
+         >[roadnumber]</ShieldSymbolizer>
+   </Rule>
+   <!-- Small Wide (3 digits) -->
+   <Rule>
+      &minz6; &maxz8;
+      <Filter>[textlen] &gt; 2</Filter>
+      <ShieldSymbolizer
+         face-name="DejaVu Sans" size="7"
+         fill="white" placement="line"
+         file="&customsymbolsdir;/shield-interstate.svg"
+         transform="scale(0.9,0.75)" dy="-0.5"
+         minimum-distance="40" spacing="500"
+         >[roadnumber]</ShieldSymbolizer>
+   </Rule>    
+
+   <!-- Normal (1-2 digits) -->
+   <Rule>
+      &minz9;
+      <Filter>[textlen] &lt;= 2</Filter>
+      <ShieldSymbolizer
+         face-name="DejaVu Sans Bold" size="10"
+         fill="white" placement="line"
+         file="&customsymbolsdir;/shield-interstate.svg"
+         transform="scale(0.9,0.9)" dx="-0.5"
+         minimum-distance="50" spacing="1000"
+         >[roadnumber]</ShieldSymbolizer>
+   </Rule>
+   <!-- Wide (3 digits) -->
+   <Rule>
+      &minz9;
+      <Filter>[textlen] &gt; 2</Filter>
+      <ShieldSymbolizer
+         face-name="DejaVu Sans Bold" size="9"
+         fill="white" placement="line"
+         file="&customsymbolsdir;/shield-interstate.svg"
+         transform="scale(1.15,0.95)" dy="-0.5"
+         minimum-distance="50" spacing="1000"
+         >[roadnumber]</ShieldSymbolizer>
+   </Rule>
+</Style>
+
+<Style name="usshields">
+   <Rule>
+      &minz7; &maxz9;
+      <ShieldSymbolizer
+         face-name="DejaVu Sans" size="7"
+         fill="black" placement="line" dx="-0.5" dy="-1"
+         transform="scale(0.7,0.7)"
+         file="&customsymbolsdir;/shield-us-3.svg"
+         minimum-distance="35" spacing="500"
+         >[roadnumber]</ShieldSymbolizer>
+   </Rule>
+   <Rule>
+      &minz10;
+      <ShieldSymbolizer
+         face-name="DejaVu Sans Bold" size="10"
+         fill="black" placement="line" dx="-0.5" dy="-1"
+         file="&customsymbolsdir;/shield-us-3.svg"
+         minimum-distance="45" spacing="750"
+         >[roadnumber]</ShieldSymbolizer>
+    </Rule>
+</Style>
+
+<Style name="stateshields">
+   <Rule>
+      &minz8; &maxz8;
+      <Filter>[highway] = 'motorway' or [highway] = 'trunk'</Filter>
+      <ShieldSymbolizer
+         face-name="DejaVu Sans Book" size="7"
+         fill="black" placement="line"
+         file="&customsymbolsdir;/shield-ma-3.svg"
+         dx="-0.5" dy="-0.5"
+         transform="scale(0.8,0.8)"
+         minimum-distance="40" spacing="500"
+         >[roadnumber]</ShieldSymbolizer>
+   </Rule>
+   <Rule>
+      &minz9; &maxz9;
+      <ShieldSymbolizer
+         face-name="DejaVu Sans Book" size="8"
+         fill="black" placement="line"
+         file="&customsymbolsdir;/shield-ma-3.svg"
+         dx="-0.5" dy="-0.5"
+         transform="scale(0.85,0.85)"
+         minimum-distance="40" spacing="500"
+         >[roadnumber]</ShieldSymbolizer>
+   </Rule>
+   <Rule>
+      &minz10;
+      <ShieldSymbolizer
+         face-name="DejaVu Sans Book" size="9"
+         fill="black" placement="line"
+         file="&customsymbolsdir;/shield-ma-3.svg"
+         dx="-0.5" dy="-0.5"
+         transform="scale(0.9,0.9)"
+         minimum-distance="45" spacing="750"
+         >[roadnumber]</ShieldSymbolizer>
+   </Rule>
+</Style>
+
+
+<!-- SYMBOLS -->
+
+<Style name="symbols">
+
+<!--
+NOTE: 2011-06-14: SVG rendering still appears to have issues on
+some systems. Disabling SVG icons for now.
+-->
+
+    <!-- Mountain peaks -->
+	<Rule>
+	  &minz14;
+      <Filter>[natural]='peak'</Filter>
+      <PointSymbolizer file="&customsymbolsdir;/peak.png" />
+    </Rule>
+    
+    <!-- Power line pylons -->
+    <Rule>
+        &minz14; &maxz14;
+        <Filter>[power] = 'tower'</Filter>
+        <PointSymbolizer file="&customsymbolsdir;/power-tower-3px.png" allow-overlap="true" />
+    </Rule>        
+    <Rule>
+        &minz15; &maxz15;
+        <Filter>[power] = 'tower'</Filter>
+        <PointSymbolizer file="&customsymbolsdir;/power-tower-4px.png" allow-overlap="true" />
+    </Rule>
+    <Rule>
+        &minz16;
+        <Filter>[power] = 'tower'</Filter>
+        <PointSymbolizer file="&customsymbolsdir;/power-tower-6px.png" allow-overlap="true" />
+    </Rule>
+    
+    <!-- airports -->
+	<Rule>
+    	&minz12;
+    	&maxz13;
+    	<Filter>[aeroway] = 'aerodrome'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/airport.png" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[aeroway] = 'aerodrome'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/airport.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+    	<Filter>[aeroway] = 'aerodrome'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/airport.png" />
+	</Rule>
+	
+	<!-- rail stations, other stations -->
+    <Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>
+    		[railway] = 'station' or
+    		[railway] = 'halt' or
+    		[railway] = 'tram_station' or
+    		[aerialway] = 'station'
+    	</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/rail-station-s.png" />
+    </Rule>
+    <Rule>
+    	&minz15;
+    	<Filter>
+    		[railway] = 'station' or
+    		[railway] = 'halt' or
+    		[railway] = 'tram_station' or
+    		[aerialway] = 'station'
+    	</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/rail-station-m.png" />
+    </Rule>
+
+	<!-- mountain huts -->
+	<Rule>
+    	&minz13;
+    	&maxz13;
+    	<Filter>[tourism] = 'alpine_hut'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/hut.png"
+    	    transform="scale(0.4, 0.4)" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'alpine_hut'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/hut.png"
+    	    transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'alpine_hut'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/hut.png"
+    	    transform="scale(0.6, 0.6)" />
+	</Rule>
+
+	<!-- shelters -->
+	<Rule>
+    	&minz13;
+    	&maxz13;
+    	<Filter>[amenity] = 'shelter'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/shelter.png"
+    	    transform="scale(0.4, 0.4)" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[amenity] = 'shelter'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/shelter.png"
+    	    transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[amenity] = 'shelter'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/shelter.png"
+    	    transform="scale(0.6, 0.6)" />
+	</Rule>
+
+	<!-- public parking lots -->
+	<Rule>
+    	&minz13;
+    	&maxz13;
+    	<Filter>
+    	    [amenity] = 'parking'
+    	    and [access] &lt;&gt; 'destination'
+    	    and [access] &lt;&gt; 'private'
+    	    and [access] &lt;&gt; 'no'
+    	</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/parking.png"
+    	    transform="scale(0.4, 0.4)" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>
+    	    [amenity] = 'parking'
+    	    and [access] &lt;&gt; 'destination'
+    	    and [access] &lt;&gt; 'private'
+    	    and [access] &lt;&gt; 'no'
+    	</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/parking.png"
+    	    transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>
+		    [amenity] = 'parking'
+    	    and [access] &lt;&gt; 'destination'
+    	    and [access] &lt;&gt; 'private'
+    	    and [access] &lt;&gt; 'no'
+		</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/parking.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/parking.png" />
+	</Rule>
+	
+	<!-- viewpoints -->
+	<Rule>
+    	&minz13;
+    	&maxz13;
+    	<Filter>[tourism] = 'viewpoint'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-xs/view.png" />
+    </Rule>
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'viewpoint'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/view.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'viewpoint'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/view.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/view.png" />
+	</Rule>
+
+	<!-- public restrooms -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[amenity] = 'toilets' or [amenity] = 'restrooms'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/restrooms.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[amenity] = 'toilets' or [amenity] = 'restrooms'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/restrooms.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/restrooms.png" />
+	</Rule>
+	
+	<!-- campgrounds -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'camp_site'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/campground.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'camp_site'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/campground.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/campground.png" />
+	</Rule>
+	
+	<!-- information -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'information'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/info.png" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'information'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/info.svg" transform="scale(0.6, 0.6)" /-->
+		<PointSymbolizer file="&customsymbolsdir;/black-m/info.png" />
+	</Rule>
+	
+	<!-- drinking water -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[amenity] = 'drinking_water'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/water.png" transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[amenity] = 'drinking_water'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/water.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/water.png" />
+	</Rule>
+	
+	<!-- picnic sites -->
+	<Rule>
+    	&minz14;
+    	&maxz14;
+    	<Filter>[tourism] = 'picnic_site'</Filter>
+    	<PointSymbolizer file="&customsymbolsdir;/black-s/picnic-area.png" transform="scale(0.5, 0.5)" />
+    </Rule>
+	<Rule>
+		&minz15;
+		<Filter>[tourism] = 'picnic_site'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/picnic-area.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/picnic-area.png" />
+	</Rule>
+    
+    <!-- restaurants -->
+	<Rule>
+		&minz15;
+		<Filter>
+			[amenity] = 'restaurant' or
+			[amenity] = 'fast_food' or
+			[amenity] = 'food_court'
+		</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/food.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/food.png" />
+	</Rule>
+	
+	<!-- mines etc (tagged 'quarry' from the GNIS import) -->
+    <Rule>
+    	&minz15;
+    	<Filter>[landuse] = 'quarry'</Filter>
+    	<!--PointSymbolizer file="&customsymbolsdir;/black-svg/mine.svg" transform="scale(0.6, 0.6)" /-->
+    	<PointSymbolizer file="&customsymbolsdir;/black-m/mine.png" />
+    </Rule>
+    
+</Style>
+
+
+
+
+
+<!-- Layers -->
+
+
+<Layer name="statenames" status="on">
+    <StyleName>statenames</StyleName>
+    <Datasource>
+		&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT way, place, name, ref FROM ${DB_PREFIX}_point
+		WHERE place = 'state') AS statenames
+		</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="placenames" status="on">
+    <StyleName>placenames</StyleName>
+    <Datasource>
+        &dbsettings; &extents;
+        <Parameter name="table">
+            (SELECT way, name, place,
+                    CASE WHEN place = 'city' THEN 2
+                         WHEN place = 'town' THEN 4
+                         WHEN place = 'suburb' THEN 5
+                         WHEN place = 'village' THEN 6
+                         WHEN place = 'hamlet' THEN 7
+                         WHEN place = 'island' THEN 8
+                         WHEN place = 'locality' THEN 9
+                         ELSE 10
+                     END AS place_order
+             FROM ${DB_PREFIX}_point
+             WHERE place IS NOT NULL AND name IS NOT NULL
+             ORDER BY place_order) AS placenames
+        </Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="streetnames" status="on">
+    <StyleName>streetnames</StyleName>
+    <StyleName>trailnames</StyleName>
+    <Datasource>
+		&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT way, highway, name, tunnel FROM ${DB_PREFIX}_line ORDER BY z_order)
+		AS streetnames</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="nhdflowlinenames" status="on">
+    <StyleName>water-line-labels</StyleName>
+	<Datasource>
+		&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT way, fcode, ftype, lengthkm, gnis_name FROM ${NHD_TABLE_PREFIX}_flowline) AS nhdflowline</Parameter>
+	</Datasource>
+</Layer>
+<Layer name="nhdwaterbodynames" status="on">
+	<StyleName>water-area-labels</StyleName>
+	<Datasource>
+		&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT way, fcode, ftype, areasqkm, gnis_name FROM ${NHD_TABLE_PREFIX}_waterbody) AS nhdwaterbody</Parameter>
+	</Datasource>
+</Layer>
+<Layer name="nhdareanames" status="on">
+	<StyleName>water-area-labels</StyleName>
+	<Datasource>
+		&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT way, fcode, ftype, areasqkm, gnis_name FROM ${NHD_TABLE_PREFIX}_area) AS nhdarea</Parameter>
+	</Datasource>
+</Layer>
+
+<Layer name="pointfeaturenames" status="on">
+    <StyleName>featurenames</StyleName>
+    <Datasource>
+		&dbsettings; &extents;
+		<!--
+		HACK: postgres converts elevation m -> ft, and appends unit
+		NOTE: The CASE is a workaround for when 'm' is explicitly specified
+		as the unit.
+		-->
+		<Parameter name="table">
+		(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
+		    boundary, 0 as way_area, CAST(ele_ft AS VARCHAR) ||
+		 ' ft' as ele_w_unit
+		 FROM ${DB_PREFIX}_point) AS featurenames
+		</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="areafeaturenames" status="on">
+    <StyleName>featurenames</StyleName>
+    <Datasource>
+		&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
+		 boundary, way_area, '' AS ele_w_unit
+		 FROM ${DB_PREFIX}_polygon ORDER BY z_order, way_area DESC)
+		 AS areafeaturenames</Parameter>
+    </Datasource>
+</Layer>
+
+<!-- NOTE: Shields and symbols *must* come last in this file, because
+they affect the label cache, and the placement of text in labels and
+labels-mask must be in sync. -->
+
+<Layer name="interstateshields" status="on">
+    <StyleName>interstateshields</StyleName>
+    <Datasource>
+    	&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT way, highway, roadnumber, char_length(roadnumber) as textlen FROM ${DB_PREFIX}_roads
+		WHERE (highway = 'motorway' OR highway = 'trunk') AND roadtype = 'I')
+		AS interstateshields</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="usshields" status="on">
+    <StyleName>usshields</StyleName>
+    <Datasource>
+		&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT way, highway, roadnumber FROM ${DB_PREFIX}_roads
+		WHERE (highway &lt;&gt; '' AND highway IS NOT NULL) AND roadtype = 'U')
+		AS usshields</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="stateshields" status="on">
+    <StyleName>stateshields</StyleName>
+    <Datasource>
+    	&dbsettings; &extents;
+		<Parameter name="table">
+		(SELECT * FROM ${DB_PREFIX}_roads
+		WHERE (highway &lt;&gt; '' AND highway IS NOT NULL) AND roadtype = 'S')
+		AS stateshields</Parameter>
+    </Datasource>
+</Layer>
+
+<Layer name="points" status="on">
+    <StyleName>symbols</StyleName>
+    <Datasource>
+      &dbsettings; &extents;
+      <Parameter name="table">${DB_PREFIX}_point</Parameter>
+    </Datasource>
+</Layer>
+
+</Map>

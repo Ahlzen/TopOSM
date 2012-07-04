@@ -2,77 +2,8 @@
 
 <head>
 <title>OSM Topo Map Test</title>
-
-<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-<script type="text/javascript" src="js/ScaleBar.js"></script>
-
-<script type="text/javascript">
-
-// TileStache base url:
-var tileroot = "http://localhost:8080"
-
-// Default starting location:
-var lat = 37.8
-var lon = -122.2
-var zoom = 12;
-
-// Max number of zoom levels (incl level 0):
-var levels = 19;
-
-
-var map;
-
-function addLayer(prettyName, name, extension, isBaseLayer, isVisible)
-{
-  path = tileroot + "/" + name + "/${z}/${x}/${y}." + extension;
-  layer = new OpenLayers.Layer.OSM(
-    prettyName, path, {numZoomLevels: levels});
-  layer.setIsBaseLayer(isBaseLayer);
-  layer.setVisibility(isVisible);
-  map.addLayer(layer);
-}
-
-function init()
-{ 
-  map = new OpenLayers.Map ("map", {
-      controls:[
-        new OpenLayers.Control.Navigation(),
-        new OpenLayers.Control.PanZoomBar(),
-        new OpenLayers.Control.Permalink('permalink', null, {}),
-        new OpenLayers.Control.ScaleLine(
-            {minWidth: 150,
-             maxWidth: 250,
-             topOutUnits: 'mi',
-             topInUnits: 'ft',
-             geodesic: true})
-      ],
-      maxExtent: new OpenLayers.Bounds(
-          -20037508.34,-20037508.34,20037508.34,20037508.34),
-      maxResolution: 156543.0399,
-      units: 'm',
-      projection: new OpenLayers.Projection("EPSG:900913"),
-      displayProjection: new OpenLayers.Projection("EPSG:4326")
-  });
-
-  addLayer("Landcoverrelief", "landcoverrelief", "png", true, true);
-  addLayer("Ocean", "ocean", "png", false, true);
-  addLayer("Contours", "contours", "png", false, true);
-  addLayer("Features", "features", "png", false, true);
-  addLayer("Contours mask", "contours-mask", "png", false, false);
-
-  map.addControl(new OpenLayers.Control.LayerSwitcher());
-  var lonLat = new OpenLayers.LonLat(lon, lat).transform(
-    new OpenLayers.Projection("EPSG:4326"),
-    map.getProjectionObject());
-
-  if (!map.getCenter())
-  {
-    map.setCenter (lonLat, zoom);
-  }
-}
-
-</script>
-
+<link rel="stylesheet" href="leaflet/leaflet.css" />
+<script src="leaflet/leaflet.js"></script>
 <style type="text/css" rel="stylesheet">
 body {
     padding: 0px;
@@ -85,7 +16,7 @@ body {
 }
 #logo {
 	position: absolute;
-	top: 15px;
+	top: 11px;
 	left: 58px;
         z-index: 1000;
 }
@@ -110,14 +41,6 @@ a:hover {
 #infobar span {
     margin: 2px 6px;
 }
-.olControlScaleLine {
-    padding: 3px;
-    margin-bottom: 5px;
-    background-image: url(white50p.png);
-}
-.olControlScaleLineBottom {
-    display: none;
-}
 </style>
 </head>
 
@@ -125,10 +48,6 @@ a:hover {
 <div id="map"></div>
 <img id="logo" src="logo_small.png" alt="TopOSM"></img>
 <div id="infobar">
-    <span>
-        <a href="" id="permalink">Permalink</a>
-    </span>
-    &bull;
     <span>
         Data from <a href="http://www.openstreetmap.org">OpenStreetMap</a>
 	and <a href="http://www.usgs.gov">USGS</a>
@@ -138,5 +57,39 @@ a:hover {
         License: <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>
     </span>
 </div>
+
+<script type="text/javascript">
+var tilebase = "http://localhost:8080/";
+var tiletail = "/{z}/{x}/{y}.png";
+
+function createLayer(name)
+{
+  return new L.TileLayer(tilebase + name + tiletail);
+}
+
+base = createLayer("base");
+landcoverrelief = createLayer("landcoverrelief");
+contours = createLayer("contours");
+ocean = createLayer("ocean");
+features = createLayer("features");
+labels = createLayer("labels");
+labelsmask = createLayer("labels-mask");
+
+var layersControl = new L.Control.Layers(
+  {"Shaded Relief with Landcover": landcoverrelief},
+  {"Contours": contours, "Ocean": ocean, "Features": features,
+   "Labels": labels, "Labels-mask": labelsmask});
+
+var oakland = new L.LatLng(37.8, -122.2);
+var hudson = new L.LatLng(41.1, -73.9);
+
+var map = new L.Map('map', {
+  zoom: 13,
+  maxZoom: 18,
+  center: oakland,
+  layers: [landcoverrelief, contours, ocean, features]});
+map.addControl(layersControl);
+</script>
+
 </body>
 </html>
