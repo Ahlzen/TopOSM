@@ -17,6 +17,8 @@ TopOSM depends on some fairly recent software, including:
 
 (later versions than those mentioned above will probably work)
 
+The 'tilestache' branch, as the name suggests, uses TileStache for compositing and tile serving, and therefore requires tilestache to be installed.
+
 
 ## Installation ##
 
@@ -121,12 +123,12 @@ $ ./prep_contours_table
 $ ./toposm.py prep WhiteMountains
 ```
 
-To render tiles for the specified area and zoom levels:
+Start a TileStache server using the included tilestache.cfg:
 ```
-$ ./toposm.py render WhiteMountains 5 15
+$ tilestache-server.py
 ```
 
-To render a PDF, use renderToPdf() in toposm.py
+The included index.html uses Leaflet to display the local TileStache server's rendered tiles.
 
 
 ## Credits ##
