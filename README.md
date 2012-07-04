@@ -9,7 +9,7 @@ TopOSM runs on Linux. It may be possible to build and run it on other platforms,
 
 TopOSM depends on some fairly recent software, including:
 
-* Mapnik (2.0) with included patches and Cairo support
+* Mapnik (2.0)
 * Python (2.6)
 * GDAL (1.7)
 * PostgreSQL + PostGIS
@@ -18,6 +18,8 @@ TopOSM depends on some fairly recent software, including:
 (later versions than those mentioned above will probably work)
 
 The 'tilestache' branch, as the name suggests, uses TileStache for compositing and tile serving, and therefore requires tilestache to be installed.
+
+The 'tilestache' branch does NOT require a patched mapnik or cairo support.
 
 
 ## Installation ##
@@ -34,30 +36,10 @@ Required packages will vary depending on your distribution. For Ubuntu 11.04, th
     libproj-dev libcairo-dev libcairomm-1.0-dev python-cairo-dev
     libpq-dev libgdal-dev libsqlite3-dev libcurl4-gnutls-dev
     libsigc++-dev libsigc++-2.0-dev ttf-sil-gentium
-    ttf-mscorefonts-installer "ttf-adf-*"
+    ttf-mscorefonts-installer "ttf-adf-*" mapnik
 
 Set up PostgreSQL with PostGIS, see:
 http://wiki.openstreetmap.org/wiki/Mapnik/PostGIS
-
-
-### Build local patched Mapnik ###
-
-```
-$ git clone https://github.com/mapnik/mapnik.git
-$ cd mapnik
-$ patch -p0 < <toposm-dir>/mapnik2_erase_patch.diff
-$ python scons/scons.py configure \
-    INPUT_PLUGINS=raster,osm,gdal,shape,postgis,ogr \
-    PREFIX=$HOME PYTHON_PREFIX=$HOME
-$ python scons/scons.py
-$ python scons/scons.py install
-```
-
-If you need a more recent boost than available for your system, you can build one locally (i.e. with PREFIX=$HOME) and tell the mapnik configure step to link against that by adding:
-
-```
-BOOST_INCLUDES=$HOME/include BOOST_LIBS=$HOME/lib
-```
 
 
 ### Required data files ###
