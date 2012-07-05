@@ -9,6 +9,7 @@ Intermittent rivers/streams (46001, 46002, 46003)
 Reservoirs (Reservoir) (436xx)
 Canals and ditches (CanalDitch) (336xx)
 Artificial Path (55800)
+Estuary (49300)
 (NOTE: Is this correct? Merced River through Yosemite valley has fcode 55800)
 -->
 
@@ -25,7 +26,7 @@ Artificial Path (55800)
     	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
     	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
     	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
-    	[fcode] = 46007
+    	[fcode] = 46007 or [fcode] = 49300
     	) and [size] > 8
     </Filter>
     <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
@@ -39,7 +40,7 @@ Artificial Path (55800)
     	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
     	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
     	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
-    	[fcode] = 46007
+    	[fcode] = 46007 or [fcode] = 49300
     	) and [size] > 4
     </Filter>
     <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.5" />
@@ -56,7 +57,7 @@ Artificial Path (55800)
     	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
     	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
     	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
-    	[fcode] = 46007
+    	[fcode] = 46007 or [fcode] = 49300
     </Filter>
     <PolygonSymbolizer fill="&waterfillcolor;" />
   </Rule>
@@ -71,6 +72,7 @@ Artificial Path (55800)
     	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
     	([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
     	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or [fcode] = 55800
+	or [fcode] = 49300
     </Filter>
     <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" />
   </Rule>
@@ -81,6 +83,7 @@ Artificial Path (55800)
     	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
     	([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
     	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or [fcode] = 55800
+	or [fcode] = 49300
     </Filter>
     <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
@@ -115,7 +118,7 @@ Artificial Path (55800)
     	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
     	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
     	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
-    	[fcode] = 46007
+    	[fcode] = 46007 or [fcode] = 49300
     </Filter>
     <PolygonSymbolizer fill="&waterfillcolor;" />
   </Rule>
