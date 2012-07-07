@@ -603,20 +603,13 @@
 		(SELECT way, fcode, ftype, lengthkm, gnis_name FROM ${NHD_TABLE_PREFIX}_flowline) AS nhdflowline</Parameter>
 	</Datasource>
 </Layer>
+
 <Layer name="nhdwaterbodynames" status="on">
-	<StyleName>water-area-labels</StyleName>
+    <StyleName>water-body-labels</StyleName>
 	<Datasource>
 		&dbsettings; &extents;
 		<Parameter name="table">
 		(SELECT way, fcode, ftype, areasqkm, gnis_name FROM ${NHD_TABLE_PREFIX}_waterbody) AS nhdwaterbody</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdareanames" status="on">
-	<StyleName>water-area-labels</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, fcode, ftype, areasqkm, gnis_name FROM ${NHD_TABLE_PREFIX}_area) AS nhdarea</Parameter>
 	</Datasource>
 </Layer>
 

@@ -1,13 +1,15 @@
 <Style name="water-line-labels">
+
+   <!-- Linear hydro features -->
    <Rule>
       &minz12; &maxz13;
       <Filter>
           ([ftype] = 460 or [ftype] = 336 or [ftype] = 428)
-            and [lengthkm] &gt; 3
+          and [lengthkm] &gt; 3
       </Filter>
       <TextSymbolizer face-name="DejaVu Sans Book" size="9"
           fill="&waterlinecolor;" placement="line" max-char-angle-delta="35"
-          halo-fill="transparent" halo-radius="4"
+          halo-fill="transparent" halo-radius="3"
           >[gnis_name]</TextSymbolizer>
    </Rule>
    <Rule>
@@ -17,20 +19,45 @@
       </Filter>
       <TextSymbolizer face-name="DejaVu Sans Book" size="10"
           fill="&waterlinecolor;" placement="line" max-char-angle-delta="35"
-          halo-fill="transparent" halo-radius="4"
+          halo-fill="transparent" halo-radius="3"
           >[gnis_name]</TextSymbolizer>
    </Rule>
+
+   <!--
+   As per Kevin Kenny's suggestion, these rules label
+   NHD's "artificial paths" (55800) that exist for NHD Area
+   features. This will place labels nicely along directional
+   water area features, such as large rivers.
+   -->
+   <Rule>
+      &minz10; &maxz11;
+      <Filter>[fcode] = 55800 and [lengthkm] >= 8</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="9"
+          fill="&waterlinecolor;" placement="line" max-char-angle-delta="35"
+          halo-fill="&waterfillcolor;" halo-radius="2"
+          >[gnis_name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz12; &maxz13;
+      <Filter>[fcode] = 55800 and [lengthkm] >= 2</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="10"
+          fill="&waterlinecolor;" placement="line" max-char-angle-delta="35"
+          halo-fill="&waterfillcolor;" halo-radius="2" spacing="300"
+          >[gnis_name]</TextSymbolizer>
+   </Rule>
+   <Rule>
+      &minz14;
+      <Filter>[fcode] = 55800 and [lengthkm] >= 0.5</Filter>
+      <TextSymbolizer face-name="DejaVu Sans Oblique" size="11"
+          fill="&waterlinecolor;" placement="line" max-char-angle-delta="35"
+          halo-fill="&waterfillcolor;" halo-radius="2" spacing="500"
+	  minimum-distance="500"
+          >[gnis_name]</TextSymbolizer>
+   </Rule>
+
 </Style>
 
-<Style name="water-area-labels">
-
-    <!-- test
-    <Rule>
-       <TextSymbolizer face-name="DejaVu Sans Oblique" size="11"
-          fill="&waterlinecolor;"
-          >[gnis_name]</TextSymbolizer>
-    </Rule>
-    -->
+<Style name="water-body-labels">
 
     <Rule>
       &minz10; &maxz11;
