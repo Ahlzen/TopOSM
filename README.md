@@ -131,8 +131,6 @@ To render a PDF, use renderToPdf() in toposm.py
 
 ## Credits ##
 
-Created by Lars Ahlzen (lars@ahlzen.com), with contributions from Ian Dees (hosting,
-rendering and troubleshooting), Phil Gold, Kevin Kenny (patches and style improvements),
-Yves Cainaud (legend), Richard Weait (shield graphics) and others.
+Created by Lars Ahlzen (lars@ahlzen.com), with contributions from Ian Dees (hosting, rendering and troubleshooting), Phil Gold (patches and style improvements), Kevin Kenny (improved NHD rendering, misc patches), Yves Cainaud (legend), Richard Weait (shield graphics) and others.
 
 License: GPLv2

@@ -1,166 +1,325 @@
 <!--
-NHD FEATURE CODES
-
-Perennial lakes and ponds (39000, 39003, 39004, 39009-39012)
-Intermittent lakes and ponds (39001, 39002, 39005, 39006)
-Perennial rivers/streams (46000, 46004, 46005, 46006)
-Ephemeral rivers/streams (46007)
-Intermittent rivers/streams (46001, 46002, 46003)
-Reservoirs (Reservoir) (436xx)
-Canals and ditches (CanalDitch) (336xx)
-Artificial Path (55800)
-Estuary (49300)
+Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
 -->
 
+<Style name="nhd-water-outline-lowzoom">
 
-<Style name="water-outline-lowzoom">
-  <!-- NOTE: Size (the area or length of a feature) is a very crude
-  filter, but it's better than nothing. -->
+  <!-- z7-8: Outline permanent waterbodies and area features 8 km^2 -->
   <Rule>
     &minz7; &maxz8;
     <Filter>
-        ([fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
-    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
-		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
-    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
-    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
-    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
-    	[fcode] = 46007 or [fcode] = 49300
-    	) and [size] > 8
+      &isNHDPermanentWaterArea;
+      and [size] > 8
     </Filter>
     <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
   </Rule>
+
   <Rule>
-     &minz9; &maxz10;
-     <Filter>
-        ([fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
-    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
-		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
-    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
-    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
-    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
-    	[fcode] = 46007 or [fcode] = 49300
-    	) and [size] > 4
+    <!-- z9-10: Outline permanent water features >= 4 km^2 -->
+    &minz9; &maxz10;
+    <Filter>
+      &isNHDPermanentWaterArea;
+      and [size] > 4
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.5" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
   </Rule>
+
 </Style>
 
-<Style name="water-fill-lowzoom">
-  <Rule>
-    &maxz9;
-    <Filter>
-    	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
-    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
-		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
-    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
-    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
-    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
-    	[fcode] = 46007 or [fcode] = 49300
-    </Filter>
-    <PolygonSymbolizer fill="&waterfillcolor;" />
-  </Rule>
-</Style>
+<Style name="nhd-water-outline">
 
-<Style name="water-outline">
-  <!-- Perennial hydrographic features -->
   <Rule>
-  	&minz11; &maxz13;
+    <!-- z11-13: Outline all permanent water features -->
+    &minz11; &maxz13;
     <Filter>
-    	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
-    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
-    	([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
-    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or [fcode] = 55800
-	or [fcode] = 49300
+      &isNHDPermanentWaterArea;
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+  </Rule>
+
+  <Rule>
+    <!-- z14+: Outline all permanent water features, heavier outline -->
+    &minz14;
+    <Filter>
+      &isNHDPermanentWaterArea;
     </Filter>
     <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" />
   </Rule>
+
   <Rule>
-  	&minz14;
+    <!-- z11-13: Outline all intermittent water features -->
+    &minz11; &maxz13;
     <Filter>
-    	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
-    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
-    	([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
-    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or [fcode] = 55800
-	or [fcode] = 49300
+      &isNHDIntermittentWaterArea;
+      or [fcode] = 30700
+      or [fcode] = 40307 or [fcode] = 40308 or [fcode] = 40309
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4"
+      stroke-dasharray="4,2,2,2" />
   </Rule>
-  
-  <!-- Intermittent/ephemeral hydrographic features -->
+
   <Rule>
-  	&minz12;
-	&maxz13;
+    <!-- z14+: Outline all intermittent water features, heavier outline -->
+    &minz14;
     <Filter>
-    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
-    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 46007
+      &isNHDIntermittentWaterArea;
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" stroke-dasharray="4,2" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8"
+      stroke-dasharray="4,2,2,2" />
   </Rule>
-  <Rule>
-  	&minz14;
-    <Filter>
-    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
-    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 46007
-    </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.5" stroke-dasharray="8,4" />
-  </Rule>
+
 </Style>
 
-<Style name="water-fill">
+
+<Style name="nhd-water-fill-lowzoom">
+
+  <!-- z7-8: Fill permanent waterbodies and area features >= 8 km^2 -->
   <Rule>
-    &minz10;
+    &minz7; &maxz8;
     <Filter>
-    	[fcode] = 39000 or [fcode] = 39003 or [fcode] = 39004 or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012) or
-    	[fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or [fcode] = 46006 or
-		([fcode] &gt;= 43600 and [fcode] &lt;= 43699) or
-    	([fcode] &gt;= 33600 and [fcode] &lt;= 33699) or
-    	[fcode] = 39001 or [fcode] = 39002 or [fcode] = 39005 or [fcode] = 39006 or
-    	[fcode] = 46001 or [fcode] = 46002 or [fcode] = 46003 or [fcode] = 55800 or
-    	[fcode] = 46007 or [fcode] = 49300
+      &isNHDPermanentWaterArea;
+      and [size] > 8
+    </Filter>
+    <PolygonSymbolizer fill="&waterfillcolor;" />
+  </Rule>
+
+  <Rule>
+    <!-- z9-10: Fill permanent water features >= 4 km^2 -->
+    &minz9; &maxz10;
+    <Filter>
+      &isNHDPermanentWaterArea;
+      and [size] > 4
+    </Filter>
+    <PolygonSymbolizer fill="&waterfillcolor;" />
+  </Rule>
+
+</Style>
+
+<Style name="nhd-water-fill">
+
+  <Rule>
+    <!-- z11+: Fill all permanent water features -->
+    &minz11;
+    <Filter>
+      &isNHDPermanentWaterArea;
     </Filter>
     <PolygonSymbolizer fill="&waterfillcolor;" />
   </Rule>
 </Style>
 
-<Style name="playas">
-	<Rule>
-		&minz10;
-		<Filter>[ftype] = 'Playa'</Filter>	 
-		<PolygonSymbolizer fill="#ffe0c0" />
-	</Rule>
+
+<Style name="nhd-nonwater-fill">
+
+  <Rule>
+    <!-- z11+: Dams, nonearthen -->
+    &minz11;
+    <Filter>
+      ([fcode] &gt;= 34300 and [fcode] &lt; 34400)
+    </Filter>
+    <PolygonSymbolizer fill="#000000" />
+  </Rule>
+
+  <Rule>
+    <!-- z11+: Hazard zones -->
+    &minz11;
+    <Filter>
+      ([fcode] = 37300)
+    </Filter>
+    <LineSymbolizer stroke="red" stroke-width="0.4"
+      stroke-dasharray="4,4" />
+  </Rule>
+
+  <Rule>
+    <!-- z11+: Rapids -->
+    &minz11;
+    <Filter>
+      ([fcode] = 43100)
+    </Filter>
+    <PolygonSymbolizer fill="white" />
+  </Rule>
+
+  <Rule>
+    <!-- z11+: Special use zone -->
+    &minz11;
+    <Filter>
+      ([fcode] = 45400 or [fcode] = 45403)
+    </Filter>
+    <LineSymbolizer stroke="yellow" stroke-width="0.4"
+      stroke-dasharray="4,4" />
+  </Rule>
+
+  <Rule>
+    <!-- z11+: Submerged stream -->
+    &minz11;
+    <Filter>
+      ([fcode] = 46100)
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4"
+      stroke-dasharray="4,4" />
+  </Rule>
+
 </Style>
 
-<Style name="wetlands">
-  <Rule>
-  	&minz13;
-    <Filter>[fcode] = 46600</Filter>
-    <PolygonPatternSymbolizer file="symbols/marsh.png" />
-  </Rule>
-</Style>
 
-<Style name="ice">
-  <Rule>
-  	&minz10;
-    <Filter>[ftype] = 'Ice Mass'</Filter>
-	<LineSymbolizer stroke="#888" stroke-width="0.7" stroke-dasharray="5,5" />
-    <PolygonSymbolizer fill="#ffe0c0" />
-  </Rule>
-</Style>
+<Style name="nhd-nonwater-line">
 
-<Style name="pipelines">
   <Rule>
-  	&minz11; &maxz13;
-    <Filter>[ftype] = 'Pipeline'</Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.6" stroke-dasharray="1.6,10" stroke-linejoin="round" stroke-linecap="round" />
+    <!-- z12-13: Dam, weir, lock gate, nonearthen shore, wall -->
+    &minz12; &maxz13;
+    <Filter>
+      &isNHDManmadeLine;
+    </Filter>
+    <LineSymbolizer stroke="#000000;" stroke-width="0.4" />
   </Rule>
+
   <Rule>
-  	&minz14;
-    <Filter>[ftype] = 'Pipeline'</Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="3" stroke-dasharray="3,20" stroke-linejoin="round" stroke-linecap="round" />
+    <!-- z14+: Dam, weir, lock gate, nonearthen shore, wall -->
+    &minz14;
+    <Filter>
+      &isNHDManmadeLine;
+    </Filter>
+    <LineSymbolizer stroke="#000000" stroke-width="0.8" />
   </Rule>
+
 </Style>
 
 
+<Style name="nhd-point">
+
+  <Rule>  <!-- Dam, weir -->
+    &minz13;
+    <Filter>
+      ([fcode] = 34300 or [fcode] = 34305 or [fcode] = 34306)
+    </Filter>
+    <TextSymbolizer face-name="DejaVu Sans Book"
+      size="10" fill="black" allow-overlap="yes"
+      vertical-alignment="middle" horizontal-alignment="middle"
+      justify-alignment="center" 
+      >'&#x00d7;'</TextSymbolizer>
+  </Rule>
+
+  <Rule>  <!-- Wink, rise, spring -->
+    &minz13;
+    <Filter>
+      ([fcode] = 45000 or [fcode] = 45800 or [fcode] = 48700)
+    </Filter>
+    <TextSymbolizer face-name="DejaVu Sans Book"
+      size="6" fill="&waterlinecolor;"
+      allow-overlap="yes"
+      vertical-alignment="middle" horizontal-alignment="middle"
+      justify-alignment="center" 
+      >'&#x25cf;'</TextSymbolizer>
+  </Rule>
+
+  <Rule>  <!-- water well -->
+    &minz13;
+    <Filter>
+      ([fcode] = 48800)
+    </Filter>
+    <TextSymbolizer face-name="DejaVu Sans Book"
+      size="6" fill="&waterlinecolor;"
+      allow-overlap="yes"
+      vertical-alignment="middle" horizontal-alignment="middle"
+      justify-alignment="center" 
+      >'&#x25cb;'</TextSymbolizer>
+  </Rule>
+
+  <Rule>  <!-- gaging station -->
+    &minz13;
+    <Filter>
+      ([fcode] = 36700)
+    </Filter>
+    <PointSymbolizer file="&customsymbolsdir;/gaging-station.svg" 
+      transform="scale(0.3)"/>
+  </Rule>
+
+  <!-- TODO: waterfall? -->
+
+</Style>		    
+
+
+<Style name="nhd-flowline-lowzoom">
+
+  <Rule>
+    <!-- z7-8: Draw permanent streams at least 8 km long -->
+    &minz7; &maxz8;
+    <Filter>
+      &isNHDPermanentStream;
+      and [size] > 8
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+  </Rule>
+
+  <Rule>
+    <!-- z9-10: Draw permanent streams of at least 4 km -->
+    &minz9; &maxz10;
+    <Filter>
+      &isNHDPermanentStream;
+      and [size] > 4
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+  </Rule>
+
+</Style>
+
+<Style name="nhd-flowline">
+
+  <Rule>
+    <!-- z11-13: Draw all permanent streams -->
+    &minz11; &maxz13;
+    <Filter>
+      &isNHDPermanentStream;
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+  </Rule>
+
+  <Rule>
+    <!-- z14+: Draw all permanent streams, heavier line -->
+    &minz14;
+    <Filter>
+      &isNHDPermanentStream;
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" />
+  </Rule>
+
+  <Rule>
+    <!-- z11-13: Draw all intermittent streams -->
+    &minz11; &maxz13;
+    <Filter>
+      &isNHDIntermittentStream;
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" 
+      stroke-dasharray="8,4,2,4,2,4" />
+  </Rule>
+
+  <Rule>
+    <!-- z14+: Draw all intermittent streams, heavier line -->
+    &minz14;
+    <Filter>
+      &isNHDIntermittentStream;
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" 
+      stroke-dasharray="8,4,2,4,2,4" />
+  </Rule>
+
+  <Rule>
+    <!-- z11-13: Draw all water tunnels -->
+    &minz11; &maxz13;
+    <Filter>
+      ([fcode] &gt;= 42800 and [fcode] &lt; 43000)
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4"
+      stroke-dasharray="8,8"/>
+  </Rule>
+
+  <Rule>
+    <!-- z14+: Draw all water tunnels, heavier line -->
+    &minz14;
+    <Filter>
+      ([fcode] &gt;= 42800 and [fcode] &lt; 43000)
+    </Filter>
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8"
+      stroke-dasharray="8,8"/>
+  </Rule>
+
+</Style>

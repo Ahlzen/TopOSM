@@ -12,3 +12,4 @@ include/*.inc
 errors.log
 geodata
 tile
+temp

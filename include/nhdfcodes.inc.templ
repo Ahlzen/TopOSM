@@ -1,0 +1,51 @@
+<!--
+
+Entitites used to simplify coding of NHD styles.
+From Kevin Kenny's TopOSM-NY.
+
+NHD FEATURE CODES
+
+Perennial lakes and ponds (39000, 39003, 39004, 39009-39012)
+Intermittent lakes and ponds (39001, 39002, 39005, 39006)
+Perennial rivers/streams (46000, 46004, 46005, 46006)
+Ephemeral rivers/streams (46007)
+Intermittent rivers/streams (46001, 46002, 46003)
+Reservoirs (Reservoir) (436xx)
+Canals and ditches (CanalDitch) (336xx)
+Artificial Path (55800)
+Estuary (49300)
+
+-->
+
+<!ENTITY isNHDIntermittentWaterArea 
+	 "([fcode] = 36400 or 
+           [fcode] = 39001 or [fcode] = 39005 or [fcode] = 39006)">
+
+<!ENTITY isNHDIntermittentStream
+	 "(([fcode] &gt;= 46001 and [fcode] &lt;= 46003) or
+            [fcode] = 46007)">
+
+<!ENTITY isNHDManmadeLine
+	 "([fcode] = 34305 or [fcode] = 34306 or [fcode] = 36900
+	   or [fcode] = 41100 or [fcode] = 48300)">
+
+<!ENTITY isNHDPermanentStream
+	 "([fcode] = 46000 or [fcode] = 46004 or [fcode] = 46005 or
+	   [fcode] = 46006 or ([fcode] &gt;= 33600 and [fcode] &lt; 33700)
+           or [fcode] = 55800)">
+
+<!ENTITY isNHDPermanentWaterArea 
+	 "&isNHDPermanentStream;
+	   or [fcode] = 39000
+	   or [fcode] = 39003
+	   or [fcode] = 39004
+	   or ([fcode] &gt;= 39009 and [fcode] &lt;= 39012)
+	   or ([fcode] &gt;= 43600 and [fcode] &lt;= 43699)
+	   or [fcode] = 31200
+	   or [fcode] = 36200
+	   or [fcode] = 39800
+	   or [fcode] = 44500
+	   or [fcode] = 45500
+	   or [fcode] = 49300
+	   or [fcode] = 53700">
+

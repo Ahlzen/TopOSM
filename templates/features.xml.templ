@@ -2,23 +2,25 @@
 <!DOCTYPE Map[
     <!ENTITY % utils SYSTEM "include/utils.inc">
     <!ENTITY % colors SYSTEM "include/colors.inc">
+    <!ENTITY % nhdfcodes SYSTEM "include/nhdfcodes.inc">
     <!ENTITY symbolsdir "symbols">
-	<!ENTITY customsymbolsdir "custom-symbols">
-	<!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
-	<!ENTITY extents SYSTEM "include/extents.inc">
-	<!ENTITY extentsLatLon SYSTEM "include/extentsLatLon.inc">
-	<!ENTITY rounded SYSTEM "include/rounded.inc">
-	<!ENTITY roadoutline SYSTEM "include/roadoutline.inc">
-	<!ENTITY bridgeoutline SYSTEM "include/bridgeoutline.inc">
-	<!ENTITY highway SYSTEM "include/highway.inc">
-	<!ENTITY rail SYSTEM "include/rail.inc">
-	<!ENTITY aeroway SYSTEM "include/aeroway.inc">
-	<!ENTITY nhd SYSTEM "include/nhd.inc">
-	<!ENTITY label SYSTEM "include/labels.inc">
-	<!ENTITY shield SYSTEM "include/shields.inc">
-	<!ENTITY symbol SYSTEM "include/symbols.inc">
-	%utils;
-	%colors;
+    <!ENTITY customsymbolsdir "custom-symbols">
+    <!ENTITY dbsettings SYSTEM "include/dbsettings.inc">
+    <!ENTITY extents SYSTEM "include/extents.inc">
+    <!ENTITY extentsLatLon SYSTEM "include/extentsLatLon.inc">
+    <!ENTITY rounded SYSTEM "include/rounded.inc">
+    <!ENTITY roadoutline SYSTEM "include/roadoutline.inc">
+    <!ENTITY bridgeoutline SYSTEM "include/bridgeoutline.inc">
+    <!ENTITY highway SYSTEM "include/highway.inc">
+    <!ENTITY rail SYSTEM "include/rail.inc">
+    <!ENTITY aeroway SYSTEM "include/aeroway.inc">
+    <!ENTITY nhd SYSTEM "include/nhd.inc">
+    <!ENTITY label SYSTEM "include/labels.inc">
+    <!ENTITY shield SYSTEM "include/shields.inc">
+    <!ENTITY symbol SYSTEM "include/symbols.inc">
+    %utils;
+    %colors;
+    %nhdfcodes;
 ]>
 
 <Map background-color="transparent" srs="&srs900913;">
@@ -236,82 +238,140 @@
 
 <!-- Layers -->
 
-<!-- NHD features at z1-9 -->
-<Layer name="nhdarea-major-outline" status="on">
-	<StyleName>water-outline-lowzoom</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm as size FROM ${NHD_TABLE_PREFIX}_area_major) AS nhdarea</Parameter>
-	</Datasource>
+<!-- NOTE: For zoom levels below 11, different tables with
+only major NHD features ("lowzoom") are used. -->
+
+
+<!-- NHD artificial paths. Any of these that are beneath areas should
+     render UNDER the area fill -->
+<Layer name="NHDArtificialPath-lowzoom" status="on">
+    <StyleName>nhd-flowline-lowzoom</StyleName>
+    <Datasource>
+      &dbsettings; &extents;
+      <Parameter name="table">
+        (SELECT way, fcode, gnis_name, lengthkm AS size
+         FROM ${NHD_TABLE_PREFIX}_flowline_major
+         WHERE fcode = 55800) AS areafeature
+      </Parameter>
+    </Datasource>
 </Layer>
-<Layer name="nhdwaterbody-major-outline" status="on">
-	<StyleName>water-outline-lowzoom</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm as size FROM ${NHD_TABLE_PREFIX}_waterbody_major) AS nhdwaterbody</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdflowline-major-outline" status="on">
-	<StyleName>water-outline-lowzoom</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, lengthkm as size FROM ${NHD_TABLE_PREFIX}_flowline_major) AS nhdarea</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdarea-major-fill" status="on">
-	<StyleName>water-fill-lowzoom</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm as size FROM ${NHD_TABLE_PREFIX}_area_major) AS nhdarea</Parameter>
-	</Datasource>
-</Layer>
-<Layer name="nhdwaterbody-major-fill" status="on">
-	<StyleName>water-fill-lowzoom</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm as size FROM ${NHD_TABLE_PREFIX}_waterbody_major) AS nhdwaterbody</Parameter>
-	</Datasource>
+<Layer name="NHDArtificialPath" status="on">
+    <StyleName>nhd-flowline</StyleName>
+    <Datasource>
+      &dbsettings; &extents;
+      <Parameter name="table">
+        (SELECT way, fcode, gnis_name, lengthkm AS size
+         FROM ${NHD_TABLE_PREFIX}_flowline
+         WHERE fcode = 55800) AS areafeature
+      </Parameter>
+    </Datasource>
 </Layer>
 
-<!-- NHD features at z10+ -->
-<Layer name="nhdwaterbody-lower" status="on" srs="&srs900913;">
-	<StyleName>water-outline</StyleName>
-	<StyleName>playas</StyleName>
-	<StyleName>wetlands</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm FROM ${NHD_TABLE_PREFIX}_waterbody) AS nhdwaterbody</Parameter>
-	</Datasource>
+<!-- Fill NHD area features -->
+<Layer name="NHDAreaFill-lowzoom" status="on">
+  <StyleName>nhd-water-fill-lowzoom</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_area_major
+       UNION
+       SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_waterbody_major) AS areafeature
+    </Parameter>
+  </Datasource>
 </Layer>
-<Layer name="nhdarea-outline" status="on" srs="&srs900913;">
-	<StyleName>water-outline</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm FROM ${NHD_TABLE_PREFIX}_area) AS nhdarea</Parameter>
-	</Datasource>
+<Layer name="NHDAreaFill" status="on">
+  <StyleName>nhd-water-fill</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_area
+       UNION
+       SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_waterbody) AS areafeature
+    </Parameter>
+  </Datasource>
 </Layer>
-<Layer name="nhdflowline" status="on" srs="&srs900913;">
-	<StyleName>water-outline</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, lengthkm FROM ${NHD_TABLE_PREFIX}_flowline) AS nhdflowline</Parameter>
-	</Datasource>
+
+<!-- Outlining of NHD area features -->
+<Layer name="NHDAreaOutline-lowzoom" status="on">
+  <StyleName>nhd-water-outline-lowzoom</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_area_major
+       UNION
+       SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_waterbody_major) AS areafeature
+    </Parameter>
+  </Datasource>
 </Layer>
-<Layer name="nhdwaterbody-upper" status="on" srs="&srs900913;">
-	<StyleName>water-fill</StyleName>
-	<StyleName>ice</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm FROM ${NHD_TABLE_PREFIX}_waterbody) AS nhdwaterbody</Parameter>
-	</Datasource>
+<Layer name="NHDAreaOutline" status="on">
+  <StyleName>nhd-water-outline</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_area
+       UNION
+       SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_waterbody) AS areafeature
+    </Parameter>
+  </Datasource>
 </Layer>
-<Layer name="nhdarea-fill" status="on" srs="&srs900913;">
-	<StyleName>water-fill</StyleName>
-	<Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">(SELECT way, fcode, ftype, areasqkm FROM ${NHD_TABLE_PREFIX}_area) AS nhdarea</Parameter>
-	</Datasource>
+
+<!-- NHD: dam, foreshore, rapids, spillway -->
+<Layer name="NHDAreaFill2" status="on">
+  <StyleName>nhd-nonwater-fill</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_area 
+       WHERE fcode IN ( 34300, 34305, 34306, 36400, 37300,
+                        43100, 45400, 45403, 45500, 46100 )
+       ORDER BY size DESC) AS areafeature
+    </Parameter>
+  </Datasource>
 </Layer>
+
+<Layer name="NHDFlowline-lowzoom" status="on">
+  <StyleName>nhd-flowline-lowzoom</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, lengthkm AS size
+       FROM ${NHD_TABLE_PREFIX}_flowline_major
+       WHERE fcode &lt;&gt; 55800) AS linefeature
+    </Parameter>
+  </Datasource>
+</Layer>
+<Layer name="NHDFlowline" status="on">
+  <StyleName>nhd-flowline</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, lengthkm AS size
+       FROM ${NHD_TABLE_PREFIX}_flowline
+       WHERE fcode &lt;&gt; 55800) AS linefeature
+    </Parameter>
+  </Datasource>
+</Layer>
+
+<Layer name="NHDLine" status="on">
+  <StyleName>nhd-nonwater-line</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, lengthkm AS size
+       FROM ${NHD_TABLE_PREFIX}_line) AS linefeature
+    </Parameter>
+  </Datasource>
+</Layer>
+
 
 <Layer name="nature-areas" status="on">
   <StyleName>nature-areas</StyleName>
@@ -349,6 +409,17 @@
       	(SELECT way, route FROM ${DB_PREFIX}_line WHERE route IS NOT NULL) AS routes
       </Parameter>
     </Datasource>
+</Layer>
+
+<Layer name="NHDpoint" status="on">
+  <StyleName>nhd-point</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+        (SELECT way, fcode, gnis_name FROM ${NHD_TABLE_PREFIX}_point)
+        AS pointfeature      
+    </Parameter>
+  </Datasource>
 </Layer>
 
 <Layer name="buildings" status="on">
