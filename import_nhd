@@ -11,113 +11,101 @@ DBCMD="psql -q -p $DB_PORT $DB_NAME $DB_USER"
 TEMPDIR="temp"
 SRS900913="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over"
 TEMPFILE="$TEMPDIR/temp.shp"
+
+
 # NOTE: The data type for fcode and ftype is changed because, for some
 # reason, mapnik (silently) fails to filter on bigint columns.
 
-# ensure that it actually exists
+ExtractMajorFeatures() {
+  TABLESUFFIX=$1
+  CONDITION="$2"
+  SRCTABLE="${NHD_TABLE_PREFIX}_${TABLESUFFIX}"
+  DSTTABLE="${SRCTABLE}_major"
+  echo "Extracting major features in $SRCTABLE..."
+  echo "INSERT INTO $DSTTABLE SELECT * FROM $SRCTABLE WHERE $CONDITION" | $DBCMD
+}
+
+UpdateColumnDatatypes() {
+  TABLESUFFIX=$1
+  TABLE="${NHD_TABLE_PREFIX}_${TABLESUFFIX}"
+  echo "Updating column datatypes in $TABLE..."
+  echo "ALTER TABLE $TABLE ALTER COLUMN fcode TYPE INT, ALTER COLUMN ftype TYPE INT" | $DBCMD
+}
+
+CreateFcodeIndex() {
+  TABLESUFFIX=$1
+  TABLE="${NHD_TABLE_PREFIX}_${TABLESUFFIX}"
+  INDEXNAME="${TABLE}_fcode"
+  echo "Creating index $INDEXNAME..."
+  echo "CREATE INDEX $INDEXNAME ON $TABLE (fcode)" | $DBCMD
+}
+
+ImportShapefiles() {
+  SHAPEFILEPREFIX=$1
+  TABLESUFFIX=$2
+  CREATE_MAJOR=$3
+  echo "Importing ${SHAPEFILEPREFIX} shapefiles..."
+  PREP_TABLE=1
+  for SRCFILE in $NHD_DIR/${SHAPEFILEPREFIX}*.shp; do
+    echo "Reprojecting $SRCFILE and applying bbox..."
+    ogr2ogr -t_srs "$SRS900913" \
+      -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
+      "$TEMPFILE" "$SRCFILE"
+    
+    # set up table(s)
+    if [ "$PREP_TABLE" ]; then 
+      echo "Creating ${NHD_TABLE_PREFIX}_area tables..."
+      $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_${TABLESUFFIX} | $DBCMD
+      if [ ! -z $CREATE_MAJOR ]; then
+        $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_${TABLESUFFIX}_major | $DBCMD
+      fi
+      unset PREP_TABLE
+    fi  
+    
+    # import data
+    echo "Importing $SRCFILE..."
+    $IMPORTCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_${TABLESUFFIX} | $DBCMD
+    
+    rm "$TEMPFILE"
+  done
+}   
+
+# Ensure that our temp directory exists
 mkdir -pv "$TEMPDIR"
 rm -f $TEMPDIR/temp.{dbf,prj,shp,shx}
 
-# areas
-PREP_TABLE=1
-for SRCFILE in $NHD_DIR/nhdarhi*.shp; do
-    echo $SRCFILE
+echo;echo "##### Area ####"
+ImportShapefiles "nhdarhi" "area" 1
+ExtractMajorFeatures "area" "areasqkm > 1"
+UpdateColumnDatatypes "area"
+UpdateColumnDatatypes "area_major"
+CreateFcodeIndex "area"
+CreateFcodeIndex "area_major"
 
-    echo "Reprojecting and applying bbox..."
-    ogr2ogr -t_srs "$SRS900913" \
-        -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
-        "$TEMPFILE" "$SRCFILE"
-   
-    if [ "$PREP_TABLE" ]; then 
-	    echo "Creating ${NHD_TABLE_PREFIX}_area tables..."
-	    $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_area | $DBCMD
-	    $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_area_major | $DBCMD
-	    unset PREP_TABLE
-    fi  
-    
-    echo "Importing $SRCFILE..."
-    $IMPORTCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_area |  $DBCMD
-    
-    rm "$TEMPFILE"
-done
-echo "ALTER TABLE ${NHD_TABLE_PREFIX}_area ALTER COLUMN fcode TYPE INT, ALTER COLUMN ftype TYPE INT" | $DBCMD
-echo "ALTER TABLE ${NHD_TABLE_PREFIX}_area_major ALTER COLUMN fcode TYPE INT, ALTER COLUMN ftype TYPE INT" | $DBCMD
-echo "Extracting major areas..."
-echo "INSERT INTO ${NHD_TABLE_PREFIX}_area_major SELECT * FROM ${NHD_TABLE_PREFIX}_area WHERE areasqkm > 1" | $DBCMD
+echo;echo "##### Flowline ####"
+ImportShapefiles "nhdflh" "flowline" 1
+ExtractMajorFeatures "flowline" "lengthkm > 2"
+UpdateColumnDatatypes "flowline"
+UpdateColumnDatatypes "flowline_major"
+CreateFcodeIndex "flowline"
+CreateFcodeIndex "flowline_major"
 
+echo;echo "##### Point ####"
+ImportShapefiles "nhdpthi" "point"
+UpdateColumnDatatypes "point"
+CreateFcodeIndex "point"
 
-# flowlines
-PREP_TABLE=1
-for SRCFILE in $NHD_DIR/nhdflh??.shp; do
-    echo $SRCFILE
-    
-    echo "Reprojecting and applying bbox..."   
-    ogr2ogr -t_srs "$SRS900913" \
-        -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
-        "$TEMPFILE" "$SRCFILE"
+echo;echo "##### Waterbody ####"
+ImportShapefiles "nhdwbhi" "waterbody" 1
+ExtractMajorFeatures "waterbody" "areasqkm > 1"
+UpdateColumnDatatypes "waterbody"
+UpdateColumnDatatypes "waterbody_major"
+CreateFcodeIndex "waterbody"
+CreateFcodeIndex "waterbody_major"
 
-    if [ "$PREP_TABLE" ]; then 
-	    echo "Creating ${NHD_TABLE_PREFIX}_flowline table..."
-	    $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_flowline | $DBCMD
-	    $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_flowline_major | $DBCMD
-	    unset PREP_TABLE
-    fi
-    
-    echo "Importing $SRCFILE..."
-    $IMPORTCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_flowline | $DBCMD
-    
-    rm "$TEMPFILE"
-done
-echo "ALTER TABLE ${NHD_TABLE_PREFIX}_flowline ALTER COLUMN fcode TYPE INT, ALTER COLUMN ftype TYPE INT" | $DBCMD
-echo "Extracting major flowlines..."
-echo "INSERT INTO ${NHD_TABLE_PREFIX}_flowline_major SELECT * FROM ${NHD_TABLE_PREFIX}_flowline WHERE lengthkm > 2" | $DBCMD
-
-# points
-PREP_TABLE=1
-for SRCFILE in $NHD_DIR/nhdpthi*.shp; do
-    echo $SRCFILE
-
-    echo "Reprojecting and applying bbox..."   
-    ogr2ogr -t_srs "$SRS900913" \
-        -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
-        "$TEMPFILE" "$SRCFILE"
-
-    if [ "$PREP_TABLE" ]; then 
-	    echo "Creating ${NHD_TABLE_PREFIX}_point table..."
-	    $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_point | $DBCMD
-	    unset PREP_TABLE
-    fi
-    echo "Importing $SRCFILE..."
-    $IMPORTCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_point | $DBCMD
-    
-    rm "$TEMPFILE"
-done
-echo "ALTER TABLE ${NHD_TABLE_PREFIX}_point ALTER COLUMN fcode TYPE INT, ALTER COLUMN ftype TYPE INT" | $DBCMD
-
-# waterbodies
-PREP_TABLE=1
-for SRCFILE in $NHD_DIR/nhdwbhi*.shp; do
-    echo $SRCFILE
-    
-    echo "Reprojecting and applying bbox..."   
-    ogr2ogr -t_srs "$SRS900913" \
-        -spat $XMINLL $YMINLL $XMAXLL $YMAXLL \
-        "$TEMPFILE" "$SRCFILE"
-    
-    if [ "$PREP_TABLE" ]; then 
-        unset PREP_TABLE
-	    echo "Creating ${NHD_TABLE_PREFIX}_waterbody table..."
-	    $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_waterbody | $DBCMD
-	    $SETUPCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_waterbody_major | $DBCMD
-    fi
-    
-    echo "Importing $SRCFILE..."
-    $IMPORTCMD "$TEMPFILE" ${NHD_TABLE_PREFIX}_waterbody | $DBCMD
-    
-    rm "$TEMPFILE"
-done
-echo "ALTER TABLE ${NHD_TABLE_PREFIX}_waterbody ALTER COLUMN fcode TYPE INT, ALTER COLUMN ftype TYPE INT" | $DBCMD
-echo "Extracting major waterbodies..."
-echo "INSERT INTO ${NHD_TABLE_PREFIX}_waterbody_major SELECT * FROM ${NHD_TABLE_PREFIX}_waterbody WHERE areasqkm > 1" | $DBCMD
+echo;echo "##### Line ####"
+ImportShapefiles "nhdlihi" "line"
+UpdateColumnDatatypes "line"
+CreateFcodeIndex "line"
 
 echo "Done."
