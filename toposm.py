@@ -340,11 +340,16 @@ def renderToPng(envLL, filename, sizex, sizey, base='hypsorelief'):
 def printSyntax():
     print "Syntax:"
     print " toposm.py render <area(s)> <minZoom> <maxZoom>"
+    print " toposm.py pdf <area> <filename> <sizeX> <sizeY>"
+    print " toposm.py png <area> <filename> <sizeX> <sizeY>"
     print " toposm.py prep <area(s)>"
     print " toposm.py info"
     print "Areas are named entities in areas.py."
 
 if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        printSyntax()
+        sys.exit(1)
     cmd = sys.argv[1]
     if cmd == 'render':
         areaname = sys.argv[2]
@@ -354,6 +359,16 @@ if __name__ == "__main__":
         print "Render: %s %s, z: %d-%d" % (areaname, env, minzoom, maxzoom)
         BASE_TILE_DIR = path.join(BASE_TILE_DIR, areaname)
         renderTiles(env, minzoom, maxzoom)
+    elif cmd == 'pdf' or cmd == 'png':
+        areaname = sys.argv[2]
+        filename = sys.argv[3]
+        sizex = int(sys.argv[4])
+        sizey = int(sys.argv[5])
+        env = vars(areas)[areaname]
+        if cmd == 'pdf':
+          renderToPdf(env, filename, sizex, sizey)
+        elif cmd == 'png':
+          renderToPng(env, filename, sizex, sizey)
     elif cmd == 'prep':
         areaname = sys.argv[2]
         env = vars(areas)[areaname]
