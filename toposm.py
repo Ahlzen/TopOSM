@@ -98,13 +98,7 @@ class RenderThread:
         if not (allConstituentTilesExist(z, x, y, ntiles)):
             msg = "Rendering meta tile %s %s %s (%sx%s)" % \
                 (z, x, y, ntiles, ntiles)
-            self.runAndLog(msg, renderMetaTile, (z, x, y, ntiles, \
-                self.maps['hypsorelief'], \
-                self.maps['landcoverrelief'], \
-                self.maps['areas'], \
-                self.maps['ocean'], \
-                self.maps['contours'], \
-                self.maps['features']))
+            self.runAndLog(msg, renderMetaTile, (z, x, y, ntiles, self.maps))
 
     def renderLoop(self):
         self.currentz = 0
@@ -116,6 +110,15 @@ class RenderThread:
             self.renderMetaTile(*r)
             self.q.task_done()
 
+
+def getCachedMetaTileDir(mapname, z, x):
+    return path.join(TEMPDIR, mapname, str(z), str(x))
+
+def getCachedMetaTilePath(mapname, z, x, y, suffix = "png"):
+    return path.join(getCachedMetaTileDir(mapname, z, x), str(y) + '.' + suffix)
+
+def cachedMetaTileExists(mapname, z, x, y, suffix = "png"):
+    return path.isfile(getCachedMetaTilePath(mapname, z, x, y, suffix))
 
 def getMetaTileDir(mapname, z):
     return path.join(BASE_TILE_DIR, mapname, str(z))
@@ -167,19 +170,18 @@ def allConstituentTilesExist(z, x, y, ntiles):
             return False
     return True
 
-def renderMetaTile(z, x, y, ntiles, hypsoreliefMap, landcoverreliefMap, areasMap, oceanMap, contoursMap, featuresMap):
+def renderMetaTile(z, x, y, ntiles, maps):
     """Renders the specified map tile and saves the result (including the
     composite) as individual tiles."""
-    hypsorelief = renderLayer('hypsorelief', z, x, y, ntiles, hypsoreliefMap, 'png')
-    landcoverrelief = renderLayer('landcoverrelief', z, x, y, ntiles, landcoverreliefMap, 'png')
-    areas = renderLayer('areas', z, x, y, ntiles, areasMap, 'png')
-    ocean = renderLayer('ocean', z, x, y, ntiles, oceanMap, 'png', True)
-    contours = renderLayer('contours', z, x, y, ntiles, contoursMap, 'png', True)
-    features = renderLayer('features', z, x, y, ntiles, featuresMap, 'png', True)
-    base_h = getComposite((hypsorelief, areas, ocean))
-    base_l = getComposite((landcoverrelief, ocean))
-    composite_h = getComposite((base_h, contours, features))
-    composite_l = getComposite((base_l, contours, features))
+    images = {}
+    for layer in MAPNIK_LAYERS:
+        images[layer] = renderLayer(layer, z, x, y, ntiles, maps[layer], 'png')
+    console.debugMessage(' Combining tiles')
+    base_h = getComposite((images['hypsorelief'], images['areas'], images['ocean']))
+    base_l = getComposite((images['landcoverrelief'], images['ocean']))
+    composite_h = getComposite((base_h, images['contours'], images['features']))
+    composite_l = getComposite((base_l, images['contours'], images['features']))
+    console.debugMessage(' Saving tiles')
     if SAVE_PNG_COMPOSITE:
         saveTiles(z, x, y, ntiles, 'composite_h', composite_h)
         saveTiles(z, x, y, ntiles, 'composite_l', composite_l)
@@ -190,20 +192,18 @@ def renderMetaTile(z, x, y, ntiles, hypsoreliefMap, landcoverreliefMap, areasMap
     if SAVE_INTERMEDIATE_TILES:
         saveTiles(z, x, y, ntiles, 'base_h', base_h)
         saveTiles(z, x, y, ntiles, 'base_l', base_l)
-        saveTiles(z, x, y, ntiles, 'contours', contours)
-        saveTiles(z, x, y, ntiles, 'hypsorelief', hypsorelief)
-        saveTiles(z, x, y, ntiles, 'landcoverrelief', landcoverrelief)
-        saveTiles(z, x, y, ntiles, 'areas', areas)
-        saveTiles(z, x, y, ntiles, 'ocean', ocean)
-        saveTiles(z, x, y, ntiles, 'features', features)
+        for layer in MAPNIK_LAYERS:
+            saveTiles(z, x, y, ntiles, layer, images['layer'])
     
-def renderLayer(name, z, x, y, ntiles, map, suffix = 'png', useCairo = False):
+def renderLayer(name, z, x, y, ntiles, map, suffix = 'png'):
     """Renders the specified map tile (layer) as a mapnik.Image."""
     console.debugMessage(' Rendering layer: ' + name)
+    if name in CACHE_LAYERS and cachedMetaTileExists(name, z, x, y, 'png'):
+        return mapnik.Image.open(getCachedMetaTilePath(name, z, x, y, 'png'))
     env = getMercTileEnv(z, x, y, ntiles, True)
     tilesize = getTileSize(ntiles, True)
     map.zoom_to_box(env)
-    if useCairo and USE_CAIRO:
+    if USE_CAIRO and name in CAIRO_LAYERS:
         assert mapnik.has_cairo()
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, tilesize, tilesize)
         mapnik.render(map, surface)
@@ -211,6 +211,9 @@ def renderLayer(name, z, x, y, ntiles, map, suffix = 'png', useCairo = False):
     else:            
         image = mapnik.Image(tilesize, tilesize)
         mapnik.render(map, image)
+    if name in CACHE_LAYERS:
+        ensureDirExists(getCachedMetaTileDir(name, z, x))
+        image.save(getCachedMetaTilePath(name, z, x, y, 'png'))
     return image
 
 def saveTiles(z, x, y, ntiles, mapname, image, suffix = 'png', imgtype = None):
