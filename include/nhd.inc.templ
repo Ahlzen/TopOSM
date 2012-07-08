@@ -1,5 +1,8 @@
 <!--
 Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
+
+NOTE: Permanent features use double-width stroke, since
+they will be filled later, effectively halving the stroke width.
 -->
 
 <Style name="nhd-water-outline-lowzoom">
@@ -11,9 +14,8 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
       &isNHDPermanentWaterArea;
       and [size] > 8
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" />
   </Rule>
-
   <Rule>
     <!-- z9-10: Outline permanent water features >= 4 km^2 -->
     &minz9; &maxz10;
@@ -21,31 +23,32 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
       &isNHDPermanentWaterArea;
       and [size] > 4
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.9" />
   </Rule>
 
 </Style>
 
 <Style name="nhd-water-outline">
 
+  <!-- Permanent: Double-width stroke, since they will be filled -->
   <Rule>
     <!-- z11-13: Outline all permanent water features -->
     &minz11; &maxz13;
     <Filter>
       &isNHDPermanentWaterArea;
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.0" />
   </Rule>
-
   <Rule>
     <!-- z14+: Outline all permanent water features, heavier outline -->
     &minz14;
     <Filter>
       &isNHDPermanentWaterArea;
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.6" />
   </Rule>
 
+  <!-- Intermittent: Single-width stroke -->
   <Rule>
     <!-- z11-13: Outline all intermittent water features -->
     &minz11; &maxz13;
@@ -54,17 +57,16 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
       or [fcode] = 30700
       or [fcode] = 40307 or [fcode] = 40308 or [fcode] = 40309
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4"
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.5"
       stroke-dasharray="4,2,2,2" />
   </Rule>
-
   <Rule>
     <!-- z14+: Outline all intermittent water features, heavier outline -->
     &minz14;
     <Filter>
       &isNHDIntermittentWaterArea;
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8"
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="1.0"
       stroke-dasharray="4,2,2,2" />
   </Rule>
 
@@ -107,7 +109,6 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
   </Rule>
 </Style>
 
-
 <Style name="nhd-nonwater-fill">
 
   <Rule>
@@ -116,7 +117,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
     <Filter>
       ([fcode] &gt;= 34300 and [fcode] &lt; 34400)
     </Filter>
-    <PolygonSymbolizer fill="#000000" />
+    <PolygonSymbolizer fill="#666" />
   </Rule>
 
   <Rule>
@@ -169,7 +170,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
     <Filter>
       &isNHDManmadeLine;
     </Filter>
-    <LineSymbolizer stroke="#000000;" stroke-width="0.4" />
+    <LineSymbolizer stroke="#666;" stroke-width="0.6" />
   </Rule>
 
   <Rule>
@@ -178,7 +179,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
     <Filter>
       &isNHDManmadeLine;
     </Filter>
-    <LineSymbolizer stroke="#000000" stroke-width="0.8" />
+    <LineSymbolizer stroke="#666" stroke-width="1.0" />
   </Rule>
 
 </Style>
@@ -187,7 +188,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
 <Style name="nhd-point">
 
   <Rule>  <!-- Dam, weir -->
-    &minz13;
+    &minz14;
     <Filter>
       ([fcode] = 34300 or [fcode] = 34305 or [fcode] = 34306)
     </Filter>
@@ -199,7 +200,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
   </Rule>
 
   <Rule>  <!-- Wink, rise, spring -->
-    &minz13;
+    &minz15;
     <Filter>
       ([fcode] = 45000 or [fcode] = 45800 or [fcode] = 48700)
     </Filter>
@@ -212,7 +213,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
   </Rule>
 
   <Rule>  <!-- water well -->
-    &minz13;
+    &minz15;
     <Filter>
       ([fcode] = 48800)
     </Filter>
@@ -225,7 +226,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
   </Rule>
 
   <Rule>  <!-- gaging station -->
-    &minz13;
+    &minz15;
     <Filter>
       ([fcode] = 36700)
     </Filter>
@@ -241,7 +242,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
 <Style name="nhd-flowline-lowzoom">
 
   <Rule>
-    <!-- z7-8: Draw permanent streams at least 8 km long -->
+    <!-- z7-8: Draw permanent streams of at least 8 km -->
     &minz7; &maxz8;
     <Filter>
       &isNHDPermanentStream;
@@ -251,13 +252,13 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
   </Rule>
 
   <Rule>
-    <!-- z9-10: Draw permanent streams of at least 4 km -->
+    <!-- z9-10: Draw permanent streams of at least 3 km -->
     &minz9; &maxz10;
     <Filter>
       &isNHDPermanentStream;
-      and [size] > 4
+      and [size] > 3
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.5" />
   </Rule>
 
 </Style>
@@ -270,7 +271,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
     <Filter>
       &isNHDPermanentStream;
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.6" />
   </Rule>
 
   <Rule>
@@ -279,12 +280,12 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
     <Filter>
       &isNHDPermanentStream;
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8" />
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.9" />
   </Rule>
 
   <Rule>
-    <!-- z11-13: Draw all intermittent streams -->
-    &minz11; &maxz13;
+    <!-- z13: Draw all intermittent streams -->
+    &minz13; &maxz13;
     <Filter>
       &isNHDIntermittentStream;
     </Filter>
@@ -298,7 +299,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
     <Filter>
       &isNHDIntermittentStream;
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4" 
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.7" 
       stroke-dasharray="8,4,2,4,2,4" />
   </Rule>
 
@@ -308,7 +309,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
     <Filter>
       ([fcode] &gt;= 42800 and [fcode] &lt; 43000)
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.4"
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.5"
       stroke-dasharray="8,8"/>
   </Rule>
 
@@ -318,7 +319,7 @@ Styling for NHD features. Adapted from Kevin Kenny's TopOSM-NY.
     <Filter>
       ([fcode] &gt;= 42800 and [fcode] &lt; 43000)
     </Filter>
-    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.8"
+    <LineSymbolizer stroke="&waterlinecolor;" stroke-width="0.9"
       stroke-dasharray="8,8"/>
   </Rule>
 

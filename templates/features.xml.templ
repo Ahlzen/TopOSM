@@ -267,34 +267,6 @@ only major NHD features ("lowzoom") are used. -->
     </Datasource>
 </Layer>
 
-<!-- Fill NHD area features -->
-<Layer name="NHDAreaFill-lowzoom" status="on">
-  <StyleName>nhd-water-fill-lowzoom</StyleName>
-  <Datasource>
-    &dbsettings; &extents;
-    <Parameter name="table">
-      (SELECT way, fcode, gnis_name, areasqkm AS size
-       FROM ${NHD_TABLE_PREFIX}_area_major
-       UNION
-       SELECT way, fcode, gnis_name, areasqkm AS size
-       FROM ${NHD_TABLE_PREFIX}_waterbody_major) AS areafeature
-    </Parameter>
-  </Datasource>
-</Layer>
-<Layer name="NHDAreaFill" status="on">
-  <StyleName>nhd-water-fill</StyleName>
-  <Datasource>
-    &dbsettings; &extents;
-    <Parameter name="table">
-      (SELECT way, fcode, gnis_name, areasqkm AS size
-       FROM ${NHD_TABLE_PREFIX}_area
-       UNION
-       SELECT way, fcode, gnis_name, areasqkm AS size
-       FROM ${NHD_TABLE_PREFIX}_waterbody) AS areafeature
-    </Parameter>
-  </Datasource>
-</Layer>
-
 <!-- Outlining of NHD area features -->
 <Layer name="NHDAreaOutline-lowzoom" status="on">
   <StyleName>nhd-water-outline-lowzoom</StyleName>
@@ -311,6 +283,34 @@ only major NHD features ("lowzoom") are used. -->
 </Layer>
 <Layer name="NHDAreaOutline" status="on">
   <StyleName>nhd-water-outline</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_area
+       UNION
+       SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_waterbody) AS areafeature
+    </Parameter>
+  </Datasource>
+</Layer>
+
+<!-- Fill NHD area features -->
+<Layer name="NHDAreaFill-lowzoom" status="on">
+  <StyleName>nhd-water-fill-lowzoom</StyleName>
+  <Datasource>
+    &dbsettings; &extents;
+    <Parameter name="table">
+      (SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_area_major
+       UNION
+       SELECT way, fcode, gnis_name, areasqkm AS size
+       FROM ${NHD_TABLE_PREFIX}_waterbody_major) AS areafeature
+    </Parameter>
+  </Datasource>
+</Layer>
+<Layer name="NHDAreaFill" status="on">
+  <StyleName>nhd-water-fill</StyleName>
   <Datasource>
     &dbsettings; &extents;
     <Parameter name="table">
