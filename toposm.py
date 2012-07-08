@@ -193,7 +193,7 @@ def renderMetaTile(z, x, y, ntiles, maps):
         saveTiles(z, x, y, ntiles, 'base_h', base_h)
         saveTiles(z, x, y, ntiles, 'base_l', base_l)
         for layer in MAPNIK_LAYERS:
-            saveTiles(z, x, y, ntiles, layer, images['layer'])
+            saveTiles(z, x, y, ntiles, layer, images[layer])
     
 def renderLayer(name, z, x, y, ntiles, map, suffix = 'png'):
     """Renders the specified map tile (layer) as a mapnik.Image."""
