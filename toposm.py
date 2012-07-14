@@ -197,9 +197,10 @@ def renderMetaTile(z, x, y, ntiles, maps):
     
 def renderLayer(name, z, x, y, ntiles, map, suffix = 'png'):
     """Renders the specified map tile (layer) as a mapnik.Image."""
-    console.debugMessage(' Rendering layer: ' + name)
     if name in CACHE_LAYERS and cachedMetaTileExists(name, z, x, y, 'png'):
+        console.debugMessage(' Using cached:    ' + name)
         return mapnik.Image.open(getCachedMetaTilePath(name, z, x, y, 'png'))
+    console.debugMessage(' Rendering layer: ' + name)
     env = getMercTileEnv(z, x, y, ntiles, True)
     tilesize = getTileSize(ntiles, True)
     map.zoom_to_box(env)
