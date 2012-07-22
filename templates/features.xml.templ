@@ -687,30 +687,27 @@ only major NHD features ("lowzoom") are used. -->
 <Layer name="pointfeaturenames" status="on">
     <StyleName>featurenames</StyleName>
     <Datasource>
-		&dbsettings; &extents;
-		<!--
-		HACK: postgres converts elevation m -> ft, and appends unit
-		NOTE: The CASE is a workaround for when 'm' is explicitly specified
-		as the unit.
-		-->
-		<Parameter name="table">
-		(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
-		    boundary, 0 as way_area, CAST(ele_ft AS VARCHAR) ||
-		 ' ft' as ele_w_unit
-		 FROM ${DB_PREFIX}_point) AS featurenames
-		</Parameter>
+      &dbsettings; &extents;
+      <Parameter name="table">
+	(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
+	boundary, 0 as way_area, ele_ft
+	FROM ${DB_PREFIX}_point) AS featurenames
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
     </Datasource>
 </Layer>
 
 <Layer name="areafeaturenames" status="on">
     <StyleName>featurenames</StyleName>
     <Datasource>
-		&dbsettings; &extents;
-		<Parameter name="table">
-		(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
-		 boundary, way_area, '' AS ele_w_unit
-		 FROM ${DB_PREFIX}_polygon ORDER BY z_order, way_area DESC)
-		 AS areafeaturenames</Parameter>
+      &dbsettings; &extents;
+      <Parameter name="table">
+	(SELECT way, name, "natural", aeroway, railway, landuse, leisure,
+	boundary, way_area, 0 AS ele_ft
+	FROM ${DB_PREFIX}_polygon ORDER BY z_order, way_area DESC)
+	AS featurenames
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
     </Datasource>
 </Layer>
 
