@@ -25,8 +25,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="256"
-     inkscape:cx="0.52206548"
-     inkscape:cy="-0.14317181"
+     inkscape:cx="0.67835736"
+     inkscape:cy="0.2153619"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -53,24 +53,15 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1051.3622)">
-    <path
-       transform="matrix(0.00360757,0,0,0.00360757,-0.81934229,1050.6111)"
-       sodipodi:type="star"
-       style="fill:#553300;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:new"
-       id="path2470"
-       sodipodi:sides="3"
-       sodipodi:cx="365.71429"
-       sodipodi:cy="389.50504"
-       sodipodi:r1="157.35051"
-       sodipodi:r2="78.675255"
-       sodipodi:arg1="0.52359878"
-       sodipodi:arg2="1.5707963"
-       inkscape:flatsided="false"
-       inkscape:rounded="0"
-       inkscape:randomized="0"
-       d="m 501.98383,468.18029 -136.26953,0 -136.26954,0 68.13476,-118.01288 68.13478,-118.01288 68.13476,118.01288 z"
-       inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/peak.png"
-       inkscape:export-xdpi="1.98"
-       inkscape:export-ydpi="1.98" />
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.20235291;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3155"
+       width="0.79764706"
+       height="0.79764712"
+       x="0.10117646"
+       y="1051.4634"
+       inkscape:export-filename="/home/lars/projects/mapnik-osm/topomap/custom-symbols/rail-station-m.png"
+       inkscape:export-xdpi="3.5699999"
+       inkscape:export-ydpi="3.5699999" />
   </g>
 </svg>
