@@ -65,8 +65,8 @@ BOOST_INCLUDES=$HOME/include BOOST_LIBS=$HOME/lib
 * http://tile.openstreetmap.org/shoreline_300.tar.bz2
 * http://www.naturalearthdata.com/download/10m/cultural/10m-populated-places.zip
 * http://www.naturalearthdata.com/download/110m/cultural/110m-admin-0-boundary-lines.zip
-* USGS NHD shapefiles: http://www.openstreetmap.us/nhd/
-* USGS NED data, as needed: http://openstreetmap.us/ned/13arcsec/grid/
+* USGS NHD shapefiles: http://209.98.153.33/nhd/
+* USGS NED data, as needed: http://209.98.153.33/ned/13arcsec/grid/
 * NLCD 2006 (Land cover) data: http://www.mrlc.gov/nlcd06_data.php
 * Planet.osm or other OSM dataset: http://planet.openstreetmap.org/
 * Water polygons (in spherical mercator) from http://openstreetmapdata.com/
